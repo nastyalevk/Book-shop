@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.1</version>
-		<relativePath/> <!-- lookup parent from nastya.bookShop.repository -->
+		<relativePath/> <!-- lookup parent from nastya.BookShop.repository -->
 	</parent>
 	<groupId>nastya.bookShop</groupId>
 	<artifactId>spring-boot-mysql-crud</artifactId>
