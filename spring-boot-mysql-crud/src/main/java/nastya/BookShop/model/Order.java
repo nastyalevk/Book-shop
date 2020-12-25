@@ -1,10 +1,13 @@
 package nastya.BookShop.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+
+import static org.hibernate.annotations.FetchMode.SELECT;
 
 @Data
 @Entity
@@ -16,6 +19,7 @@ public class Order {
     private Integer Id;
 
     @OneToMany(mappedBy = "orderContentId.order")
+    @Fetch(value = SELECT)
     private Set<OrderContent> orderContentSet;
 
     @Column(name = "order_number")
