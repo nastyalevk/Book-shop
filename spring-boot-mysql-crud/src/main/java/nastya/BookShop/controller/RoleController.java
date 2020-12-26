@@ -1,6 +1,6 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.service.RolesService;
+import nastya.BookShop.service.interf.RolesService;
 import nastya.BookShop.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

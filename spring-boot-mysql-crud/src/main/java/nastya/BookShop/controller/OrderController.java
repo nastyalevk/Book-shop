@@ -1,6 +1,6 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.service.OrderService;
+import nastya.BookShop.service.interf.OrderService;
 import nastya.BookShop.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

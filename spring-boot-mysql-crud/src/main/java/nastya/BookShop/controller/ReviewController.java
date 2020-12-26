@@ -1,7 +1,6 @@
 package nastya.BookShop.controller;
 
-
-import nastya.BookShop.service.ReviewService;
+import nastya.BookShop.service.interf.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,14 +1,18 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.service.BookService;
+import nastya.BookShop.service.interf.BookService;
 import nastya.BookShop.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,6 +33,7 @@ public class BookController {
     @PostMapping(path = "/book-create")
     public void createBook(@RequestBody Book book) {
         bookService.saveBook(book);
+        findAll();
     }
 
     //make forwarding
@@ -39,15 +44,14 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     public Book getBook(@PathVariable("id") Integer id) {
-        Book book = bookService.findById(id);
-        System.out.println(book.getBookName());
-        System.out.println(book.getId());
         return bookService.findById(id);
     }
 
     //make forwarding
-    @PostMapping("/book-update")
-    public void updateBook(@RequestBody Book book) {
+    @RequestMapping(value = "/book-update", method = RequestMethod.POST)
+//    @PostMapping("/book-update")
+    public void updateBook(@RequestBody Book book, HttpServletResponse response) throws IOException {
         bookService.saveBook(book);
+        response.sendRedirect("/books");
     }
 }
