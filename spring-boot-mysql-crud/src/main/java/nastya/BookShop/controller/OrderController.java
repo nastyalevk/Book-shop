@@ -26,7 +26,7 @@ public class OrderController {
     }
 
     @GetMapping("/client-orders/{id}")
-    public Optional<Order> getOrdersByClient(@PathVariable("id") Integer clientId){
+    public List<Order> getOrdersByClient(@PathVariable("id") Integer clientId){
         return orderService.findByClientId(clientId);
     }
 

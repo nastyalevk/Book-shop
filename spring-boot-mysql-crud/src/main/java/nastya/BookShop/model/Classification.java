@@ -25,9 +25,9 @@ public class Classification {
     @Column(name = "classif_id")
     private Integer id;
 
-    @OneToMany(mappedBy = "classification")
-    @JsonIgnore
-    private Set<Classification> classificationSet;
+//    @OneToMany(mappedBy = "classification")
+//    @JsonIgnore
+//    private Set<Classification> classifications;
 
     @OneToMany(mappedBy = "classification")
     @JsonIgnore
@@ -35,15 +35,15 @@ public class Classification {
 
     @OneToMany(mappedBy = "classification")
     @JsonIgnore
-    private Set<Assortment> assortmentSet;
+    private Set<Assortment> assortment;
 
     @OneToMany(mappedBy = "classification")
     @JsonIgnore
     private Set<Order> order;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id", nullable = false)
-    private Classification classification;
+//    @ManyToOne
+//    @JoinColumn(name = "parent_id", nullable = false)
+//    private Classification classification;
 
     private String name;
 

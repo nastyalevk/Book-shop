@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public String getUser(@PathVariable("id") Integer id) {
-        return userService.findById(id).toString();
+    public User getUser(@PathVariable("id") Integer id) {
+        return userService.findById(id);
     }
 
     @PostMapping("user-update")
