@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 public class AssortmentController {
@@ -19,7 +19,7 @@ public class AssortmentController {
     }
 
     @GetMapping("/shop-assortment/{id}")
-    public Optional<Assortment> getAssortmentByShop(@PathVariable("id") Integer shopId){
+    public List<Assortment> getAssortmentByShop(@PathVariable("id") Integer shopId){
         return assortmentService.getAssortmentByShop(shopId);
     }
 }

@@ -1,17 +1,20 @@
 package nastya.BookShop.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-import static org.hibernate.annotations.FetchMode.SELECT;
 
 @Data
 @Entity
 @Table(name = "orders")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonSerialize
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +22,7 @@ public class Order {
     private Integer Id;
 
     @OneToMany(mappedBy = "orderContentId.order")
-    @Fetch(value = SELECT)
+    @JsonIgnore
     private Set<OrderContent> orderContent;
 
     @Column(name = "order_number")

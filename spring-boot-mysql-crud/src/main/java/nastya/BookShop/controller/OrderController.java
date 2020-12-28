@@ -40,7 +40,6 @@ public class OrderController {
         return orderService.findAll();
     }
 
-    //make forwarding
     @PostMapping("/new-order")
     public ResponseEntity<Void> createOrder(@RequestBody Order order) {
         orderService.saveOrder(order);
