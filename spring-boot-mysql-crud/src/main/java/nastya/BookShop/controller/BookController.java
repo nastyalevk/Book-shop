@@ -1,18 +1,18 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.service.interf.BookService;
 import nastya.BookShop.model.Book;
+import nastya.BookShop.service.interf.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,17 +29,20 @@ public class BookController {
         return bookService.findAll();
     }
 
-    //make forwarding
     @PostMapping(path = "/book-create")
-    public void createBook(@RequestBody Book book) {
+    public ResponseEntity<Void> createBook(@RequestBody Book book) {
         bookService.saveBook(book);
-        findAll();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/books"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
-    //make forwarding
     @GetMapping("/book-delete/{id}")
-    public void deleteBook(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") Integer id) {
         bookService.deleteById(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/books"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
     @GetMapping("/book/{id}")
@@ -47,11 +50,11 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    //make forwarding
-    @RequestMapping(value = "/book-update", method = RequestMethod.POST)
-//    @PostMapping("/book-update")
-    public void updateBook(@RequestBody Book book, HttpServletResponse response) throws IOException {
+    @PostMapping("/book-update")
+    public ResponseEntity<Void> updateBook(@RequestBody Book book){
         bookService.saveBook(book);
-        response.sendRedirect("/books");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/books"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 }

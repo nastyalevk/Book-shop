@@ -20,7 +20,7 @@ public class Order {
 
     @OneToMany(mappedBy = "orderContentId.order")
     @Fetch(value = SELECT)
-    private Set<OrderContent> orderContentSet;
+    private Set<OrderContent> orderContent;
 
     @Column(name = "order_number")
     private Integer orderNumber;

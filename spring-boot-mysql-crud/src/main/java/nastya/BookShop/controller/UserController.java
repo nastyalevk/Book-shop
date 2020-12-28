@@ -3,12 +3,16 @@ package nastya.BookShop.controller;
 import nastya.BookShop.service.interf.UserService;
 import nastya.BookShop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,10 +29,12 @@ public class UserController {
         return userService.findAll();
     }
 
-    //make forwarding
     @PostMapping(path = "/user-create")
-    public void createUser(@RequestBody User user) {
+    public ResponseEntity<Void> createUser(@RequestBody User user) {
         userService.saveUser(user);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/users"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
     @GetMapping("/user/{id}")
@@ -36,9 +42,11 @@ public class UserController {
         return userService.findById(id).toString();
     }
 
-    //make forwarding
     @PostMapping("user-update")
-    public void updateBook(@RequestBody User user) {
+    public ResponseEntity<Void> updateBook(@RequestBody User user) {
         userService.saveUser(user);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/users"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 }

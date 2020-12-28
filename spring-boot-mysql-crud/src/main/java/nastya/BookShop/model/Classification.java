@@ -22,7 +22,7 @@ public class Classification {
 
     @OneToMany(mappedBy = "classification")
     @Fetch(value = SELECT)
-    private Set<Shop> shopSet;
+    private Set<Shop> shop;
 
     @OneToMany(mappedBy = "classification")
     @Fetch(value = SELECT)
@@ -30,7 +30,7 @@ public class Classification {
 
     @OneToMany(mappedBy = "classification")
     @Fetch(value = SELECT)
-    private Set<Order> orderSet;
+    private Set<Order> order;
 
     @ManyToOne
     @JoinColumn(name = "parent_id", nullable = false)

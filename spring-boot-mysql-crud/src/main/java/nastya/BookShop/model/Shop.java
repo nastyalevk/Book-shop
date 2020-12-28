@@ -31,15 +31,15 @@ public class Shop {
 
     @OneToMany(mappedBy = "shop")
     @JsonIgnore
-    private Set<Review> reviewSet;
+    private Set<Review> review;
 
     @OneToMany(mappedBy = "assortmentId.shop")
     @JsonIgnore
-    private Set<Assortment> assortmentSet;
+    private Set<Assortment> assortment;
 
     @OneToMany(mappedBy = "shop")
     @JsonIgnore
-    private Set<Order> orderSet;
+    private Set<Order> order;
 
     @Column(name = "shop_name")
     private String shopName;

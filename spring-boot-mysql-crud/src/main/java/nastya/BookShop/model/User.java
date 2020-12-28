@@ -27,19 +27,19 @@ public class User {
 
     @OneToMany(mappedBy = "userRolesId.user")
     @JsonIgnore
-    private Set<UserRoles> userRolesSet;
+    private Set<UserRoles> userRoles;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Review> reviewSet;
+    private Set<Review> review;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Shop> shopSet;
+    private Set<Shop> shop;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Order> orderSet;
+    private Set<Order> order;
 
     @Column(name = "username")
     private String userName;

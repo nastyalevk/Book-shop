@@ -3,11 +3,15 @@ package nastya.BookShop.controller;
 import nastya.BookShop.service.interf.RolesService;
 import nastya.BookShop.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,10 +28,12 @@ public class RoleController {
         return roleService.findAll();
     }
 
-    //make forwarding
     @PostMapping("/save-user")
-    public void saveRole(@RequestBody Role role){
+    public ResponseEntity<Void> saveRole(@RequestBody Role role){
         roleService.saveRole(role);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/roles"));
+        return new ResponseEntity<Void>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
 }

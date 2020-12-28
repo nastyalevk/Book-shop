@@ -28,11 +28,11 @@ public class Book {
 
     @OneToMany(mappedBy = "assortmentId.book")
     @JsonIgnore
-    private Set<Assortment> assortmentSet;
+    private Set<Assortment> assortment;
 
     @OneToMany(mappedBy = "orderContentId.book")
     @JsonIgnore
-    private Set<OrderContent> orderContentSet;
+    private Set<OrderContent> orderContent;
 
     @Column(name = "book_name")
     private String bookName;
