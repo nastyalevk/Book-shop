@@ -1435,7 +1435,7 @@ book_id</ColNames>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="422" parent="343" name="adress">
+    <column id="422" parent="343" name="address">
       <Position>5</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>

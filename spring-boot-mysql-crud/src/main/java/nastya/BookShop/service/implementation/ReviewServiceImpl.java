@@ -41,4 +41,14 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return result;
     }
+
+    @Override
+    public List<Review> findAll(){
+        return reviewRepository.findAll();
+    }
+
+    @Override
+    public void saveReview(Review review){
+        reviewRepository.save(review);
+    }
 }

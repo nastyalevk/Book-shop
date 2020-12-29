@@ -8,4 +8,8 @@ public interface ReviewService {
     List<Review> getUserReview(Integer id);
 
     List<Review> getShopReview(Integer id);
+
+    List<Review> findAll();
+
+    void saveReview(Review review);
 }
