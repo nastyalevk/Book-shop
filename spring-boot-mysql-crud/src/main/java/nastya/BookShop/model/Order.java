@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
 
-
 @Getter
 @Setter
 @Entity
@@ -61,6 +60,5 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private User user;
 
-    public Order() {
-    }
+    public Order(){}
 }

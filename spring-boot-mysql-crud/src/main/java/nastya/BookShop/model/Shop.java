@@ -46,7 +46,7 @@ public class Shop {
     private String shopName;
     private String country;
     private String city;
-    private String adress;
+    private String address;
     private String description;
 
     @ManyToOne

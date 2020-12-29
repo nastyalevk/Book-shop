@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
-
 @Embeddable
 public class AssortmentId implements Serializable {
     private static final long serialVersionUID = 1L;

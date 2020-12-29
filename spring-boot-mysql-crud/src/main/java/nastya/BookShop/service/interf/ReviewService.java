@@ -5,5 +5,7 @@ import nastya.BookShop.model.Review;
 import java.util.List;
 
 public interface ReviewService {
-    List<Review> getReviewById(Integer id);
+    List<Review> getUserReview(Integer id);
+
+    List<Review> getShopReview(Integer id);
 }
