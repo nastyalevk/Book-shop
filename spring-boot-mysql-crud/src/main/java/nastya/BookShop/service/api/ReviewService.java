@@ -1,4 +1,4 @@
-package nastya.BookShop.service.interf;
+package nastya.BookShop.service.api;
 
 import nastya.BookShop.model.Review;
 

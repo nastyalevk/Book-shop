@@ -1,13 +1,12 @@
-package nastya.BookShop.service.implementation;
+package nastya.BookShop.service.impl;
 
 import nastya.BookShop.model.OrderContent;
 import nastya.BookShop.repository.OrderContentRepository;
-import nastya.BookShop.service.interf.OrderContentService;
+import nastya.BookShop.service.api.OrderContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

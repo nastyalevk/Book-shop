@@ -1,7 +1,7 @@
-package nastya.BookShop.service.implementation;
+package nastya.BookShop.service.impl;
 
 import nastya.BookShop.repository.ClassificationRepository;
-import nastya.BookShop.service.interf.ClassificationService;
+import nastya.BookShop.service.api.ClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

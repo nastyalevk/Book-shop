@@ -1,8 +1,8 @@
-package nastya.BookShop.service.implementation;
+package nastya.BookShop.service.impl;
 
 import nastya.BookShop.model.User;
 import nastya.BookShop.repository.UserRepository;
-import nastya.BookShop.service.interf.UserService;
+import nastya.BookShop.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

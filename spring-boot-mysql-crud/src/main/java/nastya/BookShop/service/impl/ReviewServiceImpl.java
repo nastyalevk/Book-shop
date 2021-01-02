@@ -1,8 +1,8 @@
-package nastya.BookShop.service.implementation;
+package nastya.BookShop.service.impl;
 
 import nastya.BookShop.model.Review;
 import nastya.BookShop.repository.ReviewRepository;
-import nastya.BookShop.service.interf.ReviewService;
+import nastya.BookShop.service.api.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

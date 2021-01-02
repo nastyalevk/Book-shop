@@ -1,8 +1,8 @@
-package nastya.BookShop.service.implementation;
+package nastya.BookShop.service.impl;
 
 import nastya.BookShop.model.Role;
 import nastya.BookShop.repository.RolesRepository;
-import nastya.BookShop.service.interf.RolesService;
+import nastya.BookShop.service.api.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
