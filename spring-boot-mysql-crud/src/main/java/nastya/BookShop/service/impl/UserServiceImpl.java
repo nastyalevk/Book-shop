@@ -18,17 +18,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Integer id){
+    public User findById(Integer id) {
         return userRepository.getOne(id);
     }
 
     @Override
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User saveUser(User user){
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 }

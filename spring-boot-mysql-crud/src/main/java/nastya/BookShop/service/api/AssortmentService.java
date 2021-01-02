@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AssortmentService {
 
-    List<Assortment> getAssortmentByShop(Integer shopId);
+    List<Assortment> getAssortmentByShop(Integer id);
 }

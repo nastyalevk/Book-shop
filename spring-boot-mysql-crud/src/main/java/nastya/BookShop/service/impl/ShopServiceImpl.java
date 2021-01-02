@@ -19,16 +19,11 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public void addShop(Shop shop) {
-
-    }
-
-    @Override
-    public List<Shop> userOrders(Integer id) {
-        return null;
+        shopRepository.save(shop);
     }
 
     @Override
     public List<Shop> userShops(Integer id) {
-        return null;
+        return shopRepository.findAllByUserId(id);
     }
 }

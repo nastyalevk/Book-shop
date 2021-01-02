@@ -18,17 +18,17 @@ public class UserRolesServiceImpl implements UserRolesService {
     }
 
     @Override
-    public void saveUserRole(UserRoles userRoles ){
+    public void saveUserRole(UserRoles userRoles) {
         userRolesRepository.save(userRoles);
     }
 
     @Override
-    public List<UserRoles> findAll(){
+    public List<UserRoles> findAll() {
         return userRolesRepository.findAll();
     }
 
     @Override
-    public UserRoles findById(Integer id){
+    public UserRoles findById(Integer id) {
         return userRolesRepository.getOne(id);
     }
 }

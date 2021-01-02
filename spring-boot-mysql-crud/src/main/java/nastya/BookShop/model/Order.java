@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -29,7 +29,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
-    private Integer Id;
+    private Integer id;
 
     @OneToMany(mappedBy = "orderContentId.order")
     @JsonIgnore
@@ -60,5 +60,6 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private User user;
 
-    public Order(){}
+    public Order() {
+    }
 }

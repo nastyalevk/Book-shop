@@ -5,7 +5,8 @@ import nastya.BookShop.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    List<Order> findByClientId(Integer clientId);
+
+    List<Order> findByClientId(Integer id);
 
     Order findById(Integer id);
 

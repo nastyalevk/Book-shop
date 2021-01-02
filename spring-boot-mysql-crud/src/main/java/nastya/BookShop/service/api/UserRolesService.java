@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserRolesService {
 
-    void saveUserRole(UserRoles userRoles );
+    void saveUserRole(UserRoles userRoles);
 
     List<UserRoles> findAll();
 

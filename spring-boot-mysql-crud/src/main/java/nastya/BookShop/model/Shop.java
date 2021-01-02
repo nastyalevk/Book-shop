@@ -28,7 +28,7 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "shop_id")
-    private Integer Id;
+    private Integer id;
 
     @OneToMany(mappedBy = "shop")
     @JsonIgnore

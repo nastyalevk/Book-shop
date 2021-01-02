@@ -5,11 +5,12 @@ import nastya.BookShop.model.OrderContent;
 import java.util.List;
 
 public interface OrderContentService {
+
     List<OrderContent> findAll();
 
-    List<OrderContent> getShopOrderContent(Integer shopId);
+    List<OrderContent> getShopOrderContent(Integer id);
 
-    List<OrderContent> getUserOrderContent(Integer userId);
+    List<OrderContent> getUserOrderContent(Integer id);
 
     void saveOrderContent(OrderContent orderContent);
 

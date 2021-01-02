@@ -6,7 +6,6 @@ import nastya.BookShop.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,29 +18,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByClientId(Integer clientId){
-       List<Order> orders = orderRepository.findAll();
-       List <Order> result = new ArrayList<Order>();
-       for(Order i : orders){
-           if (i.getUser().getId().intValue() == clientId){
-                   result.add(i);
-           }
-       }
-       return result;
+    public List<Order> findByClientId(Integer id) {
+        return orderRepository.findAllByUserId(id);
     }
 
     @Override
-    public Order findById(Integer id){
+    public Order findById(Integer id) {
         return orderRepository.getOne(id);
     }
 
     @Override
-    public List<Order> findAll(){
+    public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
     @Override
-    public void saveOrder(Order order){
+    public void saveOrder(Order order) {
         orderRepository.save(order);
     }
 }

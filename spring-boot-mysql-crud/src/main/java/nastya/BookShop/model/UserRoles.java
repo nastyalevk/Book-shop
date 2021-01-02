@@ -16,7 +16,8 @@ public class UserRoles implements Serializable {
     @EmbeddedId
     private UserRolesId userRolesId;
 
-    public UserRoles(){}
+    public UserRoles() {
+    }
 
     public UserRoles(UserRolesId userRolesId) {
         this.userRolesId = userRolesId;

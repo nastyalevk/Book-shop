@@ -28,7 +28,8 @@ public class Assortment {
     @JoinColumn(name = "status", nullable = false)
     private Classification classification;
 
-    public Assortment(){}
+    public Assortment() {
+    }
 
     public Assortment(AssortmentId assortmentId, String quantity, String price, Date creationDate, Classification classification) {
         this.assortmentId = assortmentId;

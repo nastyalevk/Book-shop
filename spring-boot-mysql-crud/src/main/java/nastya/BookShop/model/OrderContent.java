@@ -20,7 +20,8 @@ public class OrderContent implements Serializable {
     @Column(name = "price_per_item")
     private Integer price;
 
-    public OrderContent(){}
+    public OrderContent() {
+    }
 
     public OrderContent(OrderContentId orderContentId, Integer quantity, Integer price) {
         this.orderContentId = orderContentId;

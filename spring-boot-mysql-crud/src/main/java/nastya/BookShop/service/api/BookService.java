@@ -5,6 +5,7 @@ import nastya.BookShop.model.Book;
 import java.util.List;
 
 public interface BookService {
+
     Book findById(Integer id);
 
     List<Book> findAll();

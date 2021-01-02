@@ -33,5 +33,6 @@ public class Review {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
-    public Review(){}
+    public Review() {
+    }
 }

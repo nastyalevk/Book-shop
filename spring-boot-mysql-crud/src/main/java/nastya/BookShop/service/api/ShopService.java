@@ -8,7 +8,5 @@ public interface ShopService {
 
     void addShop(Shop shop);
 
-    List<Shop> userOrders(Integer id);
-
     List<Shop> userShops(Integer id);
 }

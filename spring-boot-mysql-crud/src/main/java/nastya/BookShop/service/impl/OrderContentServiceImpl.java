@@ -6,7 +6,6 @@ import nastya.BookShop.service.api.OrderContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,27 +23,13 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public List<OrderContent> getShopOrderContent(Integer shopId) {
-        List<OrderContent> orderContents = orderContentRepository.findAll();
-        List<OrderContent> result = new ArrayList<OrderContent>();
-        for (OrderContent i: orderContents){
-            if(i.getOrderContentId().getOrder().getShop().getId().intValue() == shopId){
-                result.add(i);
-            }
-        }
-        return result;
+    public List<OrderContent> getShopOrderContent(Integer id) {
+        return orderContentRepository.findAllByOrderContentIdOrderShopId(id);
     }
 
     @Override
-    public List<OrderContent> getUserOrderContent(Integer userId) {
-        List<OrderContent> orderContents = orderContentRepository.findAll();
-        List<OrderContent> result = new ArrayList<OrderContent>();
-        for (OrderContent i: orderContents){
-            if(i.getOrderContentId().getOrder().getUser().getId().intValue() == userId){
-                result.add(i);
-            }
-        }
-        return result;
+    public List<OrderContent> getUserOrderContent(Integer id) {
+        return orderContentRepository.findAllByOrderContentIdOrderUserId(id);
     }
 
     @Override

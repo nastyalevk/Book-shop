@@ -6,7 +6,6 @@ import nastya.BookShop.service.api.AssortmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,14 +19,7 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public List<Assortment> getAssortmentByShop(Integer shopId){
-        List<Assortment> assortments = assortmentRepository.findAll();
-        List<Assortment> result = new ArrayList<Assortment>();
-        for(Assortment i : assortments){
-            if (i.getAssortmentId().getShop().getId().intValue() == shopId.intValue()){
-                result.add(i);
-            }
-        }
-        return result;
+    public List<Assortment> getAssortmentByShop(Integer id) {
+        return assortmentRepository.findAllByAssortmentIdShopId(id);
     }
 }

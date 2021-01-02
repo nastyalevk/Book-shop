@@ -41,7 +41,7 @@ public class BookController {
     }
 
     @PostMapping("/book-update")
-    public void updateBook(@RequestBody Book book){
+    public void updateBook(@RequestBody Book book) {
         bookService.saveBook(book);
     }
 }

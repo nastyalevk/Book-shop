@@ -44,5 +44,6 @@ public class Book {
     private Integer pages;
     private String description;
 
-    public Book() {}
+    public Book() {
+    }
 }

@@ -21,27 +21,27 @@ public class OrderContentController {
     }
 
     @GetMapping("/order-content")
-    public List<OrderContent>findAll(){
+    public List<OrderContent> findAll() {
         return orderContentService.findAll();
     }
 
     @GetMapping("/order-content-user/{id}")
-    public List<OrderContent> getUserOrderContent(@PathVariable("id") Integer id){
+    public List<OrderContent> getUserOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getUserOrderContent(id);
     }
 
     @GetMapping("/order-content-shop/{id}")
-    public List<OrderContent> getShopOrderContent(@PathVariable("id") Integer id){
+    public List<OrderContent> getShopOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getShopOrderContent(id);
     }
 
     @GetMapping("/order-content/{id}")
-    public OrderContent getOrderContent(@PathVariable("id") Integer id){
+    public OrderContent getOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getOne(id);
     }
 
     @PostMapping("/add-content")
-    public void saveContent(@RequestBody OrderContent orderContent){
+    public void saveContent(@RequestBody OrderContent orderContent) {
         orderContentService.saveOrderContent(orderContent);
     }
 

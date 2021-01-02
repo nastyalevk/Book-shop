@@ -14,12 +14,12 @@ public class AssortmentId implements Serializable {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-
     @ManyToOne
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
-    public AssortmentId() {}
+    public AssortmentId() {
+    }
 
     public AssortmentId(Book book, Shop shop) {
         this.book = book;

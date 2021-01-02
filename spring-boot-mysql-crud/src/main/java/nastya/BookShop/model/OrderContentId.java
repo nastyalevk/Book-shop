@@ -19,7 +19,6 @@ public class OrderContentId implements Serializable {
     private Book book;
 
     public OrderContentId() {
-
     }
 
     public OrderContentId(Order order, Book book) {

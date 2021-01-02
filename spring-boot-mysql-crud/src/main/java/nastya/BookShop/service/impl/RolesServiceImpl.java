@@ -18,12 +18,12 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public void saveRole(Role role){
+    public void saveRole(Role role) {
         rolesRepository.save(role);
     }
 
     @Override
-    public List<Role> findAll(){
+    public List<Role> findAll() {
         return rolesRepository.findAll();
     }
 
