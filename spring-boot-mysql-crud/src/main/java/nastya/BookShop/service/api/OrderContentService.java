@@ -1,19 +1,20 @@
 package nastya.BookShop.service.api;
 
+import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.model.OrderContent;
 
 import java.util.List;
 
 public interface OrderContentService {
 
-    List<OrderContent> findAll();
+    List<OrderContentDto> findAll();
 
-    List<OrderContent> getShopOrderContent(Integer id);
+    List<OrderContentDto> getShopOrderContent(Integer id);
 
-    List<OrderContent> getUserOrderContent(Integer id);
+    List<OrderContentDto> getUserOrderContent(Integer id);
 
-    void saveOrderContent(OrderContent orderContent);
+    OrderContent saveOrderContent(OrderContentDto orderContent);
 
-    OrderContent getOne(Integer id);
+    OrderContentDto getOne(Integer id);
 
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     List<Shop> findAllByUserId(Integer id);
+
+    Shop getShopById(Integer id);
 }

@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.model.Book;
 import nastya.BookShop.service.api.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<Book> findAll() {
+    public List<BookDto> findAll() {
         return bookService.findAll();
     }
 
     @PostMapping(path = "/book-create")
-    public void createBook(@RequestBody Book book) {
-        bookService.saveBook(book);
+    public void createBook(@RequestBody BookDto bookDto) {
+        bookService.saveBook(bookDto);
     }
 
     @GetMapping("/book-delete/{id}")
@@ -38,12 +39,12 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public Book getBook(@PathVariable("id") Integer id) {
+    public BookDto getBook(@PathVariable("id") Integer id) {
         return bookService.findById(id);
     }
 
     @PostMapping("/book-update")
-    public void updateBook(@RequestBody Book book) {
-        bookService.saveBook(book);
+    public void updateBook(@RequestBody BookDto bookDto) {
+        bookService.saveBook(bookDto);
     }
 }

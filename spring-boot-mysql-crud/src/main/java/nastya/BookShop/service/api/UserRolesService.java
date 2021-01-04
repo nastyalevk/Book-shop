@@ -1,14 +1,14 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.model.UserRoles;
+import nastya.BookShop.dto.userRoles.UserRolesDto;
 
 import java.util.List;
 
 public interface UserRolesService {
 
-    void saveUserRole(UserRoles userRoles);
+    void saveUserRole(UserRolesDto userRoles);
 
-    List<UserRoles> findAll();
+    List<UserRolesDto> findAll();
 
-    UserRoles findById(Integer id);
+    UserRolesDto findById(Integer id);
 }

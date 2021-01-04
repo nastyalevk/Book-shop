@@ -1,16 +1,18 @@
 package nastya.BookShop.service.api;
 
+import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.model.Book;
 
 import java.util.List;
 
 public interface BookService {
 
-    Book findById(Integer id);
+    BookDto findById(Integer id);
 
-    List<Book> findAll();
+    List<BookDto> findAll();
 
-    Book saveBook(Book book);
+    Book saveBook(BookDto book);
 
     void deleteById(Integer id);
+
 }

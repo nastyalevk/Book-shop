@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.model.OrderContent;
 import nastya.BookShop.service.api.OrderContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +24,28 @@ public class OrderContentController {
     }
 
     @GetMapping("/order-content")
-    public List<OrderContent> findAll() {
+    public List<OrderContentDto> findAll() {
         return orderContentService.findAll();
     }
 
     @GetMapping("/order-content-user/{id}")
-    public List<OrderContent> getUserOrderContent(@PathVariable("id") Integer id) {
+    public List<OrderContentDto> getUserOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getUserOrderContent(id);
     }
 
     @GetMapping("/order-content-shop/{id}")
-    public List<OrderContent> getShopOrderContent(@PathVariable("id") Integer id) {
+    public List<OrderContentDto> getShopOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getShopOrderContent(id);
     }
 
     @GetMapping("/order-content/{id}")
-    public OrderContent getOrderContent(@PathVariable("id") Integer id) {
+    public OrderContentDto getOrderContent(@PathVariable("id") Integer id) {
         return orderContentService.getOne(id);
     }
 
     @PostMapping("/add-content")
-    public void saveContent(@RequestBody OrderContent orderContent) {
-        orderContentService.saveOrderContent(orderContent);
+    public void saveContent(@RequestBody OrderContentDto orderContentDto) {
+        orderContentService.saveOrderContent(orderContentDto);
     }
 
 }

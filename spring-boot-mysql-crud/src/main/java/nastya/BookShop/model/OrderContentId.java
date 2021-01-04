@@ -1,5 +1,10 @@
 package nastya.BookShop.model;
 
+import nastya.BookShop.repository.BookRepository;
+import nastya.BookShop.repository.OrderRepository;
+import nastya.BookShop.service.api.BookService;
+import nastya.BookShop.service.api.OrderService;
+
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

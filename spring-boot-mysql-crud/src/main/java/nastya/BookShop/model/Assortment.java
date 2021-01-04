@@ -18,9 +18,9 @@ import java.util.Date;
 public class Assortment {
     @EmbeddedId
     private AssortmentId assortmentId;
-    private String quantity;
+    private Integer quantity;
     @Column(name = "price_per_item")
-    private String Price;
+    private Integer Price;
     @Column(name = "creation_date")
     private Date creationDate;
 
@@ -31,7 +31,7 @@ public class Assortment {
     public Assortment() {
     }
 
-    public Assortment(AssortmentId assortmentId, String quantity, String price, Date creationDate, Classification classification) {
+    public Assortment(AssortmentId assortmentId, Integer quantity, Integer price, Date creationDate, Classification classification) {
         this.assortmentId = assortmentId;
         this.quantity = quantity;
         Price = price;

@@ -1,14 +1,14 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.model.User;
+import nastya.BookShop.dto.user.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    User findById(Integer id);
+    UserDto findById(Integer id);
 
-    List<User> findAll();
+    List<UserDto> findAll();
 
-    void saveUser(User user);
+    void saveUser(UserDto user);
 }

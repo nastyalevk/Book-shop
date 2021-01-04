@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.Assortment.AssortmentDto;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.service.api.AssortmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AssortmentController {
     }
 
     @GetMapping("/shop-assortment/{id}")
-    public List<Assortment> getAssortmentByShop(@PathVariable("id") Integer id) {
+    public List<AssortmentDto> getAssortmentByShop(@PathVariable("id") Integer id) {
         return assortmentService.getAssortmentByShop(id);
     }
 }

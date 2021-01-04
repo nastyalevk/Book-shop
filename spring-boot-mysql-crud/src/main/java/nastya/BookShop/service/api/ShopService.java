@@ -1,12 +1,12 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.model.Shop;
+import nastya.BookShop.dto.shop.ShopDto;
 
 import java.util.List;
 
 public interface ShopService {
 
-    void addShop(Shop shop);
+    void saveShop(ShopDto shopDto);
 
-    List<Shop> userShops(Integer id);
+    List<ShopDto> userShops(Integer id);
 }

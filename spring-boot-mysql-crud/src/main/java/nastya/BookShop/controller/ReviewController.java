@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.review.ReviewDto;
 import nastya.BookShop.model.Review;
 import nastya.BookShop.service.api.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,23 +24,23 @@ public class ReviewController {
     }
 
     @GetMapping("/user-review/{id}")
-    public List<Review> getUserReview(@PathVariable("id") Integer id) {
+    public List<ReviewDto> getUserReview(@PathVariable("id") Integer id) {
         return reviewService.getUserReview(id);
     }
 
     @GetMapping("/shop-review/{id}")
-    public List<Review> getShopReview(@PathVariable("id") Integer id) {
+    public List<ReviewDto> getShopReview(@PathVariable("id") Integer id) {
         return reviewService.getShopReview(id);
     }
 
     @GetMapping("/reviews")
-    public List<Review> findAll() {
+    public List<ReviewDto> findAll() {
         return reviewService.findAll();
     }
 
     @PostMapping("/add-review")
-    public void createReview(@RequestBody Review review) {
-        reviewService.saveReview(review);
+    public void createReview(@RequestBody ReviewDto reviewDto) {
+        reviewService.saveReview(reviewDto);
     }
 
 }

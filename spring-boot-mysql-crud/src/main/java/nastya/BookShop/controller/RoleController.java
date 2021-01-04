@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.model.Role;
 import nastya.BookShop.service.api.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class RoleController {
     }
 
     @GetMapping("/roles")
-    public List<Role> findAll() {
+    public List<RoleDto> findAll() {
         return roleService.findAll();
     }
 
     @PostMapping("/save-user")
-    public void saveRole(@RequestBody Role role) {
-        roleService.saveRole(role);
+    public void saveRole(@RequestBody RoleDto roleDto) {
+        roleService.saveRole(roleDto);
     }
 
 }

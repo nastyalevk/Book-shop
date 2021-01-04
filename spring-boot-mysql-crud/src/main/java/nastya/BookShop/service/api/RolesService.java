@@ -1,12 +1,12 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.model.Role;
+import nastya.BookShop.dto.role.RoleDto;
 
 import java.util.List;
 
 public interface RolesService {
 
-    void saveRole(Role role);
+    void saveRole(RoleDto role);
 
-    List<Role> findAll();
+    List<RoleDto> findAll();
 }

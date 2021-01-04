@@ -50,6 +50,7 @@ public class Classification {
     @JoinColumn(name = "parent_id", nullable = false)
     private Classification classification;
 
+    @Column(name = "name")
     private String name;
 
     public Classification() {

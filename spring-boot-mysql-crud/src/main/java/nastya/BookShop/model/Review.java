@@ -27,7 +27,7 @@ public class Review {
     private User user;
 
     private String comment;
-    private String rating;
+    private Integer rating;
 
     @ManyToOne
     @JoinColumn(name = "shop_id", nullable = false)

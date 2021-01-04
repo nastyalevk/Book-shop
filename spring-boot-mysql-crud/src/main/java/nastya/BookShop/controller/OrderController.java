@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.service.api.OrderService;
 import nastya.BookShop.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +24,22 @@ public class OrderController {
     }
 
     @GetMapping("/client-orders/{id}")
-    public List<Order> getOrdersByClient(@PathVariable("id") Integer id){
+    public List<OrderDto> getOrdersByClient(@PathVariable("id") Integer id){
         return orderService.findByClientId(id);
     }
 
     @GetMapping("/order/{id}")
-    public Order getOrder(@PathVariable("id") Integer id){
+    public OrderDto getOrder(@PathVariable("id") Integer id){
         return orderService.findById(id);
     }
 
     @GetMapping("/orders")
-    public List<Order> findAll(){
+    public List<OrderDto> findAll(){
         return orderService.findAll();
     }
 
     @PostMapping("/new-order")
-    public void createOrder(@RequestBody Order order) {
-        orderService.saveOrder(order);
+    public void createOrder(@RequestBody OrderDto orderDto) {
+        orderService.saveOrder(orderDto);
     }
 }

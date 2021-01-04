@@ -1,10 +1,10 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.model.Assortment;
+import nastya.BookShop.dto.Assortment.AssortmentDto;
 
 import java.util.List;
 
 public interface AssortmentService {
 
-    List<Assortment> getAssortmentByShop(Integer id);
+    List<AssortmentDto> getAssortmentByShop(Integer id);
 }

@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.user.UserDto;
 import nastya.BookShop.model.User;
 import nastya.BookShop.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +24,22 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> findAll() {
+    public List<UserDto> findAll() {
         return userService.findAll();
     }
 
     @PostMapping(path = "/user-create")
-    public void createUser(@RequestBody User user) {
-        userService.saveUser(user);
+    public void createUser(@RequestBody UserDto userDto) {
+        userService.saveUser(userDto);
     }
 
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable("id") Integer id) {
+    public UserDto getUser(@PathVariable("id") Integer id) {
         return userService.findById(id);
     }
 
     @PostMapping("/user-update")
-    public void updateBook(@RequestBody User user) {
-        userService.saveUser(user);
+    public void updateBook(@RequestBody UserDto userDto) {
+        userService.saveUser(userDto);
     }
 }
