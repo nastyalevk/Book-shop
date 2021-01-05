@@ -38,6 +38,4 @@ public class Assortment {
         this.creationDate = creationDate;
         this.classification = classification;
     }
-
-
 }

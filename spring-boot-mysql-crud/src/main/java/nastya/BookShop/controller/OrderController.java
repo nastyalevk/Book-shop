@@ -40,7 +40,7 @@ public class OrderController {
 
     @GetMapping("/orders")
     public ResponseEntity findAll() {
-        List<OrderDto> orderDto =  orderService.findAll();
+        List<OrderDto> orderDto = orderService.findAll();
         if (orderDto.isEmpty()) {
             return new ResponseEntity("This client has no orders", HttpStatus.NOT_FOUND);
         }

@@ -27,7 +27,7 @@ public class BookController {
     @GetMapping("/books")
     public ResponseEntity findAll() {
         List<BookDto> bookDto = bookService.findAll();
-        if(bookDto.isEmpty()){
+        if (bookDto.isEmpty()) {
             return new ResponseEntity("No books found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(bookDto, HttpStatus.OK);

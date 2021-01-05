@@ -18,6 +18,7 @@ public class OrderContentServiceImpl implements OrderContentService {
     private final OrderContentRepository orderContentRepository;
     private final BookRepository bookRepository;
     private final OrderRepository orderRepository;
+
     @Autowired
     public OrderContentServiceImpl(OrderContentRepository orderContentRepository, BookRepository bookRepository, OrderRepository orderRepository) {
         this.orderContentRepository = orderContentRepository;
@@ -29,7 +30,7 @@ public class OrderContentServiceImpl implements OrderContentService {
     public List<OrderContentDto> findAll() {
         List<OrderContent> orderContents = orderContentRepository.findAll();
         List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for(OrderContent i: orderContents){
+        for (OrderContent i : orderContents) {
             orderContentDtos.add(transfer(i));
         }
         return orderContentDtos;
@@ -39,7 +40,7 @@ public class OrderContentServiceImpl implements OrderContentService {
     public List<OrderContentDto> getShopOrderContent(Integer id) {
         List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrderShopId(id);
         List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for(OrderContent i: orderContents){
+        for (OrderContent i : orderContents) {
             orderContentDtos.add(transfer(i));
         }
         return orderContentDtos;
@@ -49,7 +50,7 @@ public class OrderContentServiceImpl implements OrderContentService {
     public List<OrderContentDto> getUserOrderContent(Integer id) {
         List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrderUserId(id);
         List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for(OrderContent i: orderContents){
+        for (OrderContent i : orderContents) {
             orderContentDtos.add(transfer(i));
         }
         return orderContentDtos;
@@ -67,7 +68,7 @@ public class OrderContentServiceImpl implements OrderContentService {
         return transfer(orderContentRepository.getOne(id));
     }
 
-    private OrderContentDto transfer(OrderContent orderContent){
+    private OrderContentDto transfer(OrderContent orderContent) {
         OrderContentDto orderContentDto = new OrderContentDto();
         orderContentDto.setOrderId(orderContent.getOrderContentId().getOrder().getId());
         orderContentDto.setBookId(orderContent.getOrderContentId().getBook().getId());
@@ -76,7 +77,7 @@ public class OrderContentServiceImpl implements OrderContentService {
         return orderContentDto;
     }
 
-    private OrderContent transfer(OrderContentDto orderContentDto){
+    private OrderContent transfer(OrderContentDto orderContentDto) {
         OrderContent orderContent = new OrderContent();
         orderContent.setOrderContentId(new OrderContentId(orderRepository.getOne(orderContentDto.getOrderId()),
                 bookRepository.getOne(orderContentDto.getBookId())));

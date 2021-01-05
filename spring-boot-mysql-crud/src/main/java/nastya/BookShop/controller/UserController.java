@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity findAll() {
         List<UserDto> userDto = userService.findAll();
-        if(userDto.isEmpty()){
+        if (userDto.isEmpty()) {
             return new ResponseEntity("Users dont exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(userDto, HttpStatus.OK);

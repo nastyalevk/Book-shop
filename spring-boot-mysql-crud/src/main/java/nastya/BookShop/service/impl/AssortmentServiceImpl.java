@@ -24,13 +24,13 @@ public class AssortmentServiceImpl implements AssortmentService {
     public List<AssortmentDto> getAssortmentByShop(Integer id) {
         List<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(id);
         List<AssortmentDto> assortmentDtos = new ArrayList<>();
-        for(Assortment i: assortments){
+        for (Assortment i : assortments) {
             assortmentDtos.add(transfer(i));
         }
         return assortmentDtos;
     }
 
-    private AssortmentDto transfer (Assortment assortment){
+    private AssortmentDto transfer(Assortment assortment) {
         AssortmentDto assortmentDto = new AssortmentDto();
         assortmentDto.setBookId(assortment.getAssortmentId().getBook().getId());
         assortmentDto.setShopId(assortment.getAssortmentId().getShop().getId());

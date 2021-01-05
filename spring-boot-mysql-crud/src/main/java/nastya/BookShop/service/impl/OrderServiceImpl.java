@@ -1,7 +1,6 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.order.OrderDto;
-import nastya.BookShop.model.Classification;
 import nastya.BookShop.model.Order;
 import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.OrderRepository;
@@ -33,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> findByClientId(Integer id) {
         List<Order> orders = orderRepository.findAllByUserId(id);
         List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i: orders){
+        for (Order i : orders) {
             orderDtos.add(transfer(i));
         }
         return orderDtos;
@@ -48,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> findAll() {
         List<Order> orders = orderRepository.findAll();
         List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i: orders){
+        for (Order i : orders) {
             orderDtos.add(transfer(i));
         }
         return orderDtos;

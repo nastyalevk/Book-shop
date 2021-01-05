@@ -27,7 +27,7 @@ public class OrderContentController {
     @GetMapping("/order-content")
     public ResponseEntity findAll() {
         List<OrderContentDto> orderContentDto = orderContentService.findAll();
-        if(orderContentDto.isEmpty()){
+        if (orderContentDto.isEmpty()) {
             return new ResponseEntity("No order content found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(orderContentDto, HttpStatus.OK);
@@ -40,8 +40,8 @@ public class OrderContentController {
 
     @GetMapping("/order-content-shop/{id}")
     public ResponseEntity getShopOrderContent(@PathVariable("id") Integer id) {
-        List<OrderContentDto> orderContentDto =  orderContentService.getShopOrderContent(id);
-        if(orderContentDto.isEmpty()){
+        List<OrderContentDto> orderContentDto = orderContentService.getShopOrderContent(id);
+        if (orderContentDto.isEmpty()) {
             return new ResponseEntity("No order content found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(orderContentDto, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class OrderContentController {
 
     @GetMapping("/order-content/{id}")
     public ResponseEntity getOrderContent(@PathVariable("id") Integer id) {
-        return new ResponseEntity( orderContentService.getOne(id), HttpStatus.OK);
+        return new ResponseEntity(orderContentService.getOne(id), HttpStatus.OK);
     }
 
     @PostMapping("/add-content")

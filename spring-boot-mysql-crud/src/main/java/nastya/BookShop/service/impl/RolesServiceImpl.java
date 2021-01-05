@@ -28,17 +28,17 @@ public class RolesServiceImpl implements RolesService {
     public List<RoleDto> findAll() {
         List<Role> roles = rolesRepository.findAll();
         List<RoleDto> roleDtos = new ArrayList<>();
-        for (Role i: roles){
+        for (Role i : roles) {
             roleDtos.add(transfer(i));
         }
         return roleDtos;
     }
 
-    private RoleDto transfer(Role role){
+    private RoleDto transfer(Role role) {
         return new RoleDto(role.getId(), role.getRoleName());
     }
 
-    private Role transfer(RoleDto roleDto){
+    private Role transfer(RoleDto roleDto) {
         return new Role(roleDto.getId(), roleDto.getRoleName());
     }
 

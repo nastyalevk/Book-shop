@@ -29,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> getUserReview(Integer id) {
         List<Review> reviews = reviewRepository.findAllByUserId(id);
         List<ReviewDto> reviewDtos = new ArrayList<>();
-        for(Review i: reviews){
+        for (Review i : reviews) {
             reviewDtos.add(transfer(i));
         }
         return reviewDtos;
@@ -39,7 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> getShopReview(Integer id) {
         List<Review> reviews = reviewRepository.findAllByShopId(id);
         List<ReviewDto> reviewDtos = new ArrayList<>();
-        for(Review i: reviews){
+        for (Review i : reviews) {
             reviewDtos.add(transfer(i));
         }
         return reviewDtos;
@@ -49,7 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> findAll() {
         List<Review> reviews = reviewRepository.findAll();
         List<ReviewDto> reviewDtos = new ArrayList<>();
-        for(Review i: reviews){
+        for (Review i : reviews) {
             reviewDtos.add(transfer(i));
         }
         return reviewDtos;
@@ -60,7 +60,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(transfer(reviewDto));
     }
 
-    private ReviewDto transfer(Review review){
+    private ReviewDto transfer(Review review) {
         ReviewDto reviewDto = new ReviewDto();
         reviewDto.setId(review.getId());
         reviewDto.setUserId(review.getUser().getId());
@@ -70,7 +70,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDto;
     }
 
-    private Review transfer(ReviewDto reviewDto){
+    private Review transfer(ReviewDto reviewDto) {
         Review review = new Review();
         review.setId(reviewDto.getId());
         review.setUser(userRepository.getOne(reviewDto.getUserId()));

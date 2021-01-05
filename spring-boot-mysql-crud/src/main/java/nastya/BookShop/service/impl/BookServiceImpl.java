@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDto> findAll() {
         List<Book> books = bookRepository.findAll();
         List<BookDto> bookDtos = new ArrayList<BookDto>();
-        for(Book i: books){
+        for (Book i : books) {
             bookDtos.add(transfer(i));
         }
         return bookDtos;
@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-    private BookDto transfer(Book book){
+    private BookDto transfer(Book book) {
         BookDto bookDto = new BookDto();
         bookDto.setId(book.getId());
         bookDto.setBookName(book.getBookName());
@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
         return bookDto;
     }
 
-    private Book transfer(BookDto bookDto){
+    private Book transfer(BookDto bookDto) {
         Book book = new Book();
         book.setId(bookDto.getId());
         book.setBookName(bookDto.getBookName());

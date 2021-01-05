@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
         List<UserDto> userDtos = new ArrayList<>();
-        for(User i: users){
+        for (User i : users) {
             userDtos.add(transfer(i));
         }
         return userDtos;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(transfer(userDto));
     }
 
-    private UserDto transfer(User user){
+    private UserDto transfer(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUserName(user.getUserName());
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private User transfer(UserDto userDto){
+    private User transfer(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setUserName(userDto.getUserName());

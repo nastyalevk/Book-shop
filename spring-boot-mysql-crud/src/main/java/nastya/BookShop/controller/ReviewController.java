@@ -27,7 +27,7 @@ public class ReviewController {
     @GetMapping("/user-review/{id}")
     public ResponseEntity getUserReview(@PathVariable("id") Integer id) {
         List<ReviewDto> reviewDto = reviewService.getUserReview(id);
-        if(reviewDto.isEmpty()){
+        if (reviewDto.isEmpty()) {
             return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(reviewDto, HttpStatus.OK);
@@ -36,7 +36,7 @@ public class ReviewController {
     @GetMapping("/shop-review/{id}")
     public ResponseEntity getShopReview(@PathVariable("id") Integer id) {
         List<ReviewDto> reviewDto = reviewService.getShopReview(id);
-        if(reviewDto.isEmpty()){
+        if (reviewDto.isEmpty()) {
             return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(reviewDto, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class ReviewController {
     @GetMapping("/reviews")
     public ResponseEntity findAll() {
         List<ReviewDto> reviewDto = reviewService.findAll();
-        if(reviewDto.isEmpty()){
+        if (reviewDto.isEmpty()) {
             return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(reviewDto, HttpStatus.OK);

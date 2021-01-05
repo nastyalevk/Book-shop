@@ -34,13 +34,13 @@ public class ShopServiceImpl implements ShopService {
     public List<ShopDto> userShops(Integer id) {
         List<Shop> shops = shopRepository.findAllByUserId(id);
         List<ShopDto> shopDtos = new ArrayList<>();
-        for(Shop i: shops){
+        for (Shop i : shops) {
             shopDtos.add(transfer(i));
         }
         return shopDtos;
     }
 
-    private ShopDto transfer(Shop shop){
+    private ShopDto transfer(Shop shop) {
         ShopDto shopDto = new ShopDto();
         shopDto.setId(shop.getId());
         shopDto.setShopName(shop.getShopName());
@@ -54,7 +54,7 @@ public class ShopServiceImpl implements ShopService {
         return shopDto;
     }
 
-    private Shop transfer(ShopDto shopDto){
+    private Shop transfer(ShopDto shopDto) {
         Shop shop = new Shop();
         shop.setId(shopDto.getId());
         shop.setShopName(shopDto.getShopName());

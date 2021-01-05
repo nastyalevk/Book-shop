@@ -26,7 +26,7 @@ public class UserRolesController {
     @GetMapping("/user-roles")
     public ResponseEntity findAll() {
         List<UserRolesDto> userRolesDto = userRolesService.findAll();
-        if(userRolesDto.isEmpty()){
+        if (userRolesDto.isEmpty()) {
             return new ResponseEntity("Users have no roles", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(userRolesDto, HttpStatus.OK);

@@ -26,7 +26,7 @@ public class RoleController {
     @GetMapping("/roles")
     public ResponseEntity findAll() {
         List<RoleDto> roleDto = roleService.findAll();
-        if(roleDto.isEmpty()){
+        if (roleDto.isEmpty()) {
             return new ResponseEntity("Roles dont exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(roleDto, HttpStatus.OK);
