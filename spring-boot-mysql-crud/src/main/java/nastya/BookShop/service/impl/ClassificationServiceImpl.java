@@ -13,4 +13,9 @@ public class ClassificationServiceImpl implements ClassificationService {
     public ClassificationServiceImpl(ClassificationRepository classificationRepository) {
         this.classificationRepository = classificationRepository;
     }
+
+    @Override
+    public String getClassificationById(Integer id) {
+        return classificationRepository.getClassificationById(id).getName();
+    }
 }
