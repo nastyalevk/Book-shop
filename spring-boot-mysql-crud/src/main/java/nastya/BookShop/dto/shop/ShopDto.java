@@ -16,7 +16,8 @@ public class ShopDto{
     private String classificationStatus;
     private Integer userId;
 
-    public ShopDto(Integer id, String shopName, String country, String city, String address, String description, Integer classificationId, String classificationStatus, Integer userId) {
+    public ShopDto(Integer id, String shopName, String country, String city, String address,
+                   String description, Integer classificationId, String classificationStatus, Integer userId) {
         this.id = id;
         this.shopName = shopName;
         this.country = country;

@@ -16,7 +16,8 @@ public class AssortmentDto {
     private Integer classificationId;
     private String classificationStatus;
 
-    public AssortmentDto(Integer bookId, Integer shopId, Integer quantity, Integer price, Date creationDate, Integer classificationId, String classificationStatus) {
+    public AssortmentDto(Integer bookId, Integer shopId, Integer quantity, Integer price,
+                         Date creationDate, Integer classificationId, String classificationStatus) {
         this.bookId = bookId;
         this.shopId = shopId;
         this.quantity = quantity;

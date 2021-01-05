@@ -21,7 +21,9 @@ public class OrderDto {
     private Date orderCompleteDate;
     private Integer userId;
 
-    public OrderDto(Integer id, Integer orderNumber, Integer shopId, Integer cost, String deliveryAddress, String description, Date orderSubmitDate, Integer classificationId, String classificationStatus, Date orderCompleteDate, Integer userId) {
+    public OrderDto(Integer id, Integer orderNumber, Integer shopId, Integer cost, String deliveryAddress,
+                    String description, Date orderSubmitDate, Integer classificationId, String classificationStatus,
+                    Date orderCompleteDate, Integer userId) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.shopId = shopId;

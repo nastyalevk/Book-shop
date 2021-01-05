@@ -25,16 +25,20 @@ public class AssortmentServiceImpl implements AssortmentService {
         List<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(id);
         List<AssortmentDto> assortmentDtos = new ArrayList<>();
         for(Assortment i: assortments){
-            AssortmentDto assortmentDto = new AssortmentDto();
-            assortmentDto.setBookId(i.getAssortmentId().getBook().getId());
-            assortmentDto.setShopId(i.getAssortmentId().getShop().getId());
-            assortmentDto.setQuantity(i.getQuantity());
-            assortmentDto.setPrice(i.getPrice());
-            assortmentDto.setCreationDate(i.getCreationDate());
-            assortmentDto.setClassificationStatus(i.getClassification().getName());
-            assortmentDto.setClassificationId(i.getClassification().getId());
-            assortmentDtos.add(assortmentDto);
+            assortmentDtos.add(transfer(i));
         }
         return assortmentDtos;
+    }
+
+    private AssortmentDto transfer (Assortment assortment){
+        AssortmentDto assortmentDto = new AssortmentDto();
+        assortmentDto.setBookId(assortment.getAssortmentId().getBook().getId());
+        assortmentDto.setShopId(assortment.getAssortmentId().getShop().getId());
+        assortmentDto.setQuantity(assortment.getQuantity());
+        assortmentDto.setPrice(assortment.getPrice());
+        assortmentDto.setCreationDate(assortment.getCreationDate());
+        assortmentDto.setClassificationStatus(assortment.getClassification().getName());
+        assortmentDto.setClassificationId(assortment.getClassification().getId());
+        return assortmentDto;
     }
 }

@@ -1,9 +1,10 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.Assortment.AssortmentDto;
-import nastya.BookShop.model.Assortment;
 import nastya.BookShop.service.api.AssortmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,11 @@ public class AssortmentController {
     }
 
     @GetMapping("/shop-assortment/{id}")
-    public List<AssortmentDto> getAssortmentByShop(@PathVariable("id") Integer id) {
-        return assortmentService.getAssortmentByShop(id);
+    public ResponseEntity getAssortmentByShop(@PathVariable("id") Integer id) {
+        List<AssortmentDto> assortmentDto = assortmentService.getAssortmentByShop(id);
+        if(assortmentDto.isEmpty()){
+            return new ResponseEntity("This shop dont have assortment", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(assortmentDto, HttpStatus.OK);
     }
 }

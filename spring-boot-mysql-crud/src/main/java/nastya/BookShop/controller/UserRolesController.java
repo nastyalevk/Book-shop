@@ -1,9 +1,10 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.userRoles.UserRolesDto;
-import nastya.BookShop.model.UserRoles;
 import nastya.BookShop.service.api.UserRolesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +24,17 @@ public class UserRolesController {
     }
 
     @GetMapping("/user-roles")
-    public List<UserRolesDto> findAll() {
-        return userRolesService.findAll();
+    public ResponseEntity findAll() {
+        List<UserRolesDto> userRolesDto = userRolesService.findAll();
+        if(userRolesDto.isEmpty()){
+            return new ResponseEntity("Users have no roles", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(userRolesDto, HttpStatus.OK);
     }
 
     @PostMapping("/set-role")
-    public void setRole(@RequestBody UserRolesDto userRolesDto) {
+    public ResponseEntity setRole(@RequestBody UserRolesDto userRolesDto) {
         userRolesService.saveUserRole(userRolesDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

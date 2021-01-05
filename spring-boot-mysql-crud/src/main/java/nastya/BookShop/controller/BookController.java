@@ -1,9 +1,10 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.book.BookDto;
-import nastya.BookShop.model.Book;
 import nastya.BookShop.service.api.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,27 +25,34 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<BookDto> findAll() {
-        return bookService.findAll();
+    public ResponseEntity findAll() {
+        List<BookDto> bookDto = bookService.findAll();
+        if(bookDto.isEmpty()){
+            return new ResponseEntity("No books found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(bookDto, HttpStatus.OK);
     }
 
     @PostMapping(path = "/book-create")
-    public void createBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity createBook(@RequestBody BookDto bookDto) {
         bookService.saveBook(bookDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/book-delete/{id}")
-    public void deleteBook(@PathVariable("id") Integer id) {
+    public ResponseEntity deleteBook(@PathVariable("id") Integer id) {
         bookService.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/book/{id}")
-    public BookDto getBook(@PathVariable("id") Integer id) {
-        return bookService.findById(id);
+    public ResponseEntity getBook(@PathVariable("id") Integer id) {
+        return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping("/book-update")
-    public void updateBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity updateBook(@RequestBody BookDto bookDto) {
         bookService.saveBook(bookDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

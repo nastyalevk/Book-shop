@@ -1,9 +1,10 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.user.UserDto;
-import nastya.BookShop.model.User;
 import nastya.BookShop.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,22 +25,28 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserDto> findAll() {
-        return userService.findAll();
+    public ResponseEntity findAll() {
+        List<UserDto> userDto = userService.findAll();
+        if(userDto.isEmpty()){
+            return new ResponseEntity("Users dont exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(userDto, HttpStatus.OK);
     }
 
     @PostMapping(path = "/user-create")
-    public void createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity createUser(@RequestBody UserDto userDto) {
         userService.saveUser(userDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
-    public UserDto getUser(@PathVariable("id") Integer id) {
-        return userService.findById(id);
+    public ResponseEntity getUser(@PathVariable("id") Integer id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping("/user-update")
-    public void updateBook(@RequestBody UserDto userDto) {
+    public ResponseEntity updateBook(@RequestBody UserDto userDto) {
         userService.saveUser(userDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

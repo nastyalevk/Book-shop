@@ -2,8 +2,9 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.service.api.OrderService;
-import nastya.BookShop.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,22 +25,31 @@ public class OrderController {
     }
 
     @GetMapping("/client-orders/{id}")
-    public List<OrderDto> getOrdersByClient(@PathVariable("id") Integer id){
-        return orderService.findByClientId(id);
+    public ResponseEntity getOrdersByClient(@PathVariable("id") Integer id) {
+        List<OrderDto> orderDto = orderService.findByClientId(id);
+        if (orderDto.isEmpty()) {
+            return new ResponseEntity("This client has no orders", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(orderDto, HttpStatus.OK);
     }
 
     @GetMapping("/order/{id}")
-    public OrderDto getOrder(@PathVariable("id") Integer id){
-        return orderService.findById(id);
+    public ResponseEntity getOrder(@PathVariable("id") Integer id) {
+        return new ResponseEntity(orderService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/orders")
-    public List<OrderDto> findAll(){
-        return orderService.findAll();
+    public ResponseEntity findAll() {
+        List<OrderDto> orderDto =  orderService.findAll();
+        if (orderDto.isEmpty()) {
+            return new ResponseEntity("This client has no orders", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(orderDto, HttpStatus.OK);
     }
 
     @PostMapping("/new-order")
-    public void createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity createOrder(@RequestBody OrderDto orderDto) {
         orderService.saveOrder(orderDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

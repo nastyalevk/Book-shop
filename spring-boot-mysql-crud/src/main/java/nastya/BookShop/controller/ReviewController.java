@@ -1,9 +1,10 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.review.ReviewDto;
-import nastya.BookShop.model.Review;
 import nastya.BookShop.service.api.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,23 +25,36 @@ public class ReviewController {
     }
 
     @GetMapping("/user-review/{id}")
-    public List<ReviewDto> getUserReview(@PathVariable("id") Integer id) {
-        return reviewService.getUserReview(id);
+    public ResponseEntity getUserReview(@PathVariable("id") Integer id) {
+        List<ReviewDto> reviewDto = reviewService.getUserReview(id);
+        if(reviewDto.isEmpty()){
+            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(reviewDto, HttpStatus.OK);
     }
 
     @GetMapping("/shop-review/{id}")
-    public List<ReviewDto> getShopReview(@PathVariable("id") Integer id) {
-        return reviewService.getShopReview(id);
+    public ResponseEntity getShopReview(@PathVariable("id") Integer id) {
+        List<ReviewDto> reviewDto = reviewService.getShopReview(id);
+        if(reviewDto.isEmpty()){
+            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(reviewDto, HttpStatus.OK);
     }
 
     @GetMapping("/reviews")
-    public List<ReviewDto> findAll() {
-        return reviewService.findAll();
+    public ResponseEntity findAll() {
+        List<ReviewDto> reviewDto = reviewService.findAll();
+        if(reviewDto.isEmpty()){
+            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(reviewDto, HttpStatus.OK);
     }
 
     @PostMapping("/add-review")
-    public void createReview(@RequestBody ReviewDto reviewDto) {
+    public ResponseEntity createReview(@RequestBody ReviewDto reviewDto) {
         reviewService.saveReview(reviewDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

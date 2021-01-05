@@ -14,7 +14,8 @@ public class BookDto {
     private Integer pages;
     private String description;
 
-    public BookDto(Integer id, String bookName, String author, String genre, Integer publicationYear, Integer pages, String description) {
+    public BookDto(Integer id, String bookName, String author, String genre, Integer publicationYear,
+                   Integer pages, String description) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
