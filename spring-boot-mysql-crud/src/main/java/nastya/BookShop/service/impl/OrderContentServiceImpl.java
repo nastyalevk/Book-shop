@@ -20,7 +20,8 @@ public class OrderContentServiceImpl implements OrderContentService {
     private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderContentServiceImpl(OrderContentRepository orderContentRepository, BookRepository bookRepository, OrderRepository orderRepository) {
+    public OrderContentServiceImpl(OrderContentRepository orderContentRepository, BookRepository bookRepository,
+                                   OrderRepository orderRepository) {
         this.orderContentRepository = orderContentRepository;
         this.bookRepository = bookRepository;
         this.orderRepository = orderRepository;
@@ -37,18 +38,8 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public List<OrderContentDto> getShopOrderContent(Integer id) {
-        List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrderShopId(id);
-        List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for (OrderContent i : orderContents) {
-            orderContentDtos.add(transfer(i));
-        }
-        return orderContentDtos;
-    }
-
-    @Override
-    public List<OrderContentDto> getUserOrderContent(Integer id) {
-        List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrderUserId(id);
+    public List<OrderContentDto> getOrderContent(Integer id) {
+        List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrder(id);
         List<OrderContentDto> orderContentDtos = new ArrayList<>();
         for (OrderContent i : orderContents) {
             orderContentDtos.add(transfer(i));
@@ -63,10 +54,6 @@ public class OrderContentServiceImpl implements OrderContentService {
         return orderContent;
     }
 
-    @Override
-    public OrderContentDto getOne(Integer id) {
-        return transfer(orderContentRepository.getOne(id));
-    }
 
     private OrderContentDto transfer(OrderContent orderContent) {
         OrderContentDto orderContentDto = new OrderContentDto();

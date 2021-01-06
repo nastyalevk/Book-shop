@@ -9,12 +9,8 @@ public interface OrderContentService {
 
     List<OrderContentDto> findAll();
 
-    List<OrderContentDto> getShopOrderContent(Integer id);
-
-    List<OrderContentDto> getUserOrderContent(Integer id);
+    List<OrderContentDto> getOrderContent(Integer orderId);
 
     OrderContent saveOrderContent(OrderContentDto orderContent);
-
-    OrderContentDto getOne(Integer id);
 
 }

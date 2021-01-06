@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface OrderContentRepository extends JpaRepository<OrderContent, Integer> {
 
-    List<OrderContent> findAllByOrderContentIdOrderShopId(Integer id);
-
-    List<OrderContent> findAllByOrderContentIdOrderUserId(Integer Id);
+    List<OrderContent> findAllByOrderContentIdOrder(Integer id);
 }
