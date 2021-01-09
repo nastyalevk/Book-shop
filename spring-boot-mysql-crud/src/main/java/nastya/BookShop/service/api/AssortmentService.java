@@ -7,4 +7,5 @@ import java.util.List;
 public interface AssortmentService {
 
     List<AssortmentDto> getAssortmentByShop(Integer id);
+
 }

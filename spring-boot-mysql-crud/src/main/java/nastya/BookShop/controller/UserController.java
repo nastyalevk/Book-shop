@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
+
     private final UserService userService;
 
     @Autowired
@@ -22,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity findAll() {
         List<UserDto> userDto = userService.findAll();
         if (userDto.isEmpty()) {
@@ -31,20 +34,35 @@ public class UserController {
         return new ResponseEntity(userDto, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/user-create")
+    @PostMapping(path = "/create")
     public ResponseEntity createUser(@RequestBody UserDto userDto) {
         userService.saveUser(userDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getUser(@PathVariable("id") Integer id) {
         return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/user-update")
-    public ResponseEntity updateBook(@RequestBody UserDto userDto) {
+    @PostMapping("/update")
+    public ResponseEntity updateUser(@RequestBody UserDto userDto) {
         userService.saveUser(userDto);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/find/username/{username}")
+    public ResponseEntity findByUserName(@PathVariable("username") String userName){
+        return new ResponseEntity(userService.findByUsername(userName), HttpStatus.OK);
+    }
+
+    @GetMapping("/exist/username/{username}")
+    public ResponseEntity existByUserName(@PathVariable("username") String username){
+        return new ResponseEntity(userService.existsByUsername(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/exist/email/{email}")
+    public ResponseEntity existByEmail(@PathVariable("email") String email){
+        return new ResponseEntity(userService.existsByEmail(email), HttpStatus.OK);
     }
 }

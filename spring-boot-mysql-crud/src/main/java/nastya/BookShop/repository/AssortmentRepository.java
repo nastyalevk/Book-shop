@@ -8,4 +8,5 @@ import java.util.List;
 public interface AssortmentRepository extends JpaRepository<Assortment, Integer> {
 
     List<Assortment> findAllByAssortmentIdShopId(Integer id);
+
 }

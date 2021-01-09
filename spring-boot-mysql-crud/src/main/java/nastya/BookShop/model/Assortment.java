@@ -1,6 +1,8 @@
 package nastya.BookShop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,7 +17,10 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "assortment")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Assortment {
+
     @EmbeddedId
     private AssortmentId assortmentId;
     private Integer quantity;
@@ -28,14 +33,4 @@ public class Assortment {
     @JoinColumn(name = "status", nullable = false)
     private Classification classification;
 
-    public Assortment() {
-    }
-
-    public Assortment(AssortmentId assortmentId, Integer quantity, Integer price, Date creationDate, Classification classification) {
-        this.assortmentId = assortmentId;
-        this.quantity = quantity;
-        Price = price;
-        this.creationDate = creationDate;
-        this.classification = classification;
-    }
 }

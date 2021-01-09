@@ -3,7 +3,9 @@ package nastya.BookShop.model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -21,6 +23,8 @@ import java.util.Set;
 @Table(name = "roles")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonSerialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -34,9 +38,6 @@ public class Role {
 
     @Column(name = "role_name")
     private String roleName;
-
-    public Role() {
-    }
 
     public Role(Integer id, String roleName) {
         this.id = id;

@@ -1,6 +1,8 @@
 package nastya.BookShop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.EmbeddedId;
@@ -12,14 +14,11 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "user_roles")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRoles implements Serializable {
+
     @EmbeddedId
     private UserRolesId userRolesId;
 
-    public UserRoles() {
-    }
-
-    public UserRoles(UserRolesId userRolesId) {
-        this.userRolesId = userRolesId;
-    }
 }

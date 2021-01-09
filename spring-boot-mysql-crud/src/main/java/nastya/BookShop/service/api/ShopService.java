@@ -9,4 +9,5 @@ public interface ShopService {
     void saveShop(ShopDto shopDto);
 
     List<ShopDto> userShops(Integer id);
+
 }

@@ -3,7 +3,9 @@ package nastya.BookShop.model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -24,6 +26,8 @@ import java.util.Set;
 @Table(name = "orders")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonSerialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -60,6 +64,4 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private User user;
 
-    public Order() {
-    }
 }

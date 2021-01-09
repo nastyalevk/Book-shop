@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+
     private final ShopRepository shopRepository;
     private final ClassificationRepository classificationRepository;
     private final UserRepository userRepository;

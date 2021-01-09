@@ -1,5 +1,6 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.role.ERole;
 import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.model.Role;
 import nastya.BookShop.repository.RolesRepository;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RolesServiceImpl implements RolesService {
+
     private final RolesRepository rolesRepository;
 
     @Autowired
@@ -34,12 +37,17 @@ public class RolesServiceImpl implements RolesService {
         return roleDtos;
     }
 
+    @Override
+    public Optional<Role> findByName(String name) {
+        return rolesRepository.findByRoleName(ERole.valueOf(name));
+    }
+
     private RoleDto transfer(Role role) {
         return new RoleDto(role.getId(), role.getRoleName());
     }
 
     private Role transfer(RoleDto roleDto) {
-        return new Role(roleDto.getId(), roleDto.getRoleName());
+        return new Role(roleDto.getId(), roleDto.getName().toString());
     }
 
 }

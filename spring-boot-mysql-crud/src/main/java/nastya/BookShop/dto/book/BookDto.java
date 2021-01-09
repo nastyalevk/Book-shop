@@ -1,11 +1,16 @@
 package nastya.BookShop.dto.book;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookDto {
+
     private Integer id;
     private String bookName;
     private String author;
@@ -14,17 +19,4 @@ public class BookDto {
     private Integer pages;
     private String description;
 
-    public BookDto(Integer id, String bookName, String author, String genre, Integer publicationYear,
-                   Integer pages, String description) {
-        this.id = id;
-        this.bookName = bookName;
-        this.author = author;
-        this.genre = genre;
-        this.publicationYear = publicationYear;
-        this.pages = pages;
-        this.description = description;
-    }
-
-    public BookDto() {
-    }
 }

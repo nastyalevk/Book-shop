@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/assortment")
 public class AssortmentController {
 
     private final AssortmentService assortmentService;
@@ -21,7 +23,7 @@ public class AssortmentController {
         this.assortmentService = assortmentService;
     }
 
-    @GetMapping("/shop-assortment/{id}")
+    @GetMapping("/shop/{id}")
     public ResponseEntity getAssortmentByShop(@PathVariable("id") Integer id) {
         List<AssortmentDto> assortmentDto = assortmentService.getAssortmentByShop(id);
         if(assortmentDto.isEmpty()){

@@ -3,7 +3,9 @@ package nastya.BookShop.model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -21,7 +23,10 @@ import java.util.Set;
 @Table(name = "book")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonSerialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id")
@@ -44,6 +49,4 @@ public class Book {
     private Integer pages;
     private String description;
 
-    public Book() {
-    }
 }

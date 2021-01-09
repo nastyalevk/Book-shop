@@ -1,25 +1,20 @@
 package nastya.BookShop.dto.review;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReviewDto {
+
     private Integer id;
     private Integer userId;
     private String comment;
     private Integer rating;
     private Integer shopId;
 
-    public ReviewDto(Integer id, Integer userId, String comment, Integer rating, Integer shopId) {
-        this.id = id;
-        this.userId = userId;
-        this.comment = comment;
-        this.rating = rating;
-        this.shopId = shopId;
-    }
-
-    public ReviewDto() {
-    }
 }

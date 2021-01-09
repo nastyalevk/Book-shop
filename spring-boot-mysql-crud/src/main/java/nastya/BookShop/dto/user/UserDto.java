@@ -1,25 +1,25 @@
 package nastya.BookShop.dto.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nastya.BookShop.dto.role.RoleDto;
+
+import java.util.Set;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
+
     private Integer id;
-    private String userName;
+    private String username;
     private String email;
     private String firstName;
     private String lastName;
+    private String password;
+    private Set<RoleDto> roles;
 
-    public UserDto(Integer id, String userName, String email, String firstName, String lastName) {
-        this.id = id;
-        this.userName = userName;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public UserDto() {
-    }
 }

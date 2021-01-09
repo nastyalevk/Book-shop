@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+
     private final ReviewRepository reviewRepository;
     private final ShopRepository shopRepository;
     private final UserRepository userRepository;

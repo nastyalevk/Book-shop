@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/order/content")
 public class OrderContentController {
+
     private final OrderContentService orderContentService;
 
     @Autowired
@@ -22,7 +25,7 @@ public class OrderContentController {
         this.orderContentService = orderContentService;
     }
 
-    @GetMapping("/order-content")
+    @GetMapping()
     public ResponseEntity findAll() {
         List<OrderContentDto> orderContentDto = orderContentService.findAll();
         if (orderContentDto.isEmpty()) {
@@ -31,12 +34,12 @@ public class OrderContentController {
         return new ResponseEntity(orderContentDto, HttpStatus.OK);
     }
 
-    @GetMapping("/order-content/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getOrderContent(@PathVariable("id") Integer id) {
         return new ResponseEntity(orderContentService.getOrderContent(id), HttpStatus.OK);
     }
 
-    @PostMapping("/add-content")
+    @PostMapping("/create")
     public ResponseEntity saveContent(@RequestBody OrderContentDto orderContentDto) {
         orderContentService.saveOrderContent(orderContentDto);
         return new ResponseEntity(HttpStatus.OK);

@@ -1,6 +1,8 @@
 package nastya.BookShop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -16,7 +18,10 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "review_rate")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "review_id")
@@ -33,6 +38,4 @@ public class Review {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
-    public Review() {
-    }
 }

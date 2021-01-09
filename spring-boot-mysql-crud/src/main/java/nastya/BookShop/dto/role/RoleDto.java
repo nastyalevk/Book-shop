@@ -1,20 +1,21 @@
 package nastya.BookShop.dto.role;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoleDto {
 
     private Integer id;
-    private String roleName;
+    private ERole name;
 
     public RoleDto(Integer id, String roleName) {
         this.id = id;
-        this.roleName = roleName;
-    }
-
-    public RoleDto() {
+        this.name = ERole.valueOf(roleName);
     }
 }

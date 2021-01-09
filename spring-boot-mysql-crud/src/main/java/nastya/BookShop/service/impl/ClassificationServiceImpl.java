@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClassificationServiceImpl implements ClassificationService {
+
     private final ClassificationRepository classificationRepository;
 
     @Autowired

@@ -3,7 +3,9 @@ package nastya.BookShop.model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -24,7 +26,10 @@ import java.util.Set;
 @Table(name = "classif")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonSerialize
+@AllArgsConstructor
+@NoArgsConstructor
 public class Classification {
+
     @Id
     @Column(name = "classif_id")
     private Integer id;
@@ -53,6 +58,4 @@ public class Classification {
     @Column(name = "name")
     private String name;
 
-    public Classification() {
-    }
 }

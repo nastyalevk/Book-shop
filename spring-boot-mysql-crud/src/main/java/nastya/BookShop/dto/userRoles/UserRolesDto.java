@@ -1,19 +1,17 @@
 package nastya.BookShop.dto.userRoles;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRolesDto {
-    private Integer userId;
+
+    private String username;
     private Integer roleId;
 
-    public UserRolesDto(Integer userId, Integer roleId) {
-        this.userId = userId;
-        this.roleId = roleId;
-    }
-
-    public UserRolesDto() {
-    }
 }

@@ -1,11 +1,16 @@
 package nastya.BookShop.dto.shop;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShopDto {
+
     private Integer id;
     private String shopName;
     private String country;
@@ -16,19 +21,4 @@ public class ShopDto {
     private String classificationStatus;
     private Integer userId;
 
-    public ShopDto(Integer id, String shopName, String country, String city, String address,
-                   String description, Integer classificationId, String classificationStatus, Integer userId) {
-        this.id = id;
-        this.shopName = shopName;
-        this.country = country;
-        this.city = city;
-        this.address = address;
-        this.description = description;
-        this.classificationId = classificationId;
-        this.classificationStatus = classificationStatus;
-        this.userId = userId;
-    }
-
-    public ShopDto() {
-    }
 }

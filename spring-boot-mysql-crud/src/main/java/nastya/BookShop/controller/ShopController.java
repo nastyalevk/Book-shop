@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/shop")
 public class ShopController {
+
     private final ShopService shopService;
 
     @Autowired
@@ -22,13 +25,13 @@ public class ShopController {
         this.shopService = shopService;
     }
 
-    @PostMapping(path = "/shop-create")
+    @PostMapping(path = "/create")
     public ResponseEntity createShop(@RequestBody ShopDto shopDto) {
         shopService.saveShop(shopDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/shops/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity findUserShops(@PathVariable("id") Integer id) {
         List<ShopDto> shopDto = shopService.userShops(id);
         if (shopDto.isEmpty()) {

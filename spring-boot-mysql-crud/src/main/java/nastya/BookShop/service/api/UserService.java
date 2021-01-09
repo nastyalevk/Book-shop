@@ -11,4 +11,11 @@ public interface UserService {
     List<UserDto> findAll();
 
     void saveUser(UserDto user);
+
+    UserDto findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
 }

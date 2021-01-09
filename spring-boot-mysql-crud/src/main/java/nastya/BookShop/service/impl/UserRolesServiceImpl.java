@@ -15,10 +15,10 @@ import java.util.List;
 
 @Service
 public class UserRolesServiceImpl implements UserRolesService {
+
     private final UserRolesRepository userRolesRepository;
     private final UserRepository userRepository;
     private final RolesRepository rolesRepository;
-
 
     @Autowired
     public UserRolesServiceImpl(UserRolesRepository userRolesRepository, UserRepository userRepository, RolesRepository rolesRepository) {
@@ -28,8 +28,8 @@ public class UserRolesServiceImpl implements UserRolesService {
     }
 
     @Override
-    public void saveUserRole(UserRolesDto userRolesDto) {
-        userRolesRepository.save(transfer(userRolesDto));
+    public UserRoles saveUserRole(UserRolesDto userRolesDto) {
+        return userRolesRepository.save(transfer(userRolesDto));
     }
 
     @Override
@@ -49,14 +49,15 @@ public class UserRolesServiceImpl implements UserRolesService {
 
     private UserRolesDto transfer(UserRoles userRoles) {
         UserRolesDto userRolesDto = new UserRolesDto();
-        userRolesDto.setUserId(userRoles.getUserRolesId().getUser().getId());
+        userRolesDto.setUsername(userRoles.getUserRolesId().getUser().getUsername());
         userRolesDto.setRoleId(userRoles.getUserRolesId().getRole().getId());
         return userRolesDto;
     }
 
     private UserRoles transfer(UserRolesDto userRolesDto) {
         UserRoles userRoles = new UserRoles();
-        userRoles.setUserRolesId(new UserRolesId(userRepository.getOne(userRolesDto.getUserId()),
+        System.out.println(userRolesDto.getUsername());
+        userRoles.setUserRolesId(new UserRolesId(userRepository.findByUsername(userRolesDto.getUsername()),
                 rolesRepository.getOne(userRolesDto.getRoleId())));
         return userRoles;
     }

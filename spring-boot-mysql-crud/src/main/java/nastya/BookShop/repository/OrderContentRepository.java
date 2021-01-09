@@ -8,4 +8,5 @@ import java.util.List;
 public interface OrderContentRepository extends JpaRepository<OrderContent, Integer> {
 
     List<OrderContent> findAllByOrderContentIdOrder(Integer id);
+
 }

@@ -6,14 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/role")
 public class RoleController {
+
     private final RolesService roleService;
 
     @Autowired
@@ -21,7 +25,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/roles")
+    @GetMapping()
     public ResponseEntity findAll() {
         List<RoleDto> roleDto = roleService.findAll();
         if (roleDto.isEmpty()) {
@@ -30,10 +34,16 @@ public class RoleController {
         return new ResponseEntity(roleDto, HttpStatus.OK);
     }
 
-    @PostMapping("/save-user")
+    @PostMapping("/create")
     public ResponseEntity saveRole(@RequestBody RoleDto roleDto) {
         roleService.saveRole(roleDto);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/{role}")
+    public ResponseEntity findByName(@PathVariable("role")String name){
+        return new ResponseEntity(roleService.findByName(name), HttpStatus.OK);
+    }
+
 
 }
