@@ -56,7 +56,6 @@ public class UserRolesServiceImpl implements UserRolesService {
 
     private UserRoles transfer(UserRolesDto userRolesDto) {
         UserRoles userRoles = new UserRoles();
-        System.out.println(userRolesDto.getUsername());
         userRoles.setUserRolesId(new UserRolesId(userRepository.findByUsername(userRolesDto.getUsername()),
                 rolesRepository.getOne(userRolesDto.getRoleId())));
         return userRoles;

@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService {
             rolesDto.add(roleDto);
         }
         userDto.setRoles(rolesDto);
+        userDto.setActivated(user.getActivated());
         return userDto;
     }
 
@@ -93,6 +94,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
+        user.setActivated(userDto.getActivated());
         return user;
     }
 }
