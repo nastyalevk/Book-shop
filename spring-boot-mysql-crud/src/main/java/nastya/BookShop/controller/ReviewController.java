@@ -2,6 +2,8 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.review.ReviewDto;
 import nastya.BookShop.service.api.ReviewService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private final ReviewService reviewService;
 
@@ -27,35 +29,43 @@ public class ReviewController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity getUserReview(@PathVariable("id") Integer id) {
-        List<ReviewDto> reviewDto = reviewService.getUserReview(id);
-        if (reviewDto.isEmpty()) {
-            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(reviewService.getUserReview(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Review error: {}", e.getMessage());
         }
-        return new ResponseEntity(reviewDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/shop/{id}")
     public ResponseEntity getShopReview(@PathVariable("id") Integer id) {
-        List<ReviewDto> reviewDto = reviewService.getShopReview(id);
-        if (reviewDto.isEmpty()) {
-            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(reviewService.getShopReview(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Review error: {}", e.getMessage());
         }
-        return new ResponseEntity(reviewDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping()
     public ResponseEntity findAll() {
-        List<ReviewDto> reviewDto = reviewService.findAll();
-        if (reviewDto.isEmpty()) {
-            return new ResponseEntity("This user has no reviews", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(reviewService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Review error: {}", e.getMessage());
         }
-        return new ResponseEntity(reviewDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
     public ResponseEntity createReview(@RequestBody ReviewDto reviewDto) {
-        reviewService.saveReview(reviewDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            reviewService.saveReview(reviewDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Review error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

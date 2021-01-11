@@ -2,6 +2,8 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.shop.ShopDto;
 import nastya.BookShop.service.api.ShopService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
+
     private final ShopService shopService;
 
     @Autowired
@@ -27,16 +31,24 @@ public class ShopController {
 
     @PostMapping(path = "/create")
     public ResponseEntity createShop(@RequestBody ShopDto shopDto) {
-        shopService.saveShop(shopDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            shopService.saveShop(shopDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Shop error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity findUserShops(@PathVariable("id") Integer id) {
-        List<ShopDto> shopDto = shopService.userShops(id);
-        if (shopDto.isEmpty()) {
-            return new ResponseEntity("No shops found", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(shopService.userShops(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Shop error: {}", e.getMessage());
         }
-        return new ResponseEntity(shopDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
 }

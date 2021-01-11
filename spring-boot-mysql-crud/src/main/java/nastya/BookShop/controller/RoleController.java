@@ -2,6 +2,8 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.service.api.RolesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/role")
 public class RoleController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private final RolesService roleService;
 
@@ -27,22 +29,33 @@ public class RoleController {
 
     @GetMapping()
     public ResponseEntity findAll() {
-        List<RoleDto> roleDto = roleService.findAll();
-        if (roleDto.isEmpty()) {
-            return new ResponseEntity("Roles dont exist", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(roleService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
         }
-        return new ResponseEntity(roleDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
     public ResponseEntity saveRole(@RequestBody RoleDto roleDto) {
-        roleService.saveRole(roleDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            roleService.saveRole(roleDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/{role}")
-    public ResponseEntity findByName(@PathVariable("role")String name){
-        return new ResponseEntity(roleService.findByName(name), HttpStatus.OK);
+    public ResponseEntity findByName(@PathVariable("role") String name) {
+        try {
+            return new ResponseEntity(roleService.findByName(name), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
 

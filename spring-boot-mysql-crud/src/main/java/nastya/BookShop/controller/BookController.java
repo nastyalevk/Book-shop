@@ -2,6 +2,8 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.service.api.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/book")
 public class BookController {
+
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     private final BookService bookService;
 
@@ -36,24 +40,46 @@ public class BookController {
 
     @PostMapping(path = "/create")
     public ResponseEntity createBook(@RequestBody BookDto bookDto) {
-        bookService.saveBook(bookDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            bookService.saveBook(bookDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @GetMapping("/delete/{id}")
     public ResponseEntity deleteBook(@PathVariable("id") Integer id) {
-        bookService.deleteById(id);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            bookService.deleteById(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getBook(@PathVariable("id") Integer id) {
-        return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/update")
     public ResponseEntity updateBook(@RequestBody BookDto bookDto) {
-        bookService.saveBook(bookDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            bookService.saveBook(bookDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

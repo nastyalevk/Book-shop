@@ -2,6 +2,8 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.service.api.OrderContentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/order/content")
 public class OrderContentController {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderContentController.class);
 
     private final OrderContentService orderContentService;
 
@@ -27,22 +29,36 @@ public class OrderContentController {
 
     @GetMapping()
     public ResponseEntity findAll() {
-        List<OrderContentDto> orderContentDto = orderContentService.findAll();
-        if (orderContentDto.isEmpty()) {
-            return new ResponseEntity("No order content found", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(orderContentService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Order content error: {}", e.getMessage());
         }
-        return new ResponseEntity(orderContentDto, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getOrderContent(@PathVariable("id") Integer id) {
-        return new ResponseEntity(orderContentService.getOrderContent(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity(orderContentService.getOrderContent(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Order content error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
 
     @PostMapping("/create")
     public ResponseEntity saveContent(@RequestBody OrderContentDto orderContentDto) {
-        orderContentService.saveOrderContent(orderContentDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            orderContentService.saveOrderContent(orderContentDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Assortment error: {}", e.getMessage());
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
 }
