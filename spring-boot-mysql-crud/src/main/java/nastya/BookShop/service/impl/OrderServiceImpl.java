@@ -7,6 +7,8 @@ import nastya.BookShop.repository.OrderRepository;
 import nastya.BookShop.repository.ShopRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.service.api.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrderRepository orderRepository;
     private final ShopRepository shopRepository;
@@ -31,32 +35,52 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findByClientId(Integer id) {
-        List<Order> orders = orderRepository.findAllByUserId(id);
-        List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i : orders) {
-            orderDtos.add(transfer(i));
+        try {
+            List<Order> orders = orderRepository.findAllByUserId(id);
+            List<OrderDto> orderDtos = new ArrayList<>();
+            for (Order i : orders) {
+                orderDtos.add(transfer(i));
+            }
+            return orderDtos;
+        } catch (Exception e) {
+            logger.error("Order error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return orderDtos;
     }
 
     @Override
     public OrderDto findById(Integer id) {
-        return transfer(orderRepository.getOne(id));
+        try {
+            return transfer(orderRepository.getOne(id));
+        } catch (Exception e) {
+            logger.error("Order error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<OrderDto> findAll() {
-        List<Order> orders = orderRepository.findAll();
-        List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i : orders) {
-            orderDtos.add(transfer(i));
+        try {
+            List<Order> orders = orderRepository.findAll();
+            List<OrderDto> orderDtos = new ArrayList<>();
+            for (Order i : orders) {
+                orderDtos.add(transfer(i));
+            }
+            return orderDtos;
+        } catch (Exception e) {
+            logger.error("Order error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return orderDtos;
     }
 
     @Override
     public void saveOrder(OrderDto orderDto) {
-        orderRepository.save(transfer(orderDto));
+        try {
+            orderRepository.save(transfer(orderDto));
+        } catch (Exception e) {
+            logger.error("Order error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private OrderDto transfer(Order order) {

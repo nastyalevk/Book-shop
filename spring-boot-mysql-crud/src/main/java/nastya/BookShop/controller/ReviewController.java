@@ -33,8 +33,8 @@ public class ReviewController {
             return new ResponseEntity(reviewService.getUserReview(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/shop/{id}")
@@ -43,8 +43,8 @@ public class ReviewController {
             return new ResponseEntity(reviewService.getShopReview(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping()
@@ -53,8 +53,8 @@ public class ReviewController {
             return new ResponseEntity(reviewService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
@@ -64,8 +64,8 @@ public class ReviewController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

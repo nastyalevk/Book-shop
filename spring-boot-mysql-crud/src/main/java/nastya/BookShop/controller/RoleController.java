@@ -33,8 +33,8 @@ public class RoleController {
             return new ResponseEntity(roleService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
@@ -44,8 +44,8 @@ public class RoleController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/{role}")
@@ -54,8 +54,8 @@ public class RoleController {
             return new ResponseEntity(roleService.findByName(name), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
 

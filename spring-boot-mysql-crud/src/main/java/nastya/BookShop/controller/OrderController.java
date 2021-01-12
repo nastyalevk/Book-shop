@@ -33,8 +33,8 @@ public class OrderController {
             return new ResponseEntity(orderService.findByClientId(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Order error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 
@@ -44,8 +44,8 @@ public class OrderController {
             return new ResponseEntity(orderService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 
@@ -55,8 +55,8 @@ public class OrderController {
             return new ResponseEntity(orderService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 
@@ -67,8 +67,8 @@ public class OrderController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 }

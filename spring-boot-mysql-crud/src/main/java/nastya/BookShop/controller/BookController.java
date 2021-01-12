@@ -31,11 +31,12 @@ public class BookController {
 
     @GetMapping()
     public ResponseEntity findAll() {
-        List<BookDto> bookDto = bookService.findAll();
-        if (bookDto.isEmpty()) {
-            return new ResponseEntity("No books found", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(bookService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(bookDto, HttpStatus.OK);
     }
 
     @PostMapping(path = "/create")
@@ -45,9 +46,8 @@ public class BookController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
     @GetMapping("/delete/{id}")
@@ -57,8 +57,8 @@ public class BookController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/{id}")
@@ -68,8 +68,8 @@ public class BookController {
 
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/update")
@@ -79,7 +79,7 @@ public class BookController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

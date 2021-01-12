@@ -5,6 +5,8 @@ import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.model.Role;
 import nastya.BookShop.repository.RolesRepository;
 import nastya.BookShop.service.api.RolesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.Optional;
 @Service
 public class RolesServiceImpl implements RolesService {
 
+    private static final Logger logger = LoggerFactory.getLogger(RolesServiceImpl.class);
+
     private final RolesRepository rolesRepository;
 
     @Autowired
@@ -24,22 +28,37 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public void saveRole(RoleDto roleDto) {
-        rolesRepository.save(transfer(roleDto));
+        try {
+            rolesRepository.save(transfer(roleDto));
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<RoleDto> findAll() {
-        List<Role> roles = rolesRepository.findAll();
-        List<RoleDto> roleDtos = new ArrayList<>();
-        for (Role i : roles) {
-            roleDtos.add(transfer(i));
+        try {
+            List<Role> roles = rolesRepository.findAll();
+            List<RoleDto> roleDtos = new ArrayList<>();
+            for (Role i : roles) {
+                roleDtos.add(transfer(i));
+            }
+            return roleDtos;
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return roleDtos;
     }
 
     @Override
     public Optional<Role> findByName(String name) {
-        return rolesRepository.findByRoleName(ERole.valueOf(name));
+        try {
+            return rolesRepository.findByRoleName(ERole.valueOf(name));
+        } catch (Exception e) {
+            logger.error("Role error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private RoleDto transfer(Role role) {

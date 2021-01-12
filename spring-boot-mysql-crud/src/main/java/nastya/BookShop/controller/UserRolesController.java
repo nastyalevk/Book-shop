@@ -32,8 +32,8 @@ public class UserRolesController {
             return new ResponseEntity(userRolesService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
@@ -42,7 +42,7 @@ public class UserRolesController {
             return new ResponseEntity(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }

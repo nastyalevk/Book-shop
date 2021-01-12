@@ -4,6 +4,8 @@ import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.model.Book;
 import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.service.api.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final BookRepository bookRepository;
 
@@ -22,27 +26,47 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto findById(Integer id) {
-        return transfer(bookRepository.getOne(id));
+        try {
+            return transfer(bookRepository.getOne(id));
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<BookDto> findAll() {
-        List<Book> books = bookRepository.findAll();
-        List<BookDto> bookDtos = new ArrayList<BookDto>();
-        for (Book i : books) {
-            bookDtos.add(transfer(i));
+        try {
+            List<Book> books = bookRepository.findAll();
+            List<BookDto> bookDtos = new ArrayList<BookDto>();
+            for (Book i : books) {
+                bookDtos.add(transfer(i));
+            }
+            return bookDtos;
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return bookDtos;
     }
 
     @Override
     public Book saveBook(BookDto bookDto) {
-        return bookRepository.save(transfer(bookDto));
+        try {
+            return bookRepository.save(transfer(bookDto));
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void deleteById(Integer id) {
-        bookRepository.deleteById(id);
+        try {
+            bookRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private BookDto transfer(Book book) {

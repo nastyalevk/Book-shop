@@ -33,8 +33,8 @@ public class UserController {
             return new ResponseEntity(userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(path = "/create")
@@ -44,8 +44,8 @@ public class UserController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{id}")
@@ -54,8 +54,8 @@ public class UserController {
             return new ResponseEntity(userService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/update")
@@ -65,8 +65,8 @@ public class UserController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/find/username/{username}")
@@ -75,8 +75,8 @@ public class UserController {
             return new ResponseEntity(userService.findByUsername(userName), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/exist/username/{username}")
@@ -85,8 +85,8 @@ public class UserController {
             return new ResponseEntity(userService.existsByUsername(username), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/exist/email/{email}")
@@ -95,7 +95,7 @@ public class UserController {
             return new ResponseEntity(userService.existsByEmail(email), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }

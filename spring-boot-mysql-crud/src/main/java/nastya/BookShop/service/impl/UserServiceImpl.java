@@ -8,6 +8,8 @@ import nastya.BookShop.model.UserRoles;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.repository.UserRolesRepository;
 import nastya.BookShop.service.api.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private final UserRepository userRepository;
     private final UserRolesRepository userRolesRepository;
 
@@ -31,37 +35,67 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Integer id) {
-        return transfer(userRepository.getOne(id));
+        try {
+            return transfer(userRepository.getOne(id));
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<UserDto> findAll() {
-        List<User> users = userRepository.findAll();
-        List<UserDto> userDtos = new ArrayList<>();
-        for (User i : users) {
-            userDtos.add(transfer(i));
+        try {
+            List<User> users = userRepository.findAll();
+            List<UserDto> userDtos = new ArrayList<>();
+            for (User i : users) {
+                userDtos.add(transfer(i));
+            }
+            return userDtos;
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return userDtos;
     }
 
     @Override
     public void saveUser(UserDto userDto) {
-        userRepository.save(transfer(userDto));
+        try {
+            userRepository.save(transfer(userDto));
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public UserDto findByUsername(String userName) {
-        return transfer(userRepository.findByUsername(userName));
+        try {
+            return transfer(userRepository.findByUsername(userName));
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
+        try {
+            return userRepository.existsByUsername(username);
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        try {
+            return userRepository.existsByEmail(email);
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private UserDto transfer(User user) {
@@ -72,8 +106,7 @@ public class UserServiceImpl implements UserService {
         userDto.setEmail(user.getEmail());
         userDto.setLastName(user.getLastName());
         userDto.setPassword(user.getPassword());
-        Set<UserRoles> userRoles = userRolesRepository.findByUserRolesId_User(user).map(Collections::singleton).
-                orElse(Collections.emptySet());
+        List<UserRoles> userRoles = userRolesRepository.findUserRolesByUserRolesId_User(user);
         Set<RoleDto> rolesDto = new HashSet<>();
         for (UserRoles i : userRoles) {
             RoleDto roleDto = new RoleDto();

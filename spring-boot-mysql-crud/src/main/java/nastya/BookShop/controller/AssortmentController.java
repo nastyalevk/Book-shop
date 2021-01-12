@@ -1,6 +1,5 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.dto.Assortment.AssortmentDto;
 import nastya.BookShop.service.api.AssortmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/assortment")
@@ -34,8 +31,8 @@ public class AssortmentController {
             return new ResponseEntity(assortmentService.getAssortmentByShop(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
 
     }
 }

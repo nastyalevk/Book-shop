@@ -36,8 +36,8 @@ public class ShopController {
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Shop error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -47,8 +47,7 @@ public class ShopController {
             return new ResponseEntity(shopService.userShops(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Shop error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
-
     }
 }
