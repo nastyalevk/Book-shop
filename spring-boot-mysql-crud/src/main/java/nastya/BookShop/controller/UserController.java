@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.dto.user.UserDto;
 import nastya.BookShop.service.api.UserService;
 import org.slf4j.Logger;

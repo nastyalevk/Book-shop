@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 public class UserRolesId implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

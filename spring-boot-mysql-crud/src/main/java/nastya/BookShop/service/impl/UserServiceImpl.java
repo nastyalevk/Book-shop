@@ -3,8 +3,11 @@ package nastya.BookShop.service.impl;
 import nastya.BookShop.dto.role.ERole;
 import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.dto.user.UserDto;
+import nastya.BookShop.model.Role;
 import nastya.BookShop.model.User;
 import nastya.BookShop.model.UserRoles;
+import nastya.BookShop.model.UserRolesId;
+import nastya.BookShop.repository.RolesRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.repository.UserRolesRepository;
 import nastya.BookShop.service.api.UserService;
@@ -12,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,11 +29,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRolesRepository userRolesRepository;
+    private final RolesRepository rolesRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRolesRepository userRolesRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserRolesRepository userRolesRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
         this.userRolesRepository = userRolesRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     @Override
@@ -58,6 +63,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     @Override
     public void saveUser(UserDto userDto) {
         try {
@@ -120,6 +126,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User transfer(UserDto userDto) {
+
         User user = new User();
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
@@ -128,6 +135,23 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         user.setActivated(userDto.getActivated());
+        Set<RoleDto> roleDtos = userDto.getRoles();
+        Set<UserRoles> userRolesSet = new HashSet<>();
+        userRolesRepository.deleteAllByUserRolesIdUser(userRepository.getOne(userDto.getId()));
+        for(RoleDto i : roleDtos){
+            UserRoles userRoles = new UserRoles();
+
+            UserRolesId userRolesId = new UserRolesId();
+            userRolesId.setUser(userRepository.getOne(userDto.getId()));
+//            Role role = new Role();
+//            role.setRoleName(role.getName().toString());
+//            role.setId(i.getId());
+            userRolesId.setRole(rolesRepository.getOne(i.getId()));
+            userRoles.setUserRolesId(userRolesId);
+            userRolesSet.add(userRoles);
+            userRolesRepository.save(userRoles);
+        }
+        user.setUserRoles(userRolesSet);
         return user;
     }
 }
