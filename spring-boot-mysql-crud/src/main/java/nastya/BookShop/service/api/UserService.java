@@ -1,6 +1,7 @@
 package nastya.BookShop.service.api;
 
 import nastya.BookShop.dto.user.UserDto;
+import nastya.BookShop.model.User;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface UserService {
 
     List<UserDto> findAll();
 
-    void saveUser(UserDto user);
+    User saveUser(UserDto user);
 
     UserDto findByUsername(String username);
 
@@ -18,4 +19,7 @@ public interface UserService {
 
     Boolean existsByEmail(String email);
 
+//    void saveUserRoles(User user, UserDto userDto);
+//
+//    void updateUserRoles(User user, UserDto userDto);
 }

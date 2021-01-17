@@ -14,7 +14,9 @@ import nastya.BookShop.service.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
     public List<UserDto> findAll() {
         try {
@@ -63,11 +67,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
+
+
     @Override
-    public void saveUser(UserDto userDto) {
+    public User saveUser(UserDto userDto) {
         try {
-            userRepository.save(transfer(userDto));
+            User user = createUser(userDto);
+            updateUserRoles(userDto);
+            return user;
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User createUser(UserDto userDto) {
+        try {
+            return userRepository.save(transfer(userDto));
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -135,23 +151,22 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         user.setActivated(userDto.getActivated());
-        Set<RoleDto> roleDtos = userDto.getRoles();
-        Set<UserRoles> userRolesSet = new HashSet<>();
-        userRolesRepository.deleteAllByUserRolesIdUser(userRepository.getOne(userDto.getId()));
-        for(RoleDto i : roleDtos){
-            UserRoles userRoles = new UserRoles();
-
-            UserRolesId userRolesId = new UserRolesId();
-            userRolesId.setUser(userRepository.getOne(userDto.getId()));
-//            Role role = new Role();
-//            role.setRoleName(role.getName().toString());
-//            role.setId(i.getId());
-            userRolesId.setRole(rolesRepository.getOne(i.getId()));
-            userRoles.setUserRolesId(userRolesId);
-            userRolesSet.add(userRoles);
-            userRolesRepository.save(userRoles);
-        }
-        user.setUserRoles(userRolesSet);
         return user;
     }
+
+    public void updateUserRoles(UserDto userDto){
+        User user = transfer(userDto);
+        userRolesRepository.deleteAllByUserRolesIdUser(user);
+        Set<RoleDto> roleDtos = userDto.getRoles();
+        for(RoleDto i : roleDtos){
+            UserRoles userRoles = new UserRoles();
+            Role role = rolesRepository.getOne(i.getId());
+            UserRolesId userRolesId = new UserRolesId();
+            userRolesId.setRole(role);
+            userRolesId.setUser(user);
+            userRoles.setUserRolesId(userRolesId);
+            userRolesRepository.save(userRoles);
+        }
+    }
+
 }

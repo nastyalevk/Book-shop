@@ -7,7 +7,13 @@ import nastya.BookShop.service.api.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +47,21 @@ public class BookServiceImpl implements BookService {
             List<BookDto> bookDtos = new ArrayList<BookDto>();
             for (Book i : books) {
                 bookDtos.add(transfer(i));
-            }
+           }
             return bookDtos;
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    private Sort.Direction getSortDirection(String direction) {
+        if (direction.equals("asc")) {
+            return Sort.Direction.ASC;
+        } else if (direction.equals("desc")) {
+            return Sort.Direction.DESC;
+        }
+
+        return Sort.Direction.ASC;
     }
 
     @Override
