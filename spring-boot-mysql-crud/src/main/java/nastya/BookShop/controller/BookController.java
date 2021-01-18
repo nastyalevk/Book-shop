@@ -33,7 +33,7 @@ public class BookController {
     @GetMapping()
     public ResponseEntity<Map<String, Object>> findAll(@RequestParam(required = false) String bookName,
                                                        @RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam int size,
+                                                       @RequestParam(defaultValue = "3") int size,
                                                        @RequestParam(defaultValue = "id,desc") String[] sort) {
         try {
             return new ResponseEntity<Map<String, Object>>

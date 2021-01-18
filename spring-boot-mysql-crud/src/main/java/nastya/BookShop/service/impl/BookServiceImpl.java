@@ -88,11 +88,27 @@ public class BookServiceImpl implements BookService {
     @Override
     public Map<String, Object> getAllBooksPage(String bookName, int page, int size, String[] sort) {
         try {
+            List<Sort.Order> orders = new ArrayList<Sort.Order>();
+            if (sort[0].contains(",")) {
+                // will sort more than 2 fields
+                // sortOrder="field, direction"
+                for (String sortOrder : sort) {
+                    String[] _sort = sortOrder.split(",");
+                    orders.add(new Sort.Order(getSortDirection(_sort[1]), _sort[0]));
+                }
+            } else {
+                // sort=[field, direction]
+                orders.add(new Sort.Order(getSortDirection(sort[1]), sort[0]));
+            }
+
             List<Book> books = new ArrayList<Book>();
             Pageable pagingSort = PageRequest.of(page, size);
 
             Page<Book> pageBook;
-            pageBook = bookRepository.findAll(pagingSort);
+            if (bookName == null)
+                pageBook = bookRepository.findAll(pagingSort);
+            else
+                pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
 
             books = pageBook.getContent();
 
