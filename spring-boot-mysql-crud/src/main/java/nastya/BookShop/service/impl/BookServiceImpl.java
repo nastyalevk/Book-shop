@@ -7,16 +7,16 @@ import nastya.BookShop.service.api.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -47,13 +47,14 @@ public class BookServiceImpl implements BookService {
             List<BookDto> bookDtos = new ArrayList<BookDto>();
             for (Book i : books) {
                 bookDtos.add(transfer(i));
-           }
+            }
             return bookDtos;
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
     private Sort.Direction getSortDirection(String direction) {
         if (direction.equals("asc")) {
             return Sort.Direction.ASC;
@@ -78,6 +79,30 @@ public class BookServiceImpl implements BookService {
     public void deleteById(Integer id) {
         try {
             bookRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Map<String, Object> getAllBooksPage(String bookName, int page, int size, String[] sort) {
+        try {
+            List<Book> books = new ArrayList<Book>();
+            Pageable pagingSort = PageRequest.of(page, size);
+
+            Page<Book> pageBook;
+            pageBook = bookRepository.findAll(pagingSort);
+
+            books = pageBook.getContent();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("books", books);
+            response.put("currentPage", pageBook.getNumber());
+            response.put("totalItems", pageBook.getTotalElements());
+            response.put("totalPages", pageBook.getTotalPages());
+            return response;
+
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
