@@ -36,7 +36,6 @@ public class BookController {
                                                        @RequestParam int size,
                                                        @RequestParam(defaultValue = "id,desc") String[] sort) {
         try {
-            System.out.println(size);
             return new ResponseEntity<Map<String, Object>>
                     (bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
         } catch (Exception e) {
