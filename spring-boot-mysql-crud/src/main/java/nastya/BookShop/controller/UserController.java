@@ -1,6 +1,5 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.dto.user.UserDto;
 import nastya.BookShop.service.api.UserService;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -59,10 +59,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update")
-    public ResponseEntity updateUser(@RequestBody UserDto userDto) {
+    @GetMapping("/update-roles/")
+    public ResponseEntity updateUser(@RequestParam String[] roles,
+                                     @RequestParam int id) {
         try {
-            userService.saveUser(userDto);
+            userService.updateUserRoles(roles, id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());

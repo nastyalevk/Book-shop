@@ -14,9 +14,7 @@ import nastya.BookShop.service.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -68,12 +66,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public User saveUser(UserDto userDto) {
         try {
             User user = createUser(userDto);
-            updateUserRoles(userDto);
             return user;
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
@@ -81,14 +77,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private User createUser(UserDto userDto) {
-        try {
-            return userRepository.save(transfer(userDto));
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public UserDto findByUsername(String userName) {
@@ -118,6 +106,29 @@ public class UserServiceImpl implements UserService {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void updateUserRoles(String[] roles, Integer id) {
+        for (String i : roles) {
+            String[] split = i.split("-");
+            if ("create".equalsIgnoreCase(split[1])) {
+                userRolesRepository.save(newUserRole(split[1], id));
+            } else if ("delete".equalsIgnoreCase(split[1])) {
+                userRolesRepository.delete(newUserRole(split[1], id));
+            }
+        }
+    }
+
+    private UserRoles newUserRole(String roleName, Integer id) {
+        User user = userRepository.getOne(id);
+        Role role = rolesRepository.findByRoleName(roleName);
+        UserRolesId userRolesId = new UserRolesId();
+        userRolesId.setRole(role);
+        userRolesId.setUser(user);
+        UserRoles userRoles = new UserRoles();
+        userRoles.setUserRolesId(userRolesId);
+        return userRoles;
     }
 
     private UserDto transfer(User user) {
@@ -154,19 +165,12 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public void updateUserRoles(UserDto userDto){
-        User user = transfer(userDto);
-        userRolesRepository.deleteAllByUserRolesIdUser(user);
-        Set<RoleDto> roleDtos = userDto.getRoles();
-        for(RoleDto i : roleDtos){
-            UserRoles userRoles = new UserRoles();
-            Role role = rolesRepository.getOne(i.getId());
-            UserRolesId userRolesId = new UserRolesId();
-            userRolesId.setRole(role);
-            userRolesId.setUser(user);
-            userRoles.setUserRolesId(userRolesId);
-            userRolesRepository.save(userRoles);
+    private User createUser(UserDto userDto) {
+        try {
+            return userRepository.save(transfer(userDto));
+        } catch (Exception e) {
+            logger.error("User error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
     }
-
 }

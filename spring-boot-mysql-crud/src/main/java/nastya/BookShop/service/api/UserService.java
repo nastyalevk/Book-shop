@@ -19,7 +19,6 @@ public interface UserService {
 
     Boolean existsByEmail(String email);
 
-//    void saveUserRoles(User user, UserDto userDto);
-//
-//    void updateUserRoles(User user, UserDto userDto);
+    void updateUserRoles(String[] roles, Integer id);
+
 }
