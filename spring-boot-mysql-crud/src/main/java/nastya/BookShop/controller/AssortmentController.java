@@ -26,13 +26,21 @@ public class AssortmentController {
 
     @GetMapping("/shop/{id}")
     public ResponseEntity getAssortmentByShop(@PathVariable("id") Integer id) {
-
         try {
             return new ResponseEntity(assortmentService.getAssortmentByShop(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
 
+    @GetMapping("/price/{id}")
+    public ResponseEntity getLowestPrice(@PathVariable("id") Integer id){
+        try{
+            return new ResponseEntity(assortmentService.getPrice(id), HttpStatus.OK);
+        }catch (Exception e){
+            logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }
