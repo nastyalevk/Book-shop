@@ -34,10 +34,9 @@ public class BookController {
     public ResponseEntity<Map<String, Object>> findAll(@RequestParam(required = false) String bookName,
                                                        @RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "3") int size,
-                                                       @RequestParam(defaultValue = "id,desc") String[] sort) {
+                                                       @RequestParam String sort) {
         try {
-            return new ResponseEntity<Map<String, Object>>
-                    (bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
+            return new ResponseEntity(bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.book.BookDto;
+import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Book;
 import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.service.api.BookService;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,16 +55,6 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private Sort.Direction getSortDirection(String direction) {
-        if (direction.equals("asc")) {
-            return Sort.Direction.ASC;
-        } else if (direction.equals("desc")) {
-            return Sort.Direction.DESC;
-        }
-
-        return Sort.Direction.ASC;
-    }
-
     @Override
     public Book saveBook(BookDto bookDto) {
         try {
@@ -86,43 +76,47 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Map<String, Object> getAllBooksPage(String bookName, int page, int size, String[] sort) {
+    public PageResponse getAllBooksPage(String bookName, int page, int size, String sort) {
         try {
-            List<Sort.Order> orders = new ArrayList<Sort.Order>();
-            if (sort[0].contains(",")) {
-                // will sort more than 2 fields
-                // sortOrder="field, direction"
-                for (String sortOrder : sort) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Sort.Order(getSortDirection(_sort[1]), _sort[0]));
-                }
+            Pageable pagingSort = PageRequest.of(page, size, SortType(sort));
+            Page<Book> pageBook;
+            if (bookName == null) {
+                pageBook = bookRepository.findAll(pagingSort);
             } else {
-                // sort=[field, direction]
-                orders.add(new Sort.Order(getSortDirection(sort[1]), sort[0]));
+                pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
             }
 
-            List<Book> books = new ArrayList<Book>();
-            Pageable pagingSort = PageRequest.of(page, size);
-
-            Page<Book> pageBook;
-            if (bookName == null)
-                pageBook = bookRepository.findAll(pagingSort);
-            else
-                pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
-
-            books = pageBook.getContent();
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("books", books);
-            response.put("currentPage", pageBook.getNumber());
-            response.put("totalItems", pageBook.getTotalElements());
-            response.put("totalPages", pageBook.getTotalPages());
-            return response;
+            return transfer(pageBook);
 
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    private Sort SortType(String fieldsort) {
+        String[] split = fieldsort.split("_");
+        Sort sort = Sort.unsorted();
+        Sort result = Sort.unsorted();
+            if ("asc".equalsIgnoreCase(split[1])) {
+                sort = Sort.by(split[0]).ascending();
+            } else if ("desc".equalsIgnoreCase(split[1])) {
+                sort = Sort.by(split[0]).descending();
+            }
+            if (result == null) {
+                result = sort;
+            } else {
+                result = result.and(sort);
+            }
+        return result;
+    }
+
+    private List<BookDto> transfer(List<Book> books) {
+        List<BookDto> booksDto = new ArrayList<>();
+        for (Book i : books) {
+            booksDto.add(transfer(i));
+        }
+        return booksDto;
     }
 
     private BookDto transfer(Book book) {
@@ -148,4 +142,14 @@ public class BookServiceImpl implements BookService {
         book.setDescription(bookDto.getDescription());
         return book;
     }
+
+    private PageResponse transfer(Page page) {
+        PageResponse<BookDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(transfer(page.getContent()));
+        pageResponse.setCurrentPage(page.getNumber());
+        pageResponse.setTotalElements(page.getTotalElements());
+        pageResponse.setTotalPages(page.getTotalPages());
+        return pageResponse;
+    }
+
 }

@@ -1,10 +1,10 @@
 package nastya.BookShop.service.api;
 
 import nastya.BookShop.dto.book.BookDto;
+import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Book;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BookService {
 
@@ -16,6 +16,5 @@ public interface BookService {
 
     void deleteById(Integer id);
 
-    Map<String, Object> getAllBooksPage(String bookName, int page, int size, String[] sort);
-
+    PageResponse getAllBooksPage(String bookName, int page, int size, String sort);
 }
