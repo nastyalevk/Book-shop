@@ -10,4 +10,5 @@ public interface AssortmentService {
 
     int getPrice(Integer id);
 
+    int getPriceByBookShop(Integer bookId, Integer shopId);
 }

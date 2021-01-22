@@ -10,4 +10,6 @@ public interface ShopService {
 
     List<ShopDto> userShops(Integer id);
 
+    List<ShopDto> getShopByBook(Integer id);
+
 }

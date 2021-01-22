@@ -50,4 +50,15 @@ public class ShopController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/book/{id}")
+    public ResponseEntity findBookShops(@PathVariable("id") Integer id) {
+        try {
+            return new ResponseEntity(shopService.getShopByBook(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Shop error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
 }

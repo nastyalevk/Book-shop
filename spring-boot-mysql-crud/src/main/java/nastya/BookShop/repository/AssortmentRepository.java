@@ -11,6 +11,8 @@ public interface AssortmentRepository extends JpaRepository<Assortment, Integer>
 
     List<Assortment> findAllByAssortmentIdShopId(Integer id);
 
-    List<Assortment> findAssortmentByAssortmentId_Book(Book book);
+    List<Assortment> findAssortmentByAssortmentId_Book_Id(Integer id);
+
+    Assortment findByAssortmentId_Book_IdAndAssortmentId_Shop_Id(Integer bookId, Integer shopId);
 
 }

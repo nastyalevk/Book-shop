@@ -1,7 +1,9 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.shop.ShopDto;
+import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.Shop;
+import nastya.BookShop.repository.AssortmentRepository;
 import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.ShopRepository;
 import nastya.BookShop.repository.UserRepository;
@@ -22,13 +24,15 @@ public class ShopServiceImpl implements ShopService {
     private final ShopRepository shopRepository;
     private final ClassificationRepository classificationRepository;
     private final UserRepository userRepository;
+    private final AssortmentRepository assortmentRepository;
 
     @Autowired
     public ShopServiceImpl(ShopRepository shopRepository, ClassificationRepository classificationRepository,
-                           UserRepository userRepository) {
+                           UserRepository userRepository, AssortmentRepository assortmentRepository) {
         this.shopRepository = shopRepository;
         this.classificationRepository = classificationRepository;
         this.userRepository = userRepository;
+        this.assortmentRepository = assortmentRepository;
     }
 
     @Override
@@ -54,6 +58,16 @@ public class ShopServiceImpl implements ShopService {
             logger.error("Shop error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<ShopDto> getShopByBook(Integer id) {
+        List <ShopDto> result = new ArrayList<>();
+        List<Assortment> assortments= assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
+        for(Assortment i :assortments){
+            result.add(transfer(i.getAssortmentId().getShop()));
+        }
+        return result;
     }
 
     private ShopDto transfer(Shop shop) {

@@ -2,7 +2,6 @@ package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.Assortment.AssortmentDto;
 import nastya.BookShop.model.Assortment;
-import nastya.BookShop.model.Book;
 import nastya.BookShop.repository.AssortmentRepository;
 import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.service.api.AssortmentService;
@@ -47,15 +46,31 @@ public class AssortmentServiceImpl implements AssortmentService {
 
     @Override
     public int getPrice(Integer id) {
-//        Book book = bookRepository.getOne(id);
-        List<Assortment> assortments =
-                assortmentRepository.findAssortmentByAssortmentId_Book(bookRepository.getOne(id));
-        List<Integer> prices = new ArrayList<>();
-        for (Assortment i : assortments) {
-            prices.add(i.getPrice());
+        try {
+            List<Assortment> assortments =
+                    assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
+            List<Integer> prices = new ArrayList<>();
+            for (Assortment i : assortments) {
+                prices.add(i.getPrice());
+            }
+            Collections.sort(prices);
+            return prices.get(0);
+        } catch (Exception e) {
+            logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
-        Collections.sort(prices);
-        return prices.get(0);
+    }
+
+    @Override
+    public int getPriceByBookShop(Integer bookId, Integer shopId) {
+        try {
+            AssortmentDto assortmentDto =
+                    transfer(assortmentRepository.findByAssortmentId_Book_IdAndAssortmentId_Shop_Id(bookId, shopId));
+            return assortmentDto.getPrice();
+        } catch (Exception e) {
+            logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private AssortmentDto transfer(Assortment assortment) {
