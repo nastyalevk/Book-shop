@@ -7,8 +7,6 @@ import nastya.BookShop.repository.RolesRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.repository.UserRolesRepository;
 import nastya.BookShop.service.api.UserRolesService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,6 @@ import java.util.List;
 
 @Service
 public class UserRolesServiceImpl implements UserRolesService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserRolesServiceImpl.class);
 
     private final UserRolesRepository userRolesRepository;
     private final UserRepository userRepository;
@@ -33,37 +29,22 @@ public class UserRolesServiceImpl implements UserRolesService {
 
     @Override
     public UserRoles saveUserRole(UserRolesDto userRolesDto) {
-        try {
-            return userRolesRepository.save(transfer(userRolesDto));
-        } catch (Exception e) {
-            logger.error("User role error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return userRolesRepository.save(transfer(userRolesDto));
     }
 
     @Override
     public List<UserRolesDto> findAll() {
-        try {
-            List<UserRoles> userRoles = userRolesRepository.findAll();
-            List<UserRolesDto> userRolesDtos = new ArrayList<>();
-            for (UserRoles i : userRoles) {
-                userRolesDtos.add(transfer(i));
-            }
-            return userRolesDtos;
-        } catch (Exception e) {
-            logger.error("User role error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<UserRoles> userRoles = userRolesRepository.findAll();
+        List<UserRolesDto> userRolesDtos = new ArrayList<>();
+        for (UserRoles i : userRoles) {
+            userRolesDtos.add(transfer(i));
         }
+        return userRolesDtos;
     }
 
     @Override
     public UserRolesDto findById(Integer id) {
-        try {
-            return transfer(userRolesRepository.getOne(id));
-        } catch (Exception e) {
-            logger.error("User role error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return transfer(userRolesRepository.getOne(id));
     }
 
     private UserRolesDto transfer(UserRoles userRoles) {

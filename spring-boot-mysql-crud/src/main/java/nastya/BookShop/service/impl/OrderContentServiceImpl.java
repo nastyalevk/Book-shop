@@ -7,8 +7,6 @@ import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.repository.OrderContentRepository;
 import nastya.BookShop.repository.OrderRepository;
 import nastya.BookShop.service.api.OrderContentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,6 @@ import java.util.List;
 
 @Service
 public class OrderContentServiceImpl implements OrderContentService {
-
-    private static final Logger logger = LoggerFactory.getLogger(OrderContentServiceImpl.class);
 
     private final OrderContentRepository orderContentRepository;
     private final BookRepository bookRepository;
@@ -34,44 +30,29 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     @Override
     public List<OrderContentDto> findAll() {
-        try {
-            List<OrderContent> orderContents = orderContentRepository.findAll();
-            List<OrderContentDto> orderContentDtos = new ArrayList<>();
-            for (OrderContent i : orderContents) {
-                orderContentDtos.add(transfer(i));
-            }
-            return orderContentDtos;
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<OrderContent> orderContents = orderContentRepository.findAll();
+        List<OrderContentDto> orderContentDtos = new ArrayList<>();
+        for (OrderContent i : orderContents) {
+            orderContentDtos.add(transfer(i));
         }
+        return orderContentDtos;
     }
 
     @Override
     public List<OrderContentDto> getOrderContent(Integer id) {
-        try {
-            List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrder(id);
-            List<OrderContentDto> orderContentDtos = new ArrayList<>();
-            for (OrderContent i : orderContents) {
-                orderContentDtos.add(transfer(i));
-            }
-            return orderContentDtos;
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrder(id);
+        List<OrderContentDto> orderContentDtos = new ArrayList<>();
+        for (OrderContent i : orderContents) {
+            orderContentDtos.add(transfer(i));
         }
+        return orderContentDtos;
     }
 
     @Override
     public OrderContent saveOrderContent(OrderContentDto orderContentDto) {
-        try {
-            OrderContent orderContent = transfer(orderContentDto);
-            orderContentRepository.save(orderContent);
-            return orderContent;
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        OrderContent orderContent = transfer(orderContentDto);
+        orderContentRepository.save(orderContent);
+        return orderContent;
     }
 
 

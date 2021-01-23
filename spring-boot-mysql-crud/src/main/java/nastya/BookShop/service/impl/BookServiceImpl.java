@@ -5,8 +5,6 @@ import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Book;
 import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.service.api.BookService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
-
-    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final BookRepository bookRepository;
 
@@ -32,82 +27,52 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto findById(Integer id) {
-        try {
-            return transfer(bookRepository.getOne(id));
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return transfer(bookRepository.getOne(id));
     }
 
     @Override
     public List<BookDto> findAll() {
-        try {
-            List<Book> books = bookRepository.findAll();
-            List<BookDto> bookDtos = new ArrayList<BookDto>();
-            for (Book i : books) {
-                bookDtos.add(transfer(i));
-            }
-            return bookDtos;
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<Book> books = bookRepository.findAll();
+        List<BookDto> bookDtos = new ArrayList<BookDto>();
+        for (Book i : books) {
+            bookDtos.add(transfer(i));
         }
+        return bookDtos;
     }
 
     @Override
     public Book saveBook(BookDto bookDto) {
-        try {
-            return bookRepository.save(transfer(bookDto));
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return bookRepository.save(transfer(bookDto));
     }
 
     @Override
     public void deleteById(Integer id) {
-        try {
-            bookRepository.deleteById(id);
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        bookRepository.deleteById(id);
     }
 
     @Override
     public PageResponse getAllBooksPage(String bookName, int page, int size, String sort) {
-        try {
-            Pageable pagingSort = PageRequest.of(page, size, SortType(sort));
-            Page<Book> pageBook;
-            if (bookName == null) {
-                pageBook = bookRepository.findAll(pagingSort);
-            } else {
-                pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
-            }
-
-            return transfer(pageBook);
-
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        Pageable pagingSort = PageRequest.of(page, size, sortType(sort));
+        Page<Book> pageBook;
+        if (bookName == null) {
+            pageBook = bookRepository.findAll(pagingSort);
+        } else {
+            pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
         }
+
+        return transfer(pageBook);
     }
 
-    private Sort SortType(String fieldsort) {
+    private Sort sortType(String fieldsort) {
         String[] split = fieldsort.split("_");
         Sort sort = Sort.unsorted();
         Sort result = Sort.unsorted();
-            if ("asc".equalsIgnoreCase(split[1])) {
-                sort = Sort.by(split[0]).ascending();
-            } else if ("desc".equalsIgnoreCase(split[1])) {
-                sort = Sort.by(split[0]).descending();
-            }
-            if (result == null) {
-                result = sort;
-            } else {
-                result = result.and(sort);
-            }
+        if ("asc".equalsIgnoreCase(split[1])) {
+            sort = Sort.by(split[0]).ascending();
+        } else if ("desc".equalsIgnoreCase(split[1])) {
+            sort = Sort.by(split[0]).descending();
+        }
+        result = result.and(sort);
         return result;
     }
 

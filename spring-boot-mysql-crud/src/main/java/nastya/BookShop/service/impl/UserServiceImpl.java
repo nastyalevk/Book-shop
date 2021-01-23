@@ -11,8 +11,6 @@ import nastya.BookShop.repository.RolesRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.repository.UserRolesRepository;
 import nastya.BookShop.service.api.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +23,6 @@ import java.util.Set;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final UserRolesRepository userRolesRepository;
@@ -41,71 +37,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Integer id) {
-        try {
-            return transfer(userRepository.getOne(id));
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return transfer(userRepository.getOne(id));
     }
 
 
     @Override
     public List<UserDto> findAll() {
-        try {
-            List<User> users = userRepository.findAll();
-            List<UserDto> userDtos = new ArrayList<>();
-            for (User i : users) {
-                userDtos.add(transfer(i));
-            }
-            return userDtos;
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<User> users = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User i : users) {
+            userDtos.add(transfer(i));
         }
+        return userDtos;
     }
 
 
     @Override
     public User saveUser(UserDto userDto) {
-        try {
-            User user = createUser(userDto);
-            return user;
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        User user = createUser(userDto);
+        return user;
     }
 
 
     @Override
     public UserDto findByUsername(String userName) {
-        try {
-            return transfer(userRepository.findByUsername(userName));
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return transfer(userRepository.findByUsername(userName));
     }
 
     @Override
     public Boolean existsByUsername(String username) {
-        try {
-            return userRepository.existsByUsername(username);
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return userRepository.existsByUsername(username);
     }
 
     @Override
     public Boolean existsByEmail(String email) {
-        try {
-            return userRepository.existsByEmail(email);
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return userRepository.existsByEmail(email);
     }
 
     @Override
@@ -166,11 +132,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private User createUser(UserDto userDto) {
-        try {
-            return userRepository.save(transfer(userDto));
-        } catch (Exception e) {
-            logger.error("User error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return userRepository.save(transfer(userDto));
     }
 }

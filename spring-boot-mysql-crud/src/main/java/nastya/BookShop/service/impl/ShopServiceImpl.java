@@ -8,8 +8,6 @@ import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.ShopRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.service.api.ShopService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +16,6 @@ import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.class);
 
     private final ShopRepository shopRepository;
     private final ClassificationRepository classificationRepository;
@@ -37,34 +33,24 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public void saveShop(ShopDto shopDto) {
-        try {
-            shopRepository.save(transfer((shopDto)));
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        shopRepository.save(transfer((shopDto)));
     }
 
     @Override
     public List<ShopDto> userShops(Integer id) {
-        try {
-            List<Shop> shops = shopRepository.findAllByUserId(id);
-            List<ShopDto> shopDtos = new ArrayList<>();
-            for (Shop i : shops) {
-                shopDtos.add(transfer(i));
-            }
-            return shopDtos;
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
+        List<Shop> shops = shopRepository.findAllByUserId(id);
+        List<ShopDto> shopDtos = new ArrayList<>();
+        for (Shop i : shops) {
+            shopDtos.add(transfer(i));
         }
+        return shopDtos;
     }
 
     @Override
     public List<ShopDto> getShopByBook(Integer id) {
-        List <ShopDto> result = new ArrayList<>();
-        List<Assortment> assortments= assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
-        for(Assortment i :assortments){
+        List<ShopDto> result = new ArrayList<>();
+        List<Assortment> assortments = assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
+        for (Assortment i : assortments) {
             result.add(transfer(i.getAssortmentId().getShop()));
         }
         return result;
