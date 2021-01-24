@@ -31,11 +31,12 @@ public class BookController {
     }
 
     @GetMapping()
-    public ResponseEntity<Map<String, Object>> findAll(@RequestParam(required = false) String bookName,
+    public ResponseEntity findAll(@RequestParam(required = false) String bookName,
                                                        @RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "3") int size,
-                                                       @RequestParam String sort) {
+                                                       @RequestParam String[] sort) {
         try {
+            System.out.println(sort.length);
             return new ResponseEntity(bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());

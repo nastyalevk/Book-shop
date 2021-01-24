@@ -16,5 +16,5 @@ public interface BookService {
 
     void deleteById(Integer id);
 
-    PageResponse getAllBooksPage(String bookName, int page, int size, String sort);
+    PageResponse getAllBooksPage(String bookName, int page, int size, String[] sort);
 }

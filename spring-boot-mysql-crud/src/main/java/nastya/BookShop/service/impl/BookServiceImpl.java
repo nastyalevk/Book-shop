@@ -51,29 +51,32 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public PageResponse getAllBooksPage(String bookName, int page, int size, String sort) {
-        Pageable pagingSort = PageRequest.of(page, size, sortType(sort));
+    public PageResponse getAllBooksPage(String bookName, int page, int size, String[] sort) {
+        Pageable pagingSort = PageRequest.of(page, size, Sort.by(sortType(sort)));
         Page<Book> pageBook;
         if (bookName == null) {
             pageBook = bookRepository.findAll(pagingSort);
         } else {
-            pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
+        pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
         }
 
         return transfer(pageBook);
     }
 
-    private Sort sortType(String fieldsort) {
-        String[] split = fieldsort.split("_");
-        Sort sort = Sort.unsorted();
-        Sort result = Sort.unsorted();
-        if ("asc".equalsIgnoreCase(split[1])) {
-            sort = Sort.by(split[0]).ascending();
-        } else if ("desc".equalsIgnoreCase(split[1])) {
-            sort = Sort.by(split[0]).descending();
+    private List<Sort.Order> sortType(String[] fieldsort) {
+        List<Sort.Order> orders = new ArrayList<Sort.Order>();
+        for (String i : fieldsort) {
+            System.out.println(i);
+            String[] split = i.split("_");
+            Sort sort = Sort.unsorted();
+            if ("asc".equalsIgnoreCase(split[1])) {
+                orders.add(new Sort.Order(Sort.Direction.ASC, split[0]));
+            } else if ("desc".equalsIgnoreCase(split[1])) {
+                orders.add(new Sort.Order(Sort.Direction.DESC, split[0]));
+
+            }
         }
-        result = result.and(sort);
-        return result;
+        return orders;
     }
 
     private List<BookDto> transfer(List<Book> books) {
