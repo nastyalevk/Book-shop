@@ -66,14 +66,12 @@ public class BookServiceImpl implements BookService {
     private List<Sort.Order> sortType(String[] fieldsort) {
         List<Sort.Order> orders = new ArrayList<Sort.Order>();
         for (String i : fieldsort) {
-            System.out.println(i);
             String[] split = i.split("_");
             Sort sort = Sort.unsorted();
             if ("asc".equalsIgnoreCase(split[1])) {
                 orders.add(new Sort.Order(Sort.Direction.ASC, split[0]));
             } else if ("desc".equalsIgnoreCase(split[1])) {
                 orders.add(new Sort.Order(Sort.Direction.DESC, split[0]));
-
             }
         }
         return orders;
