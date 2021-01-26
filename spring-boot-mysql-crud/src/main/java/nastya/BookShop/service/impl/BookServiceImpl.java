@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
         if (bookName == null) {
             pageBook = bookRepository.findAll(pagingSort);
         } else {
-        pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
+            pageBook = bookRepository.findByBookNameContaining(bookName, pagingSort);
         }
 
         return transfer(pageBook);

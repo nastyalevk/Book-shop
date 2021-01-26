@@ -30,29 +30,17 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     @Override
     public List<OrderContentDto> findAll() {
-        List<OrderContent> orderContents = orderContentRepository.findAll();
-        List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for (OrderContent i : orderContents) {
-            orderContentDtos.add(transfer(i));
-        }
-        return orderContentDtos;
+        return transfer(orderContentRepository.findAll());
     }
 
     @Override
     public List<OrderContentDto> getOrderContent(Integer id) {
-        List<OrderContent> orderContents = orderContentRepository.findAllByOrderContentIdOrder(id);
-        List<OrderContentDto> orderContentDtos = new ArrayList<>();
-        for (OrderContent i : orderContents) {
-            orderContentDtos.add(transfer(i));
-        }
-        return orderContentDtos;
+        return transfer(orderContentRepository.findAllByOrderContentIdOrder(id));
     }
 
     @Override
     public OrderContent saveOrderContent(OrderContentDto orderContentDto) {
-        OrderContent orderContent = transfer(orderContentDto);
-        orderContentRepository.save(orderContent);
-        return orderContent;
+        return orderContentRepository.save(transfer(orderContentDto));
     }
 
 
@@ -63,6 +51,14 @@ public class OrderContentServiceImpl implements OrderContentService {
         orderContentDto.setQuantity(orderContent.getQuantity());
         orderContentDto.setPrice(orderContent.getPrice());
         return orderContentDto;
+    }
+
+    private List<OrderContentDto> transfer (List<OrderContent> orderContents){
+        List<OrderContentDto> orderContentDtos = new ArrayList<>();
+        for (OrderContent i : orderContents) {
+            orderContentDtos.add(transfer(i));
+        }
+        return orderContentDtos;
     }
 
     private OrderContent transfer(OrderContentDto orderContentDto) {

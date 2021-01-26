@@ -38,12 +38,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopDto> userShops(Integer id) {
-        List<Shop> shops = shopRepository.findAllByUserId(id);
-        List<ShopDto> shopDtos = new ArrayList<>();
-        for (Shop i : shops) {
-            shopDtos.add(transfer(i));
-        }
-        return shopDtos;
+        return transfer(shopRepository.findAllByUserId(id));
     }
 
     @Override
@@ -54,6 +49,14 @@ public class ShopServiceImpl implements ShopService {
             result.add(transfer(i.getAssortmentId().getShop()));
         }
         return result;
+    }
+
+    private List<ShopDto> transfer(List<Shop> shops){
+        List<ShopDto> shopDtos = new ArrayList<>();
+        for (Shop i : shops) {
+            shopDtos.add(transfer(i));
+        }
+        return shopDtos;
     }
 
     private ShopDto transfer(Shop shop) {

@@ -31,12 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findByClientId(Integer id) {
-        List<Order> orders = orderRepository.findAllByUserId(id);
-        List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i : orders) {
-            orderDtos.add(transfer(i));
-        }
-        return orderDtos;
+        return transfer(orderRepository.findAllByUserId(id));
     }
 
     @Override
@@ -46,17 +41,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findAll() {
-        List<Order> orders = orderRepository.findAll();
-        List<OrderDto> orderDtos = new ArrayList<>();
-        for (Order i : orders) {
-            orderDtos.add(transfer(i));
-        }
-        return orderDtos;
+        return transfer(orderRepository.findAll());
     }
 
     @Override
     public void saveOrder(OrderDto orderDto) {
         orderRepository.save(transfer(orderDto));
+    }
+
+    private List<OrderDto> transfer(List<Order> orders) {
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (Order i : orders) {
+            orderDtos.add(transfer(i));
+        }
+        return orderDtos;
     }
 
     private OrderDto transfer(Order order) {

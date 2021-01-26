@@ -16,12 +16,10 @@ import java.util.List;
 public class AssortmentServiceImpl implements AssortmentService {
 
     private final AssortmentRepository assortmentRepository;
-    private final BookRepository bookRepository;
 
     @Autowired
-    public AssortmentServiceImpl(AssortmentRepository assortmentRepository, BookRepository bookRepository) {
+    public AssortmentServiceImpl(AssortmentRepository assortmentRepository) {
         this.assortmentRepository = assortmentRepository;
-        this.bookRepository = bookRepository;
     }
 
     @Override

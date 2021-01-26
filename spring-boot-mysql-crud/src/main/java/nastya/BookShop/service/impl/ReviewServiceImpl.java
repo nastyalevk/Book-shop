@@ -29,32 +29,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewDto> getUserReview(Integer id) {
-        List<Review> reviews = reviewRepository.findAllByUserId(id);
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-        for (Review i : reviews) {
-            reviewDtos.add(transfer(i));
-        }
-        return reviewDtos;
+        return transfer(reviewRepository.findAllByUserId(id));
     }
 
     @Override
     public List<ReviewDto> getShopReview(Integer id) {
-        List<Review> reviews = reviewRepository.findAllByShopId(id);
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-        for (Review i : reviews) {
-            reviewDtos.add(transfer(i));
-        }
-        return reviewDtos;
+        return transfer(reviewRepository.findAllByShopId(id));
     }
 
     @Override
     public List<ReviewDto> findAll() {
-        List<Review> reviews = reviewRepository.findAll();
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-        for (Review i : reviews) {
-            reviewDtos.add(transfer(i));
-        }
-        return reviewDtos;
+        return transfer(reviewRepository.findAll());
     }
 
     @Override
@@ -70,6 +55,14 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setRating(review.getRating());
         reviewDto.setShopId(review.getShop().getId());
         return reviewDto;
+    }
+
+    private List<ReviewDto> transfer(List<Review> reviews) {
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+        for (Review i : reviews) {
+            reviewDtos.add(transfer(i));
+        }
+        return reviewDtos;
     }
 
     private Review transfer(ReviewDto reviewDto) {

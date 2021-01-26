@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -32,9 +30,9 @@ public class BookController {
 
     @GetMapping()
     public ResponseEntity findAll(@RequestParam(required = false) String bookName,
-                                                       @RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam(defaultValue = "3") int size,
-                                                       @RequestParam(required = false) String[] sort) {
+                                  @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "3") int size,
+                                  @RequestParam(required = false) String[] sort) {
         try {
             return new ResponseEntity(bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
         } catch (Exception e) {
