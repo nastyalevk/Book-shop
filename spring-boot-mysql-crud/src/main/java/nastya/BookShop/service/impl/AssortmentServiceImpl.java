@@ -34,9 +34,9 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public int getPrice(Integer id) {
+    public int getMinPrice(Integer bookId) {
         List<Assortment> assortments =
-                assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
+                assortmentRepository.findAssortmentByAssortmentId_Book_Id(bookId);
         List<Integer> prices = new ArrayList<>();
         for (Assortment i : assortments) {
             prices.add(i.getPrice());

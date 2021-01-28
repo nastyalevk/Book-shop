@@ -8,7 +8,7 @@ public interface AssortmentService {
 
     List<AssortmentDto> getAssortmentByShop(Integer id);
 
-    int getPrice(Integer id);
+    int getMinPrice(Integer bookId);
 
     int getPriceByBookShop(Integer bookId, Integer shopId);
 }
