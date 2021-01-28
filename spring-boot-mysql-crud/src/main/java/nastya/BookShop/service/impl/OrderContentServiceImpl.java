@@ -46,7 +46,7 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     private OrderContentDto transfer(OrderContent orderContent) {
         OrderContentDto orderContentDto = new OrderContentDto();
-        orderContentDto.setOrderId(orderContent.getOrderContentId().getOrder().getId());
+        orderContentDto.setOrderNumber(orderContent.getOrderContentId().getOrder().getOrderNumber());
         orderContentDto.setBookId(orderContent.getOrderContentId().getBook().getId());
         orderContentDto.setQuantity(orderContent.getQuantity());
         orderContentDto.setPrice(orderContent.getPrice());
@@ -63,7 +63,10 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     private OrderContent transfer(OrderContentDto orderContentDto) {
         OrderContent orderContent = new OrderContent();
-        orderContent.setOrderContentId(new OrderContentId(orderRepository.getOne(orderContentDto.getOrderId()),
+        System.out.println(orderContentDto.getOrderNumber());
+        System.out.println(orderRepository.findByOrderNumber(orderContentDto.getOrderNumber()).getId());
+        orderContent.setOrderContentId(new OrderContentId(
+                orderRepository.findByOrderNumber(orderContentDto.getOrderNumber()),
                 bookRepository.getOne(orderContentDto.getBookId())));
         orderContent.setQuantity(orderContentDto.getQuantity());
         orderContent.setPrice(orderContentDto.getPrice());

@@ -1,5 +1,6 @@
 package nastya.BookShop.dto.orderContent;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderContentDto {
 
-    private Integer orderId;
+    @JsonProperty("orderNumber")
+    private Integer orderNumber;
+    @JsonProperty("bookId")
     private Integer bookId;
+    @JsonProperty("quantity")
     private Integer quantity;
+    @JsonProperty("price")
     private Integer price;
 
 }

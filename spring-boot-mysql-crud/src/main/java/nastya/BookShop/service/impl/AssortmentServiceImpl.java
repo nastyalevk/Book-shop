@@ -48,7 +48,7 @@ public class AssortmentServiceImpl implements AssortmentService {
     @Override
     public int getPriceByBookShop(Integer bookId, Integer shopId) {
         AssortmentDto assortmentDto =
-                transfer(assortmentRepository.findByAssortmentId_Book_IdAndAssortmentId_Shop_Id(bookId, shopId));
+                transfer(assortmentRepository.findByAssortmentIdBookIdAndAssortmentIdShopId(bookId, shopId));
         return assortmentDto.getPrice();
     }
 

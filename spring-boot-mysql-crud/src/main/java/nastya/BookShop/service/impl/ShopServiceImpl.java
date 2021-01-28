@@ -42,7 +42,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<ShopDto> getShopByBook(Integer id) {
+    public List<ShopDto> getShopsByBook(Integer id) {
         List<ShopDto> result = new ArrayList<>();
         List<Assortment> assortments = assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
         for (Assortment i : assortments) {

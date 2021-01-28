@@ -52,6 +52,7 @@ public class OrderContentController {
     @PostMapping("/create")
     public ResponseEntity saveContent(@RequestBody OrderContentDto orderContentDto) {
         try {
+            System.out.println(orderContentDto.getOrderNumber());
             orderContentService.saveOrderContent(orderContentDto);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {

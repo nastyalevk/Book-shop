@@ -51,7 +51,7 @@ public class Order {
     private String deliveryAddress;
     private String description;
     @Column(name = "order_submit_date")
-    private Date OrderSubmitDate;
+    private Date orderSubmitDate;
 
     @ManyToOne
     @JoinColumn(name = "status", nullable = false)
