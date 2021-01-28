@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -29,9 +31,9 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<UserDto>> findAll() {
         try {
-            return new ResponseEntity(userService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -39,10 +41,10 @@ public class UserController {
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<HttpStatus> createUser(@RequestBody UserDto userDto) {
         try {
             userService.saveUser(userDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -50,9 +52,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(userService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -60,11 +62,11 @@ public class UserController {
     }
 
     @GetMapping("/update-roles/")
-    public ResponseEntity updateUser(@RequestParam String[] roles,
+    public ResponseEntity<HttpStatus> updateUser(@RequestParam String[] roles,
                                      @RequestParam int id) {
         try {
             userService.updateUserRoles(roles, id);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -72,9 +74,9 @@ public class UserController {
     }
 
     @GetMapping("/find/username/{username}")
-    public ResponseEntity findByUserName(@PathVariable("username") String userName) {
+    public ResponseEntity<UserDto> findByUserName(@PathVariable("username") String userName) {
         try {
-            return new ResponseEntity(userService.findByUsername(userName), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findByUsername(userName), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -82,9 +84,9 @@ public class UserController {
     }
 
     @GetMapping("/exist/username/{username}")
-    public ResponseEntity existByUserName(@PathVariable("username") String username) {
+    public ResponseEntity<Boolean> existByUserName(@PathVariable("username") String username) {
         try {
-            return new ResponseEntity(userService.existsByUsername(username), HttpStatus.OK);
+            return new ResponseEntity<>(userService.existsByUsername(username), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -92,9 +94,9 @@ public class UserController {
     }
 
     @GetMapping("/exist/email/{email}")
-    public ResponseEntity existByEmail(@PathVariable("email") String email) {
+    public ResponseEntity<Boolean> existByEmail(@PathVariable("email") String email) {
         try {
-            return new ResponseEntity(userService.existsByEmail(email), HttpStatus.OK);
+            return new ResponseEntity<>(userService.existsByEmail(email), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("User error: {}", e.getMessage());
             throw new RuntimeException(e);

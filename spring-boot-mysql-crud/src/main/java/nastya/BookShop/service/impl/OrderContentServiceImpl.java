@@ -63,8 +63,6 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     private OrderContent transfer(OrderContentDto orderContentDto) {
         OrderContent orderContent = new OrderContent();
-        System.out.println(orderContentDto.getOrderNumber());
-        System.out.println(orderRepository.findByOrderNumber(orderContentDto.getOrderNumber()).getId());
         orderContent.setOrderContentId(new OrderContentId(
                 orderRepository.findByOrderNumber(orderContentDto.getOrderNumber()),
                 bookRepository.getOne(orderContentDto.getBookId())));

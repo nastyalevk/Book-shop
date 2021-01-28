@@ -1,6 +1,7 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.book.BookDto;
+import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.service.api.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,12 @@ public class BookController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll(@RequestParam(required = false) String bookName,
-                                  @RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(defaultValue = "3") int size,
-                                  @RequestParam(required = false) String[] sort) {
+    public ResponseEntity<PageResponse> findAll(@RequestParam(required = false) String bookName,
+                                                @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "3") int size,
+                                                @RequestParam(required = false) String[] sort) {
         try {
-            return new ResponseEntity(bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.getAllBooksPage(bookName, page, size, sort), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -43,10 +44,10 @@ public class BookController {
 
 
     @PostMapping(path = "/create")
-    public ResponseEntity createBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<HttpStatus> createBook(@RequestBody BookDto bookDto) {
         try {
             bookService.saveBook(bookDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -54,10 +55,10 @@ public class BookController {
     }
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity deleteBook(@PathVariable("id") Integer id) {
+    public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Integer id) {
         try {
             bookService.deleteById(id);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -65,9 +66,9 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getBook(@PathVariable("id") Integer id) {
+    public ResponseEntity<BookDto> getBook(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
 
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
@@ -76,10 +77,10 @@ public class BookController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity updateBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<HttpStatus> updateBook(@RequestBody BookDto bookDto) {
         try {
             bookService.saveBook(bookDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);

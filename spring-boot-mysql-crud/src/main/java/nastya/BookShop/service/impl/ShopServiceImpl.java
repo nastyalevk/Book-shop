@@ -44,7 +44,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<ShopDto> getShopsByBook(Integer id) {
         List<ShopDto> result = new ArrayList<>();
-        List<Assortment> assortments = assortmentRepository.findAssortmentByAssortmentId_Book_Id(id);
+        List<Assortment> assortments = assortmentRepository.findAssortmentByAssortmentIdBookId(id);
         for (Assortment i : assortments) {
             result.add(transfer(i.getAssortmentId().getShop()));
         }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order/content")
 public class OrderContentController {
@@ -28,9 +30,9 @@ public class OrderContentController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<OrderContentDto>> findAll() {
         try {
-            return new ResponseEntity(orderContentService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(orderContentService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Order content error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -39,9 +41,9 @@ public class OrderContentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getOrderContent(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<OrderContentDto>> getOrderContent(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(orderContentService.getOrderContent(id), HttpStatus.OK);
+            return new ResponseEntity<>(orderContentService.getOrderContent(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Order content error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -50,11 +52,11 @@ public class OrderContentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity saveContent(@RequestBody OrderContentDto orderContentDto) {
+    public ResponseEntity<HttpStatus> saveContent(@RequestBody OrderContentDto orderContentDto) {
         try {
             System.out.println(orderContentDto.getOrderNumber());
             orderContentService.saveOrderContent(orderContentDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);

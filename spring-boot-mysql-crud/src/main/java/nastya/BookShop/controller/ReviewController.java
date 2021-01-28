@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
@@ -28,9 +30,9 @@ public class ReviewController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity getUserReview(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<ReviewDto>> getUserReview(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(reviewService.getUserReview(id), HttpStatus.OK);
+            return new ResponseEntity<>(reviewService.getUserReview(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -38,9 +40,9 @@ public class ReviewController {
     }
 
     @GetMapping("/shop/{id}")
-    public ResponseEntity getShopReview(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<ReviewDto>> getShopReview(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(reviewService.getShopReview(id), HttpStatus.OK);
+            return new ResponseEntity<>(reviewService.getShopReview(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -48,9 +50,9 @@ public class ReviewController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<ReviewDto>> findAll() {
         try {
-            return new ResponseEntity(reviewService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(reviewService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -58,10 +60,10 @@ public class ReviewController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createReview(@RequestBody ReviewDto reviewDto) {
+    public ResponseEntity<HttpStatus> createReview(@RequestBody ReviewDto reviewDto) {
         try {
             reviewService.saveReview(reviewDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);

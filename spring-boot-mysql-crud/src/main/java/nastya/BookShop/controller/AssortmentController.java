@@ -1,5 +1,6 @@
 package nastya.BookShop.controller;
 
+import nastya.BookShop.dto.Assortment.AssortmentDto;
 import nastya.BookShop.service.api.AssortmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/assortment")
@@ -25,9 +28,9 @@ public class AssortmentController {
     }
 
     @GetMapping("/shop/{id}")
-    public ResponseEntity getAssortmentByShop(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<AssortmentDto>> getAssortmentByShop(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(assortmentService.getAssortmentByShop(id), HttpStatus.OK);
+            return new ResponseEntity<>(assortmentService.getAssortmentByShop(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -35,9 +38,9 @@ public class AssortmentController {
     }
 
     @GetMapping("/price/{id}")
-    public ResponseEntity getMinPrice(@PathVariable("id") Integer bookId) {
+    public ResponseEntity<Integer> getMinPrice(@PathVariable("id") Integer bookId) {
         try {
-            return new ResponseEntity(assortmentService.getMinPrice(bookId), HttpStatus.OK);
+            return new ResponseEntity<>(assortmentService.getMinPrice(bookId), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -45,10 +48,10 @@ public class AssortmentController {
     }
 
     @GetMapping("/price/{bookId}/{shopId}")
-    public ResponseEntity getPriceByBookShop
+    public ResponseEntity<Integer> getPriceByBookShop
             (@PathVariable("bookId") Integer bookId, @PathVariable("shopId") Integer shopId) {
         try {
-            return new ResponseEntity(assortmentService.getPriceByBookShop(bookId, shopId), HttpStatus.OK);
+            return new ResponseEntity<>(assortmentService.getPriceByBookShop(bookId, shopId), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);

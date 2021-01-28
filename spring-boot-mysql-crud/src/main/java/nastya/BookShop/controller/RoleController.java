@@ -1,6 +1,7 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.role.RoleDto;
+import nastya.BookShop.model.Role;
 import nastya.BookShop.service.api.RolesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/role")
@@ -28,9 +32,9 @@ public class RoleController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<RoleDto>> findAll() {
         try {
-            return new ResponseEntity(roleService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -38,10 +42,10 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity saveRole(@RequestBody RoleDto roleDto) {
+    public ResponseEntity<HttpStatus> saveRole(@RequestBody RoleDto roleDto) {
         try {
             roleService.saveRole(roleDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -49,9 +53,9 @@ public class RoleController {
     }
 
     @GetMapping("/{role}")
-    public ResponseEntity findByName(@PathVariable("role") String name) {
+    public ResponseEntity<Optional<Role>> findByName(@PathVariable("role") String name) {
         try {
-            return new ResponseEntity(roleService.findByName(name), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.findByName(name), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Role error: {}", e.getMessage());
             throw new RuntimeException(e);

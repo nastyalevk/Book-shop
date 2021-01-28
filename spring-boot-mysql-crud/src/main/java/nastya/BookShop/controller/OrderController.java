@@ -1,6 +1,7 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.order.OrderDto;
+import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.service.api.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
@@ -28,9 +31,9 @@ public class OrderController {
     }
 
     @GetMapping("/client/{id}")
-    public ResponseEntity getOrdersByClient(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<OrderDto>> getOrdersByClient(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(orderService.findByClientId(id), HttpStatus.OK);
+            return new ResponseEntity<>(orderService.findByClientId(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Order error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -39,9 +42,9 @@ public class OrderController {
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity getOrder(@PathVariable("id") Integer id) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity(orderService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(orderService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -50,9 +53,9 @@ public class OrderController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<OrderDto>> findAll() {
         try {
-            return new ResponseEntity(orderService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -61,10 +64,10 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<HttpStatus> createOrder(@RequestBody OrderDto orderDto) {
         try {
             orderService.saveOrder(orderDto);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);

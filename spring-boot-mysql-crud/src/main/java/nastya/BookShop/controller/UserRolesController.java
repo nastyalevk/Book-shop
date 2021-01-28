@@ -1,6 +1,7 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.userRoles.UserRolesDto;
+import nastya.BookShop.model.UserRoles;
 import nastya.BookShop.service.api.UserRolesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user/role")
@@ -27,9 +30,9 @@ public class UserRolesController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<UserRolesDto>> findAll() {
         try {
-            return new ResponseEntity(userRolesService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(userRolesService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -37,9 +40,9 @@ public class UserRolesController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity setRole(@RequestBody UserRolesDto userRolesDto) {
+    public ResponseEntity<UserRoles> setRole(@RequestBody UserRolesDto userRolesDto) {
         try {
-            return new ResponseEntity(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);
+            return new ResponseEntity<>(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
