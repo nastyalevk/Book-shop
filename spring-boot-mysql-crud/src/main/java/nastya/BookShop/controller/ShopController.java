@@ -41,10 +41,10 @@ public class ShopController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<ShopDto>> findUserShops(@PathVariable("id") Integer id) {
+    @GetMapping("/username/{username}")
+    public ResponseEntity<List<ShopDto>> findUserShops(@PathVariable("username") String username) {
         try {
-            return new ResponseEntity<>(shopService.userShops(id), HttpStatus.OK);
+            return new ResponseEntity<>(shopService.userShops(username), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Shop error: {}", e.getMessage());
             throw new RuntimeException(e);

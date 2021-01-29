@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
-    List<Shop> findAllByUserId(Integer id);
+    List<Shop> findAllByUserUsername(String username);
 
     Shop getShopById(Integer id);
 

@@ -37,8 +37,8 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<ShopDto> userShops(Integer id) {
-        return transfer(shopRepository.findAllByUserId(id));
+    public List<ShopDto> userShops(String username) {
+        return transfer(shopRepository.findAllByUserUsername(username));
     }
 
     @Override

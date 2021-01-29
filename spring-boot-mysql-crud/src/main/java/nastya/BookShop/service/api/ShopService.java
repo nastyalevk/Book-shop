@@ -8,7 +8,7 @@ public interface ShopService {
 
     void saveShop(ShopDto shopDto);
 
-    List<ShopDto> userShops(Integer id);
+    List<ShopDto> userShops(String username);
 
     List<ShopDto> getShopsByBook(Integer id);
 }
