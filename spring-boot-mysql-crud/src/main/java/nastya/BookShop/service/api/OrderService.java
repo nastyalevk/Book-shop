@@ -12,6 +12,6 @@ public interface OrderService {
 
     List<OrderDto> findAll();
 
-    void saveOrder(OrderDto order);
+    OrderDto saveOrder(OrderDto order);
 
 }

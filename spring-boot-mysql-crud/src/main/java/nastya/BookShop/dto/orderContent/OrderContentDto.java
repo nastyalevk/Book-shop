@@ -12,13 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderContentDto {
 
-    @JsonProperty("orderNumber")
-    private Integer orderNumber;
-    @JsonProperty("bookId")
+//    @JsonProperty("orderId")
+    private Integer orderId;
+//    @JsonProperty("bookId")
     private Integer bookId;
-    @JsonProperty("quantity")
+//    @JsonProperty("quantity")
     private Integer quantity;
-    @JsonProperty("price")
+//    @JsonProperty("price")
     private Integer price;
 
 }

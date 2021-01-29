@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
-
+    private Integer orderId;
     private Integer orderNumber;
     private Integer shopId;
     private Integer cost;

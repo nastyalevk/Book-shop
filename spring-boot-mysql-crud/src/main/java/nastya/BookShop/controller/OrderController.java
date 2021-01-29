@@ -64,10 +64,9 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
         try {
-            orderService.saveOrder(orderDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(orderService.saveOrder(orderDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);

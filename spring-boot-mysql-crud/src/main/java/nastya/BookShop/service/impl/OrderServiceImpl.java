@@ -50,12 +50,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveOrder(OrderDto orderDto) {
+    public OrderDto saveOrder(OrderDto orderDto) {
         try {
-            orderRepository.save(transfer(orderDto));
+            return transfer(orderRepository.save(transfer(orderDto)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private List<OrderDto> transfer(List<Order> orders) {
@@ -69,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDto transfer(Order order) {
         DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         OrderDto orderDto = new OrderDto();
-//        orderDto.setId(order.getId());
+        orderDto.setOrderId(order.getId());
         orderDto.setOrderNumber(order.getOrderNumber());
         orderDto.setShopId(order.getShop().getId());
         orderDto.setDeliveryAddress(order.getDeliveryAddress());

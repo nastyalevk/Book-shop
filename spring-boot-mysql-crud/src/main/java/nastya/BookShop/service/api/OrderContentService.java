@@ -11,6 +11,6 @@ public interface OrderContentService {
 
     List<OrderContentDto> getOrderContent(Integer orderId);
 
-    OrderContent saveOrderContent(OrderContentDto orderContent);
+    OrderContentDto saveOrderContent(OrderContentDto orderContent);
 
 }

@@ -39,14 +39,14 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public OrderContent saveOrderContent(OrderContentDto orderContentDto) {
-        return orderContentRepository.save(transfer(orderContentDto));
+    public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) {
+        return transfer(orderContentRepository.save(transfer(orderContentDto)));
     }
 
 
     private OrderContentDto transfer(OrderContent orderContent) {
         OrderContentDto orderContentDto = new OrderContentDto();
-        orderContentDto.setOrderNumber(orderContent.getOrderContentId().getOrder().getOrderNumber());
+        orderContentDto.setOrderId(orderContent.getOrderContentId().getOrder().getId());
         orderContentDto.setBookId(orderContent.getOrderContentId().getBook().getId());
         orderContentDto.setQuantity(orderContent.getQuantity());
         orderContentDto.setPrice(orderContent.getPrice());
@@ -64,7 +64,7 @@ public class OrderContentServiceImpl implements OrderContentService {
     private OrderContent transfer(OrderContentDto orderContentDto) {
         OrderContent orderContent = new OrderContent();
         orderContent.setOrderContentId(new OrderContentId(
-                orderRepository.findByOrderNumber(orderContentDto.getOrderNumber()),
+                orderRepository.getOne(orderContentDto.getOrderId()),
                 bookRepository.getOne(orderContentDto.getBookId())));
         orderContent.setQuantity(orderContentDto.getQuantity());
         orderContent.setPrice(orderContentDto.getPrice());
