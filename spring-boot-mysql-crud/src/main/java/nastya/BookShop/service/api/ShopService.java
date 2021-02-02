@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface ShopService {
 
-    void saveShop(ShopDto shopDto);
+    ShopDto saveShop(ShopDto shopDto);
 
     List<ShopDto> userShops(String username);
 
     List<ShopDto> getShopsByBook(Integer id);
+
+    ShopDto getOne(Integer id);
 }

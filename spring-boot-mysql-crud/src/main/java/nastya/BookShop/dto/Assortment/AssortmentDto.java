@@ -17,7 +17,7 @@ public class AssortmentDto {
     private Integer shopId;
     private Integer quantity;
     private Integer Price;
-    private Date creationDate;
+    private String creationDate;
     private Integer classificationId;
     private String classificationStatus;
 

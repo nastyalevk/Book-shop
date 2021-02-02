@@ -10,10 +10,12 @@ import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.service.api.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class ShopServiceImpl implements ShopService {
 
@@ -32,8 +34,8 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public void saveShop(ShopDto shopDto) {
-        shopRepository.save(transfer((shopDto)));
+    public ShopDto saveShop(ShopDto shopDto) {
+        return transfer(shopRepository.save(transfer((shopDto))));
     }
 
     @Override
@@ -49,6 +51,11 @@ public class ShopServiceImpl implements ShopService {
             result.add(transfer(i.getAssortmentId().getShop()));
         }
         return result;
+    }
+
+    @Override
+    public ShopDto getOne(Integer id) {
+        return transfer(shopRepository.getOne(id));
     }
 
     private List<ShopDto> transfer(List<Shop> shops){
@@ -81,6 +88,7 @@ public class ShopServiceImpl implements ShopService {
         shop.setCity(shopDto.getCity());
         shop.setAddress(shopDto.getAddress());
         shop.setDescription(shopDto.getDescription());
+        System.out.println(shopDto.getClassificationId());
         shop.setClassification(classificationRepository.getClassificationById(shopDto.getClassificationId()));
         shop.setUser(userRepository.getOne(shopDto.getUserId()));
         return shop;

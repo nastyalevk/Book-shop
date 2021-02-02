@@ -9,10 +9,12 @@ import nastya.BookShop.repository.OrderRepository;
 import nastya.BookShop.service.api.OrderContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class OrderContentServiceImpl implements OrderContentService {
 
@@ -35,7 +37,7 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     @Override
     public List<OrderContentDto> getOrderContent(Integer id) {
-        return transfer(orderContentRepository.findAllByOrderContentIdOrder(id));
+        return transfer(orderContentRepository.findAllByOrderContentIdOrderId(id));
     }
 
     @Override

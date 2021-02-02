@@ -1,6 +1,7 @@
 package nastya.BookShop.repository;
 
 import nastya.BookShop.model.Assortment;
+import nastya.BookShop.model.AssortmentId;
 import nastya.BookShop.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,9 @@ public interface AssortmentRepository extends JpaRepository<Assortment, Integer>
 
     Assortment findByAssortmentIdBookIdAndAssortmentIdShopId(Integer bookId, Integer shopId);
 
+    Boolean existsByAssortmentId(AssortmentId assortmentId);
+
+    void deleteByAssortmentId(AssortmentId assortmentId);
+
+    Assortment getAssortmentByAssortmentId(AssortmentId assortmentId);
 }

@@ -8,10 +8,13 @@ public interface OrderService {
 
     List<OrderDto> findByClientId(Integer id);
 
+    List<OrderDto> findByClientUsername(String username);
+
     OrderDto findById(Integer id);
 
     List<OrderDto> findAll();
 
     OrderDto saveOrder(OrderDto order);
 
+    List<OrderDto> getOrderByShop(Integer shopId);
 }

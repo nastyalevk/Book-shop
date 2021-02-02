@@ -30,10 +30,9 @@ public class ShopController {
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity<HttpStatus> createShop(@RequestBody ShopDto shopDto) {
+    public ResponseEntity<ShopDto> createShop(@RequestBody ShopDto shopDto) {
         try {
-            shopService.saveShop(shopDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(shopService.saveShop(shopDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Shop error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -55,6 +54,16 @@ public class ShopController {
     public ResponseEntity<List<ShopDto>> findBookShops(@PathVariable("id") Integer id) {
         try {
             return new ResponseEntity<>(shopService.getShopsByBook(id), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Shop error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ShopDto> getShop(@PathVariable("id") Integer id) {
+        try {
+            return new ResponseEntity<>(shopService.getOne(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Shop error: {}", e.getMessage());
             throw new RuntimeException(e);

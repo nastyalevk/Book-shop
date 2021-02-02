@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -44,10 +46,9 @@ public class BookController {
 
 
     @PostMapping(path = "/create")
-    public ResponseEntity<HttpStatus> createBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
         try {
-            bookService.saveBook(bookDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(bookService.saveBook(bookDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);
@@ -81,6 +82,17 @@ public class BookController {
         try {
             bookService.saveBook(bookDto);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Book error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/shop/{id}")
+    public ResponseEntity<List<BookDto>> getBooksByShop(@PathVariable("id") Integer id) {
+        try {
+            return new ResponseEntity<>(bookService.getBookByShop(id), HttpStatus.OK);
+
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());
             throw new RuntimeException(e);

@@ -40,6 +40,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderDto> findByClientUsername(String username) {
+        return transfer(orderRepository.findByUserUsername(username));
+    }
+
+    @Override
     public OrderDto findById(Integer id) {
         return transfer(orderRepository.getOne(id));
     }
@@ -57,6 +62,11 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<OrderDto> getOrderByShop(Integer shopId) {
+        return transfer(orderRepository.findByShopId(shopId));
     }
 
     private List<OrderDto> transfer(List<Order> orders) {

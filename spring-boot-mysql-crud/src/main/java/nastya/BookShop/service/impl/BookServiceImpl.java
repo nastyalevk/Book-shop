@@ -2,7 +2,9 @@ package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.dto.response.PageResponse;
+import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.Book;
+import nastya.BookShop.repository.AssortmentRepository;
 import nastya.BookShop.repository.BookRepository;
 import nastya.BookShop.service.api.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +13,23 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AssortmentRepository assortmentRepository;
+
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, AssortmentRepository assortmentRepository) {
         this.bookRepository = bookRepository;
+        this.assortmentRepository = assortmentRepository;
     }
 
     @Override
@@ -41,8 +48,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book saveBook(BookDto bookDto) {
-        return bookRepository.save(transfer(bookDto));
+    public BookDto saveBook(BookDto bookDto) {
+        return transfer(bookRepository.save(transfer(bookDto)));
     }
 
     @Override
@@ -61,6 +68,16 @@ public class BookServiceImpl implements BookService {
         }
 
         return transfer(pageBook);
+    }
+
+    @Override
+    public List<BookDto> getBookByShop(Integer shopId) {
+        List<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(shopId);
+        List<BookDto> bookDtos = new ArrayList<>();
+        for(Assortment i : assortments){
+            bookDtos.add(transfer(i.getAssortmentId().getBook()));
+        }
+        return bookDtos;
     }
 
     private List<Sort.Order> sortType(String[] fieldsort) {
