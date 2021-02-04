@@ -1,17 +1,18 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.dto.review.ReviewDto;
+import nastya.BookShop.dto.review.BookReviewDto;
+import nastya.BookShop.dto.review.ShopReviewDto;
 
 import java.util.List;
 
 public interface ReviewService {
 
-    List<ReviewDto> getUserReview(Integer id);
+    List<BookReviewDto> getBookReview(Integer bookId);
 
-    List<ReviewDto> getShopReview(Integer id);
+    List<ShopReviewDto> getShopReview(Integer bookId);
 
-    List<ReviewDto> findAll();
+    BookReviewDto saveBookReview(BookReviewDto bookReviewDto);
 
-    void saveReview(ReviewDto review);
+    ShopReviewDto saveShopReview(ShopReviewDto shopReviewDto);
 
 }

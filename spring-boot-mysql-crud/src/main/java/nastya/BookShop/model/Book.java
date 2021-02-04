@@ -49,4 +49,8 @@ public class Book {
     private Integer pages;
     private String description;
 
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private Set<BookReview> BookReview;
+
 }

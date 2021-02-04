@@ -1,7 +1,7 @@
 package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.order.OrderDto;
-import nastya.BookShop.dto.orderContent.OrderContentDto;
+import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.service.api.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -71,15 +71,18 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/client/username/{username}")
-    public ResponseEntity<List<OrderDto>> getOrdersByClient(@PathVariable("username") String username) {
+    @GetMapping("/client/")
+    public ResponseEntity<PageResponse> getOrdersByClient(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "9") int size,
+                                                          @RequestParam() String username) {
         try {
-            return new ResponseEntity<>(orderService.findByClientUsername(username), HttpStatus.OK);
+            return new ResponseEntity<>(orderService.findByClientUsername(page, size, username), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Order error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
     @GetMapping("/shop/{id}")
     public ResponseEntity<List<OrderDto>> getOrdersByShop(@PathVariable("id") Integer id) {
         try {

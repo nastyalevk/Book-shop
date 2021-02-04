@@ -38,7 +38,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<Review> review;
+    private Set<BookReview> review;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore

@@ -2,11 +2,11 @@ package nastya.BookShop.repository;
 
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.AssortmentId;
-import nastya.BookShop.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AssortmentRepository extends JpaRepository<Assortment, Integer> {
 
@@ -21,4 +21,7 @@ public interface AssortmentRepository extends JpaRepository<Assortment, Integer>
     void deleteByAssortmentId(AssortmentId assortmentId);
 
     Assortment getAssortmentByAssortmentId(AssortmentId assortmentId);
+
+    Page<Assortment> findAllByAssortmentIdShopId(Integer shopId, Pageable pageable);
+
 }

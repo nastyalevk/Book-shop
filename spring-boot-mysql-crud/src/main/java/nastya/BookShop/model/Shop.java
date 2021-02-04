@@ -36,7 +36,7 @@ public class Shop {
 
     @OneToMany(mappedBy = "shop")
     @JsonIgnore
-    private Set<Review> review;
+    private Set<ShopReview> ShopReview;
 
     @OneToMany(mappedBy = "assortmentId.shop")
     @JsonIgnore

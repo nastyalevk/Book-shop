@@ -1,6 +1,7 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.dto.review.ReviewDto;
+import nastya.BookShop.dto.review.BookReviewDto;
+import nastya.BookShop.dto.review.ShopReviewDto;
 import nastya.BookShop.service.api.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +30,8 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<ReviewDto>> getUserReview(@PathVariable("id") Integer id) {
-        try {
-            return new ResponseEntity<>(reviewService.getUserReview(id), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Review error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
     @GetMapping("/shop/{id}")
-    public ResponseEntity<List<ReviewDto>> getShopReview(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<ShopReviewDto>> getShopReview(@PathVariable("id") Integer id) {
         try {
             return new ResponseEntity<>(reviewService.getShopReview(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -49,25 +40,34 @@ public class ReviewController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity<List<ReviewDto>> findAll() {
+    @GetMapping("/book/{id}")
+    public ResponseEntity<List<BookReviewDto>> getBookReview(@PathVariable("id") Integer id) {
         try {
-            return new ResponseEntity<>(reviewService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(reviewService.getBookReview(id), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<HttpStatus> createReview(@RequestBody ReviewDto reviewDto) {
+    @PostMapping("book/create")
+    public ResponseEntity<BookReviewDto> createBookReview(@RequestBody BookReviewDto BookReviewDto) {
         try {
-            reviewService.saveReview(reviewDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+
+            return new ResponseEntity<>(reviewService.saveBookReview(BookReviewDto), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Review error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
+    @PostMapping("shop/create")
+    public ResponseEntity<ShopReviewDto> createShopReview(@RequestBody ShopReviewDto ShopReviewDto) {
+        try {
+            return new ResponseEntity<>(reviewService.saveShopReview(ShopReviewDto), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Review error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 }

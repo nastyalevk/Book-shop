@@ -17,5 +17,5 @@ public interface BookService {
 
     PageResponse getAllBooksPage(String bookName, int page, int size, String[] sort);
 
-    List<BookDto> getBookByShop(Integer shopId);
+    PageResponse getBookByShop(int page, int size, Integer shopId);
 }

@@ -1,6 +1,7 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.order.OrderDto;
+import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Order;
 import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.OrderRepository;
@@ -8,6 +9,9 @@ import nastya.BookShop.repository.ShopRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +44,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findByClientUsername(String username) {
-        return transfer(orderRepository.findByUserUsername(username));
+    public PageResponse findByClientUsername(int page, int size, String username) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Order> orders = orderRepository.findByUserUsername(username, paging);
+        return transfer(orders);
     }
 
     @Override
@@ -78,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderDto transfer(Order order) {
-        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getId());
         orderDto.setOrderNumber(order.getOrderNumber());
@@ -96,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order transfer(OrderDto orderDto) throws ParseException {
         Order order = new Order();
-//        order.setId(orderDto.getId());
+        order.setId(orderDto.getOrderId());
         order.setOrderNumber(orderDto.getOrderNumber());
         order.setShop(shopRepository.getShopById(orderDto.getShopId()));
         order.setDeliveryAddress(orderDto.getDeliveryAddress());
@@ -107,5 +113,14 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderCompleteDate(new SimpleDateFormat("MM/dd/yyyy").parse(orderDto.getOrderCompleteDate()));
         order.setUser(userRepository.findByUsername(orderDto.getUsername()));
         return order;
+    }
+
+    private PageResponse transfer(Page page) {
+        PageResponse<OrderDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(transfer(page.getContent()));
+        pageResponse.setCurrentPage(page.getNumber());
+        pageResponse.setTotalElements(page.getTotalElements());
+        pageResponse.setTotalPages(page.getTotalPages());
+        return pageResponse;
     }
 }

@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -88,10 +86,12 @@ public class BookController {
         }
     }
 
-    @GetMapping("/shop/{id}")
-    public ResponseEntity<List<BookDto>> getBooksByShop(@PathVariable("id") Integer id) {
+    @GetMapping("/shop/")
+    public ResponseEntity<PageResponse> getBooksByShop(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "9") int size,
+                                                       @RequestParam() int id) {
         try {
-            return new ResponseEntity<>(bookService.getBookByShop(id), HttpStatus.OK);
+            return new ResponseEntity(bookService.getBookByShop(page, size, id), HttpStatus.OK);
 
         } catch (Exception e) {
             logger.error("Book error: {}", e.getMessage());

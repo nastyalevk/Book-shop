@@ -71,13 +71,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getBookByShop(Integer shopId) {
-        List<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(shopId);
+    public PageResponse getBookByShop(int page, int size, Integer shopId) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(shopId, paging);
         List<BookDto> bookDtos = new ArrayList<>();
-        for(Assortment i : assortments){
+        for (Assortment i : assortments) {
             bookDtos.add(transfer(i.getAssortmentId().getBook()));
         }
-        return bookDtos;
+        PageResponse<BookDto> pageResponse = new PageResponse<>();
+        pageResponse.setContent(bookDtos);
+        pageResponse.setCurrentPage(assortments.getNumber());
+        pageResponse.setTotalElements(assortments.getTotalElements());
+        pageResponse.setTotalPages(assortments.getTotalPages());
+        return pageResponse;
     }
 
     private List<Sort.Order> sortType(String[] fieldsort) {

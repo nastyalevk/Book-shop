@@ -17,14 +17,14 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "review_rate")
+@Table(name = "review_rate_book")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
+public class BookReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "review_id")
+    @Column(name = "book_review_id")
     private Integer id;
 
     @ManyToOne
@@ -35,7 +35,7 @@ public class Review {
     private Integer rating;
 
     @ManyToOne
-    @JoinColumn(name = "shop_id", nullable = false)
-    private Shop shop;
+    @JoinColumn(name = "book_id")
+    private Book book;
 
 }
