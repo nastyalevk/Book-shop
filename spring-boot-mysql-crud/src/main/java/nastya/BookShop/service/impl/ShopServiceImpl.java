@@ -58,7 +58,7 @@ public class ShopServiceImpl implements ShopService {
         return transfer(shopRepository.getOne(id));
     }
 
-    private List<ShopDto> transfer(List<Shop> shops){
+    private List<ShopDto> transfer(List<Shop> shops) {
         List<ShopDto> shopDtos = new ArrayList<>();
         for (Shop i : shops) {
             shopDtos.add(transfer(i));

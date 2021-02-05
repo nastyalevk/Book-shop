@@ -12,6 +12,6 @@ public interface RolesService {
 
     List<RoleDto> findAll();
 
-    Optional<Role> findByName(String name);
+    List<Role> findByName(String name);
 
 }

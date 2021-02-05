@@ -66,13 +66,12 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDto> getBook(@PathVariable("id") Integer id) {
-        try {
+//        try {
             return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error("Book error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+//        } catch (Exception e) {
+//            logger.error("Book error: {}", e.getMessage());
+//            throw new RuntimeException(e);
+//        }
     }
 
     @PostMapping("/update")

@@ -13,4 +13,5 @@ public interface ShopService {
     List<ShopDto> getShopsByBook(Integer id);
 
     ShopDto getOne(Integer id);
+
 }

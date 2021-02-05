@@ -4,13 +4,11 @@ import nastya.BookShop.dto.role.ERole;
 import nastya.BookShop.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface RolesRepository extends JpaRepository<Role, Integer> {
 
-    Optional<Role> findByRoleName(ERole name);
-
-    Optional<Role> findById(Integer id);
+    List<Role> findByRoleName(ERole name);
 
     Role findByRoleName(String roleName);
 

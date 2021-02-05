@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -40,7 +39,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Optional<Role> findByName(String name) {
+    public List<Role> findByName(String name) {
         return rolesRepository.findByRoleName(ERole.valueOf(name));
     }
 

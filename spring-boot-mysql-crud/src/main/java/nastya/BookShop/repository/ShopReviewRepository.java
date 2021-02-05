@@ -8,4 +8,5 @@ import java.util.List;
 public interface ShopReviewRepository extends JpaRepository<ShopReview, Integer> {
 
     List<ShopReview> findAllByShopId(Integer shopId);
+
 }

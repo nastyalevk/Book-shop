@@ -45,7 +45,6 @@ public class AssortmentServiceImpl implements AssortmentService {
             assortmentDtos.add(transfer(i));
         }
         return assortmentDtos;
-
     }
 
     @Override
@@ -79,7 +78,7 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public void delete( Integer bookId, Integer shopId) throws ParseException {
+    public void delete(Integer bookId, Integer shopId) throws ParseException {
         assortmentRepository.deleteByAssortmentId(new AssortmentId(bookRepository.getOne(bookId),
                 shopRepository.getOne(shopId)));
     }
