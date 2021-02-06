@@ -2,8 +2,6 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.shop.ShopDto;
 import nastya.BookShop.service.api.ShopService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,6 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
-
     private final ShopService shopService;
 
     @Autowired
@@ -31,43 +27,22 @@ public class ShopController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<ShopDto> createShop(@RequestBody ShopDto shopDto) {
-        try {
-            return new ResponseEntity<>(shopService.saveShop(shopDto), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        return new ResponseEntity<>(shopService.saveShop(shopDto), HttpStatus.OK);
     }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<List<ShopDto>> findUserShops(@PathVariable("username") String username) {
-        try {
-            return new ResponseEntity<>(shopService.userShops(username), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(shopService.userShops(username), HttpStatus.OK);
     }
 
     @GetMapping("/book/{id}")
     public ResponseEntity<List<ShopDto>> findBookShops(@PathVariable("id") Integer id) {
-        try {
-            return new ResponseEntity<>(shopService.getShopsByBook(id), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(shopService.getShopsByBook(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ShopDto> getShop(@PathVariable("id") Integer id) {
-        try {
-            return new ResponseEntity<>(shopService.getOne(id), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Shop error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(shopService.getOne(id), HttpStatus.OK);
     }
 
 }

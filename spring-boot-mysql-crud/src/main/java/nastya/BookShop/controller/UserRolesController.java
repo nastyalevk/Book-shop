@@ -3,8 +3,6 @@ package nastya.BookShop.controller;
 import nastya.BookShop.dto.userRoles.UserRolesDto;
 import nastya.BookShop.model.UserRoles;
 import nastya.BookShop.service.api.UserRolesService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,6 @@ import java.util.List;
 @RequestMapping("/user/role")
 public class UserRolesController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRolesController.class);
-
     private final UserRolesService userRolesService;
 
     @Autowired
@@ -31,21 +27,11 @@ public class UserRolesController {
 
     @GetMapping()
     public ResponseEntity<List<UserRolesDto>> findAll() {
-        try {
-            return new ResponseEntity<>(userRolesService.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Assortment error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(userRolesService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<UserRoles> setRole(@RequestBody UserRolesDto userRolesDto) {
-        try {
-            return new ResponseEntity<>(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Assortment error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);
     }
 }

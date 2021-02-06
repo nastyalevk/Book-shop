@@ -2,8 +2,6 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.service.api.OrderContentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,6 @@ import java.util.List;
 @RequestMapping("/order/content")
 public class OrderContentController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderContentController.class);
-
     private final OrderContentService orderContentService;
 
     @Autowired
@@ -31,56 +27,27 @@ public class OrderContentController {
 
     @GetMapping()
     public ResponseEntity<List<OrderContentDto>> findAll() {
-        try {
-            return new ResponseEntity<>(orderContentService.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        return new ResponseEntity<>(orderContentService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<List<OrderContentDto>> getOrderContent(@PathVariable("id") Integer id) {
-        try {
-            return new ResponseEntity<>(orderContentService.getOrderContent(id), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        return new ResponseEntity<>(orderContentService.getOrderContent(id), HttpStatus.OK);
     }
 
     @GetMapping("/{orderId}/{bookId}")
     public ResponseEntity<OrderContentDto> getOrderContent(@PathVariable("orderId") Integer orderId,
                                                            @PathVariable("bookId") Integer bookId) {
-        try {
-            return new ResponseEntity<>(orderContentService.getOrderContent(orderId, bookId), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Order content error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        return new ResponseEntity<>(orderContentService.getOrderContent(orderId, bookId), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<OrderContentDto> saveContent(@RequestBody OrderContentDto orderContentDto) {
-        try {
-            return new ResponseEntity<>(orderContentService.saveOrderContent(orderContentDto), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Assortment error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(orderContentService.saveOrderContent(orderContentDto), HttpStatus.OK);
     }
 
     @PostMapping("/update")
     public ResponseEntity<OrderContentDto> updateContent(@RequestBody OrderContentDto orderContentDto) {
-        try {
-            return new ResponseEntity<>(orderContentService.updateOrderContent(orderContentDto), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Assortment error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(orderContentService.updateOrderContent(orderContentDto), HttpStatus.OK);
     }
-
 }

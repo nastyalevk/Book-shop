@@ -21,8 +21,6 @@ import java.util.List;
 @RequestMapping("/role")
 public class RoleController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
-
     private final RolesService roleService;
 
     @Autowired
@@ -32,33 +30,18 @@ public class RoleController {
 
     @GetMapping()
     public ResponseEntity<List<RoleDto>> findAll() {
-        try {
-            return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Role error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> saveRole(@RequestBody RoleDto roleDto) {
-        try {
-            roleService.saveRole(roleDto);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Role error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        roleService.saveRole(roleDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{role}")
     public ResponseEntity<List<Role>> findByName(@PathVariable("role") String name) {
-        try {
-            return new ResponseEntity<>(roleService.findByName(name), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Role error: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(roleService.findByName(name), HttpStatus.OK);
     }
 
 
