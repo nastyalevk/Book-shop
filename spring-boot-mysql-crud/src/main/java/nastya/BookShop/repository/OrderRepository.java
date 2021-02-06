@@ -13,6 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Page<Order> findByUserUsername(String username, Pageable pageable);
 
-    List<Order> findByShopId(Integer shopId);
+    Page<Order> findByShopId(Integer shopId, Pageable pageable);
 
 }

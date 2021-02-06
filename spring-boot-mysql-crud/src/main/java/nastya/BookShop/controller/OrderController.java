@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) throws ParseException {
         return new ResponseEntity<>(orderService.saveOrder(orderDto), HttpStatus.OK);
     }
 
@@ -54,8 +55,10 @@ public class OrderController {
         return new ResponseEntity<>(orderService.findByClientUsername(page, size, username), HttpStatus.OK);
     }
 
-    @GetMapping("/shop/{id}")
-    public ResponseEntity<List<OrderDto>> getOrdersByShop(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderService.getOrderByShop(id), HttpStatus.OK);
+    @GetMapping("/shop/")
+    public ResponseEntity<PageResponse> getOrdersByShop(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "9") int size,
+                                                        @RequestParam() int shopId) {
+        return new ResponseEntity<>(orderService.getOrderByShop(page, size, shopId), HttpStatus.OK);
     }
 }

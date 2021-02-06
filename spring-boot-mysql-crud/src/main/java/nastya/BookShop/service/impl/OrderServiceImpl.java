@@ -1,5 +1,6 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.order.OrderClassification;
 import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Order;
@@ -61,18 +62,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto saveOrder(OrderDto orderDto) {
-        try {
-            return transfer(orderRepository.save(transfer(orderDto)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public OrderDto saveOrder(OrderDto orderDto) throws ParseException {
+        return transfer(orderRepository.save(transfer(orderDto)));
     }
 
     @Override
-    public List<OrderDto> getOrderByShop(Integer shopId) {
-        return transfer(orderRepository.findByShopId(shopId));
+    public PageResponse getOrderByShop(int page, int size, int shopId) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Order> orders = orderRepository.findByShopId(shopId, paging);
+        return transfer(orders);
     }
 
     private List<OrderDto> transfer(List<Order> orders) {
@@ -92,8 +90,7 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setDeliveryAddress(order.getDeliveryAddress());
         orderDto.setDescription(order.getDescription());
         orderDto.setOrderSubmitDate(dateFormat.format(order.getOrderSubmitDate()));
-        orderDto.setClassificationStatus(order.getClassification().getName());
-        orderDto.setClassificationId(order.getClassification().getId());
+        orderDto.setClassification(OrderClassification.valueOf(order.getClassification().getName()));
         orderDto.setCost(order.getCost());
         orderDto.setOrderCompleteDate(dateFormat.format(order.getOrderCompleteDate()));
         orderDto.setUsername(order.getUser().getUsername());
@@ -108,7 +105,8 @@ public class OrderServiceImpl implements OrderService {
         order.setDeliveryAddress(orderDto.getDeliveryAddress());
         order.setDescription(orderDto.getDescription());
         order.setOrderSubmitDate(new SimpleDateFormat("MM/dd/yyyy").parse(orderDto.getOrderSubmitDate()));
-        order.setClassification(classificationRepository.getClassificationById(orderDto.getClassificationId()));
+        order.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
+                orderDto.getClassification().toString(), "order"));
         order.setCost(orderDto.getCost());
         order.setOrderCompleteDate(new SimpleDateFormat("MM/dd/yyyy").parse(orderDto.getOrderCompleteDate()));
         order.setUser(userRepository.findByUsername(orderDto.getUsername()));

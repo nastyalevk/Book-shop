@@ -3,6 +3,7 @@ package nastya.BookShop.service.api;
 import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.dto.response.PageResponse;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface OrderService {
@@ -15,8 +16,8 @@ public interface OrderService {
 
     List<OrderDto> findAll();
 
-    OrderDto saveOrder(OrderDto order);
+    OrderDto saveOrder(OrderDto order) throws ParseException;
 
-    List<OrderDto> getOrderByShop(Integer shopId);
+    PageResponse getOrderByShop(int page, int size, int shopId);
 
 }

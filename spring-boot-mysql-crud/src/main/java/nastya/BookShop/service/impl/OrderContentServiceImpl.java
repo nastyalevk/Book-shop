@@ -1,5 +1,6 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.Assortment.AssortmentClassification;
 import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.AssortmentId;
@@ -56,7 +57,8 @@ public class OrderContentServiceImpl implements OrderContentService {
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
         assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
         if(assortment.getQuantity() == 0){
-            assortment.setClassification(classificationRepository.getClassificationByName("waiting for new arrivals"));
+            assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
+                    AssortmentClassification.waiting.toString(), "assortment"));
         }
         assortmentRepository.save(assortment);
         return transfer(orderContentRepository.save(orderContent));
@@ -71,7 +73,8 @@ public class OrderContentServiceImpl implements OrderContentService {
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
         assortment.setQuantity(assortment.getQuantity()-orderContentNew.getQuantity()+orderContentOld.getQuantity());
         if(assortment.getQuantity() == 0){
-            assortment.setClassification(classificationRepository.getClassificationByName("waiting for new arrivals"));
+            assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
+                    AssortmentClassification.waiting.toString(), "assortment"));
         }
         assortmentRepository.save(assortment);
         return transfer(orderContentRepository.save(orderContentNew));

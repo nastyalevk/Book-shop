@@ -1,5 +1,6 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.shop.ShopClassification;
 import nastya.BookShop.dto.shop.ShopDto;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.Shop;
@@ -46,7 +47,8 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<ShopDto> getShopsByBook(Integer id) {
         List<ShopDto> result = new ArrayList<>();
-        List<Assortment> assortments = assortmentRepository.findAssortmentByAssortmentIdBookId(id);
+        List<Assortment> assortments = assortmentRepository.
+                findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(id, ShopClassification.open.toString());
         for (Assortment i : assortments) {
             result.add(transfer(i.getAssortmentId().getShop()));
         }
@@ -74,8 +76,7 @@ public class ShopServiceImpl implements ShopService {
         shopDto.setCity(shop.getCity());
         shopDto.setAddress(shop.getAddress());
         shopDto.setDescription(shop.getDescription());
-        shopDto.setClassificationId(shop.getClassification().getId());
-        shopDto.setClassificationStatus(shop.getClassification().getName());
+        shopDto.setClassification(ShopClassification.valueOf(shop.getClassification().getName()));
         shopDto.setUserId(shop.getUser().getId());
         return shopDto;
     }
@@ -88,8 +89,8 @@ public class ShopServiceImpl implements ShopService {
         shop.setCity(shopDto.getCity());
         shop.setAddress(shopDto.getAddress());
         shop.setDescription(shopDto.getDescription());
-        System.out.println(shopDto.getClassificationId());
-        shop.setClassification(classificationRepository.getClassificationById(shopDto.getClassificationId()));
+        shop.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(shopDto.getClassification()
+                .toString(), "shop"));
         shop.setUser(userRepository.getOne(shopDto.getUserId()));
         return shop;
     }

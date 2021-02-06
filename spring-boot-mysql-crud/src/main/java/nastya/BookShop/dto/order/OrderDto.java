@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
+
     private Integer orderId;
     private Integer orderNumber;
     private Integer shopId;
@@ -20,8 +21,7 @@ public class OrderDto {
     private String deliveryAddress;
     private String description;
     private String OrderSubmitDate;
-    private Integer classificationId;
-    private String classificationStatus;
+    private OrderClassification classification;
     private String orderCompleteDate;
     private String username;
 

@@ -1,6 +1,8 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.Assortment.AssortmentClassification;
 import nastya.BookShop.dto.Assortment.AssortmentDto;
+import nastya.BookShop.dto.shop.ShopClassification;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.AssortmentId;
 import nastya.BookShop.repository.AssortmentRepository;
@@ -50,7 +52,8 @@ public class AssortmentServiceImpl implements AssortmentService {
     @Override
     public int getMinPrice(Integer bookId) {
         List<Assortment> assortments =
-                assortmentRepository.findAssortmentByAssortmentIdBookId(bookId);
+                assortmentRepository.findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(bookId,
+                        ShopClassification.open.toString());
         List<Integer> prices = new ArrayList<>();
         for (Assortment i : assortments) {
             prices.add(i.getPrice());
@@ -97,8 +100,7 @@ public class AssortmentServiceImpl implements AssortmentService {
         assortmentDto.setQuantity(assortment.getQuantity());
         assortmentDto.setPrice(assortment.getPrice());
         assortmentDto.setCreationDate(dateFormat.format(assortment.getCreationDate()));
-        assortmentDto.setClassificationStatus(assortment.getClassification().getName());
-        assortmentDto.setClassificationId(assortment.getClassification().getId());
+        assortmentDto.setClassification(AssortmentClassification.valueOf(assortment.getClassification().getName()));
         return assortmentDto;
     }
 
@@ -109,8 +111,8 @@ public class AssortmentServiceImpl implements AssortmentService {
         assortment.setQuantity(assortmentDto.getQuantity());
         assortment.setPrice(assortmentDto.getPrice());
         assortment.setCreationDate(new SimpleDateFormat("MM/dd/yyyy").parse(assortmentDto.getCreationDate()));
-        assortment.setClassification(classificationRepository.getClassificationById(
-                assortmentDto.getClassificationId()));
+        assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
+                assortmentDto.getClassification().toString(), "assortment"));
         return assortment;
     }
 }
