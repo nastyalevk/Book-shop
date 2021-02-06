@@ -51,6 +51,18 @@ public class OrderContentController {
 
     }
 
+    @GetMapping("/{orderId}/{bookId}")
+    public ResponseEntity<OrderContentDto> getOrderContent(@PathVariable("orderId") Integer orderId,
+                                                           @PathVariable("bookId") Integer bookId) {
+        try {
+            return new ResponseEntity<>(orderContentService.getOrderContent(orderId, bookId), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Order content error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @PostMapping("/create")
     public ResponseEntity<OrderContentDto> saveContent(@RequestBody OrderContentDto orderContentDto) {
         try {
@@ -59,7 +71,16 @@ public class OrderContentController {
             logger.error("Assortment error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
 
+    @PostMapping("/update")
+    public ResponseEntity<OrderContentDto> updateContent(@RequestBody OrderContentDto orderContentDto) {
+        try {
+            return new ResponseEntity<>(orderContentService.updateOrderContent(orderContentDto), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Assortment error: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 }

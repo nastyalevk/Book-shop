@@ -1,9 +1,13 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.orderContent.OrderContentDto;
+import nastya.BookShop.model.Assortment;
+import nastya.BookShop.model.AssortmentId;
 import nastya.BookShop.model.OrderContent;
 import nastya.BookShop.model.OrderContentId;
+import nastya.BookShop.repository.AssortmentRepository;
 import nastya.BookShop.repository.BookRepository;
+import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.OrderContentRepository;
 import nastya.BookShop.repository.OrderRepository;
 import nastya.BookShop.service.api.OrderContentService;
@@ -21,13 +25,17 @@ public class OrderContentServiceImpl implements OrderContentService {
     private final OrderContentRepository orderContentRepository;
     private final BookRepository bookRepository;
     private final OrderRepository orderRepository;
+    private final AssortmentRepository assortmentRepository;
+    private final ClassificationRepository classificationRepository;
 
     @Autowired
     public OrderContentServiceImpl(OrderContentRepository orderContentRepository, BookRepository bookRepository,
-                                   OrderRepository orderRepository) {
+                                   OrderRepository orderRepository, AssortmentRepository assortmentRepository, ClassificationRepository classificationRepository) {
         this.orderContentRepository = orderContentRepository;
         this.bookRepository = bookRepository;
         this.orderRepository = orderRepository;
+        this.assortmentRepository = assortmentRepository;
+        this.classificationRepository = classificationRepository;
     }
 
     @Override
@@ -42,7 +50,37 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     @Override
     public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) {
-        return transfer(orderContentRepository.save(transfer(orderContentDto)));
+        OrderContent orderContent = transfer(orderContentDto);
+        Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
+                new AssortmentId(orderContent.getOrderContentId().getBook(),
+                        orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
+        assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
+        if(assortment.getQuantity() == 0){
+            assortment.setClassification(classificationRepository.getClassificationByName("waiting for new arrivals"));
+        }
+        assortmentRepository.save(assortment);
+        return transfer(orderContentRepository.save(orderContent));
+    }
+
+    @Override
+    public OrderContentDto updateOrderContent(OrderContentDto orderContentDto) {
+        OrderContent orderContentNew = transfer(orderContentDto);
+        OrderContent orderContentOld = orderContentRepository.getByOrderContentId(orderContentNew.getOrderContentId());
+        Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
+                new AssortmentId(orderContentNew.getOrderContentId().getBook(),
+                        orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
+        assortment.setQuantity(assortment.getQuantity()-orderContentNew.getQuantity()+orderContentOld.getQuantity());
+        if(assortment.getQuantity() == 0){
+            assortment.setClassification(classificationRepository.getClassificationByName("waiting for new arrivals"));
+        }
+        assortmentRepository.save(assortment);
+        return transfer(orderContentRepository.save(orderContentNew));
+    }
+
+    @Override
+    public OrderContentDto getOrderContent(Integer orderId, Integer bookId) {
+        return transfer(this.orderContentRepository.getByOrderContentId(
+                new OrderContentId(orderRepository.getOne(orderId), bookRepository.getOne(bookId))));
     }
 
 

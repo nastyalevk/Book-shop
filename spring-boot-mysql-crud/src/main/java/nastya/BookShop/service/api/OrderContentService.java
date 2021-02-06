@@ -13,4 +13,8 @@ public interface OrderContentService {
 
     OrderContentDto saveOrderContent(OrderContentDto orderContent);
 
+    OrderContentDto updateOrderContent(OrderContentDto orderContent);
+
+    OrderContentDto getOrderContent(Integer orderId, Integer bookId);
+
 }

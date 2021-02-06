@@ -7,4 +7,5 @@ public interface ClassificationRepository extends JpaRepository<Classification, 
 
     Classification getClassificationById(Integer id);
 
+    Classification getClassificationByName(String name);
 }

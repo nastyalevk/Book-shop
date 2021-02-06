@@ -66,7 +66,7 @@ public class OrderController {
         try {
             return new ResponseEntity<>(orderService.saveOrder(orderDto), HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Assortment error: {}", e.getMessage());
+            logger.error("Order error: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
