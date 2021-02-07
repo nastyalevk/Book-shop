@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -33,6 +34,8 @@ public class ShopReview {
 
     private String comment;
     private Integer rating;
+    @Column(name = "creation_date")
+    private Date datetime;
 
     @ManyToOne
     @JoinColumn(name = "shop_id")

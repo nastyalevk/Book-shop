@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +50,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public BookReviewDto saveBookReview(BookReviewDto bookReviewDto) {
+    public BookReviewDto saveBookReview(BookReviewDto bookReviewDto) throws ParseException {
         return transfer(bookReviewRepository.save(transfer(bookReviewDto)));
     }
 
     @Override
-    public ShopReviewDto saveShopReview(ShopReviewDto shopReviewDto) {
+    public ShopReviewDto saveShopReview(ShopReviewDto shopReviewDto) throws ParseException {
         return transfer(shopReviewRepository.save(transfer(shopReviewDto)));
     }
 
@@ -75,6 +77,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setComment(review.getComment());
         reviewDto.setRating(review.getRating());
         reviewDto.setBookId(review.getBook().getId());
+        reviewDto.setDatetime(review.getDatetime().toString());
         return reviewDto;
     }
 
@@ -85,26 +88,31 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setComment(review.getComment());
         reviewDto.setRating(review.getRating());
         reviewDto.setShopId(review.getShop().getId());
+        reviewDto.setDatetime(review.getDatetime().toString());
         return reviewDto;
     }
 
-    private BookReview transfer(BookReviewDto reviewDto) {
+    private BookReview transfer(BookReviewDto reviewDto) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BookReview review = new BookReview();
         review.setId(reviewDto.getId());
         review.setUser(userRepository.findByUsername(reviewDto.getUsername()));
         review.setComment(reviewDto.getComment());
         review.setRating(reviewDto.getRating());
         review.setBook(bookRepository.getOne(reviewDto.getBookId()));
+        review.setDatetime(formatter.parse(reviewDto.getDatetime()));
         return review;
     }
 
-    private ShopReview transfer(ShopReviewDto reviewDto) {
+    private ShopReview transfer(ShopReviewDto reviewDto) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ShopReview review = new ShopReview();
         review.setId(reviewDto.getId());
         review.setUser(userRepository.findByUsername(reviewDto.getUsername()));
         review.setComment(reviewDto.getComment());
         review.setRating(reviewDto.getRating());
         review.setShop(shopRepository.getOne(reviewDto.getShopId()));
+        review.setDatetime(formatter.parse(reviewDto.getDatetime()));
         return review;
     }
 }

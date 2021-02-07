@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -37,12 +38,14 @@ public class ReviewController {
     }
 
     @PostMapping("book/create")
-    public ResponseEntity<BookReviewDto> createBookReview(@RequestBody BookReviewDto BookReviewDto) {
+    public ResponseEntity<BookReviewDto> createBookReview(@RequestBody BookReviewDto BookReviewDto)
+            throws ParseException {
         return new ResponseEntity<>(reviewService.saveBookReview(BookReviewDto), HttpStatus.OK);
     }
 
     @PostMapping("shop/create")
-    public ResponseEntity<ShopReviewDto> createShopReview(@RequestBody ShopReviewDto ShopReviewDto) {
+    public ResponseEntity<ShopReviewDto> createShopReview(@RequestBody ShopReviewDto ShopReviewDto)
+            throws ParseException {
         return new ResponseEntity<>(reviewService.saveShopReview(ShopReviewDto), HttpStatus.OK);
     }
 }
