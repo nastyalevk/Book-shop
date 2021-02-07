@@ -92,6 +92,12 @@ public class AssortmentServiceImpl implements AssortmentService {
                 shopRepository.getOne(shopId))));
     }
 
+    @Override
+    public List<AssortmentDto> getByBook(Integer bookId) {
+        return transfer(assortmentRepository.findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(bookId,
+                ShopClassification.open.toString()));
+    }
+
     private AssortmentDto transfer(Assortment assortment) {
         DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         AssortmentDto assortmentDto = new AssortmentDto();
@@ -114,5 +120,13 @@ public class AssortmentServiceImpl implements AssortmentService {
         assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                 assortmentDto.getClassification().toString(), "assortment"));
         return assortment;
+    }
+
+    private List<AssortmentDto> transfer(List<Assortment> assortments){
+        List<AssortmentDto> assortmentDtos = new ArrayList<>();
+        for(Assortment i: assortments){
+            assortmentDtos.add(transfer(i));
+        }
+        return assortmentDtos;
     }
 }

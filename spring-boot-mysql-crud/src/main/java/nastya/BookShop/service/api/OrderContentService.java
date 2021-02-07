@@ -17,4 +17,6 @@ public interface OrderContentService {
 
     OrderContentDto getOrderContent(Integer orderId, Integer bookId);
 
+    void deleteOrderContent(OrderContentDto orderContent);
+
 }

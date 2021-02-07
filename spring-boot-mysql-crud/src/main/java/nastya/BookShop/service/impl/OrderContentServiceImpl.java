@@ -86,6 +86,11 @@ public class OrderContentServiceImpl implements OrderContentService {
                 new OrderContentId(orderRepository.getOne(orderId), bookRepository.getOne(bookId))));
     }
 
+    @Override
+    public void deleteOrderContent(OrderContentDto orderContent) {
+        orderContentRepository.delete(transfer(orderContent));
+    }
+
 
     private OrderContentDto transfer(OrderContent orderContent) {
         OrderContentDto orderContentDto = new OrderContentDto();

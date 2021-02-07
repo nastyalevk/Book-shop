@@ -50,4 +50,10 @@ public class OrderContentController {
     public ResponseEntity<OrderContentDto> updateContent(@RequestBody OrderContentDto orderContentDto) {
         return new ResponseEntity<>(orderContentService.updateOrderContent(orderContentDto), HttpStatus.OK);
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<OrderContentDto> deleteContent(@RequestBody OrderContentDto orderContentDto) {
+        orderContentService.deleteOrderContent(orderContentDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
