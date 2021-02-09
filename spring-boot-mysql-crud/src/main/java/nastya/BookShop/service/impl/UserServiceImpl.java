@@ -115,11 +115,11 @@ public class UserServiceImpl implements UserService {
         }
         userDto.setRoles(rolesDto);
         userDto.setActivated(user.getActivated());
+        userDto.setIsEnabled(user.getIsEnabled());
         return userDto;
     }
 
     private User transfer(UserDto userDto) {
-
         User user = new User();
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
@@ -128,6 +128,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         user.setActivated(userDto.getActivated());
+        user.setIsEnabled(userDto.getIsEnabled());
         return user;
     }
 

@@ -33,6 +33,7 @@ public class UserController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<HttpStatus> createUser(@RequestBody UserDto userDto) {
+        System.out.println("createUser");
         userService.saveUser(userDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResponse findByClientUsername(int page, int size, String username) {
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging = PageRequest.of(page, size, Sort.by("id").descending());
         Page<Order> orders = orderRepository.findByUserUsername(username, paging);
         return transfer(orders);
     }
@@ -68,7 +69,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResponse getOrderByShop(int page, int size, int shopId) {
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging = PageRequest.of(page, size,
+                Sort.by("id").descending());
         Page<Order> orders = orderRepository.findByShopId(shopId, paging);
         return transfer(orders);
     }
@@ -82,17 +84,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderDto transfer(Order order) {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getId());
         orderDto.setOrderNumber(order.getOrderNumber());
         orderDto.setShopId(order.getShop().getId());
         orderDto.setDeliveryAddress(order.getDeliveryAddress());
         orderDto.setDescription(order.getDescription());
-        orderDto.setOrderSubmitDate(dateFormat.format(order.getOrderSubmitDate()));
+        orderDto.setOrderSubmitDate(order.getOrderSubmitDate().toString());
         orderDto.setClassification(OrderClassification.valueOf(order.getClassification().getName()));
         orderDto.setCost(order.getCost());
-        orderDto.setOrderCompleteDate(dateFormat.format(order.getOrderCompleteDate()));
+        orderDto.setOrderCompleteDate(order.getOrderCompleteDate().toString());
         orderDto.setUsername(order.getUser().getUsername());
         return orderDto;
     }
@@ -104,11 +105,11 @@ public class OrderServiceImpl implements OrderService {
         order.setShop(shopRepository.getShopById(orderDto.getShopId()));
         order.setDeliveryAddress(orderDto.getDeliveryAddress());
         order.setDescription(orderDto.getDescription());
-        order.setOrderSubmitDate(new SimpleDateFormat("MM/dd/yyyy").parse(orderDto.getOrderSubmitDate()));
+        order.setOrderSubmitDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(orderDto.getOrderSubmitDate()));
         order.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                 orderDto.getClassification().toString(), "order"));
         order.setCost(orderDto.getCost());
-        order.setOrderCompleteDate(new SimpleDateFormat("MM/dd/yyyy").parse(orderDto.getOrderCompleteDate()));
+        order.setOrderCompleteDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(orderDto.getOrderCompleteDate()));
         order.setUser(userRepository.findByUsername(orderDto.getUsername()));
         return order;
     }

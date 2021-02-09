@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -40,6 +41,10 @@ public class User {
     @JsonIgnore
     private Set<BookReview> review;
 
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private ConfirmationToken confirmationToken;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Shop> shop;
@@ -56,5 +61,6 @@ public class User {
     private String lastName;
     private String password;
     private Boolean activated;
+    private Boolean isEnabled;
 
 }
