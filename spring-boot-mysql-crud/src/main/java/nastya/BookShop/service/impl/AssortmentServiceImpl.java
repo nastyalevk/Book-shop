@@ -50,19 +50,6 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public int getMinPrice(Integer bookId) {
-        List<Assortment> assortments =
-                assortmentRepository.findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(bookId,
-                        ShopClassification.open.toString());
-        List<Integer> prices = new ArrayList<>();
-        for (Assortment i : assortments) {
-            prices.add(i.getPrice());
-        }
-        Collections.sort(prices);
-        return prices.get(0);
-    }
-
-    @Override
     public int getPriceByBookShop(Integer bookId, Integer shopId) {
         AssortmentDto assortmentDto =
                 transfer(assortmentRepository.findByAssortmentIdBookIdAndAssortmentIdShopId(bookId, shopId));
@@ -99,13 +86,12 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     private AssortmentDto transfer(Assortment assortment) {
-        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
         AssortmentDto assortmentDto = new AssortmentDto();
         assortmentDto.setBookId(assortment.getAssortmentId().getBook().getId());
         assortmentDto.setShopId(assortment.getAssortmentId().getShop().getId());
         assortmentDto.setQuantity(assortment.getQuantity());
         assortmentDto.setPrice(assortment.getPrice());
-        assortmentDto.setCreationDate(dateFormat.format(assortment.getCreationDate()));
+        assortmentDto.setCreationDate(assortment.getCreationDate().toString());
         assortmentDto.setClassification(AssortmentClassification.valueOf(assortment.getClassification().getName()));
         return assortmentDto;
     }
@@ -116,7 +102,7 @@ public class AssortmentServiceImpl implements AssortmentService {
                 shopRepository.getOne(assortmentDto.getShopId())));
         assortment.setQuantity(assortmentDto.getQuantity());
         assortment.setPrice(assortmentDto.getPrice());
-        assortment.setCreationDate(new SimpleDateFormat("MM/dd/yyyy").parse(assortmentDto.getCreationDate()));
+        assortment.setCreationDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(assortmentDto.getCreationDate()));
         assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                 assortmentDto.getClassification().toString(), "assortment"));
         return assortment;
