@@ -41,7 +41,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ShopReviewDto> getShopReview(Integer id) {
-        List<ShopReview> reviews = shopReviewRepository.findAllByShopId(id);
+        List<ShopReview> reviews = shopReviewRepository.findAllByShopIdAndApproved(id, true);
+        List<ShopReviewDto> reviewDtos = new ArrayList<>();
+        for (ShopReview i : reviews) {
+            reviewDtos.add(transfer(i));
+        }
+        return reviewDtos;
+    }
+
+    @Override
+    public List<ShopReviewDto> getShopReviewAdmin() {
+        List<ShopReview> reviews = shopReviewRepository.findAllByApproved(false);
         List<ShopReviewDto> reviewDtos = new ArrayList<>();
         for (ShopReview i : reviews) {
             reviewDtos.add(transfer(i));
@@ -60,14 +70,36 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public BookReviewDto getOneBookReview(Integer reviewId) {
+        System.out.println("getOneBookReview");
+        return transfer(this.bookReviewRepository.getOne(reviewId));
+    }
+
+    @Override
+    public ShopReviewDto getOneShopReview(Integer reviewId) {
+        return transfer(this.shopReviewRepository.getOne(reviewId));
+    }
+
+    @Override
     public List<BookReviewDto> getBookReview(Integer id) {
-        List<BookReview> reviews = bookReviewRepository.findAllByBookId(id);
+        List<BookReview> reviews = bookReviewRepository.findAllByBookIdAndApproved(id, true);
         List<BookReviewDto> reviewDtos = new ArrayList<>();
         for (BookReview i : reviews) {
             reviewDtos.add(transfer(i));
         }
         return reviewDtos;
     }
+
+    @Override
+    public List<BookReviewDto> getBookReviewAdmin() {
+        List<BookReview> reviews = bookReviewRepository.findAllByApproved(false);
+        List<BookReviewDto> reviewDtos = new ArrayList<>();
+        for (BookReview i : reviews) {
+            reviewDtos.add(transfer(i));
+        }
+        return reviewDtos;
+    }
+
 
 
     private BookReviewDto transfer(BookReview review) {
@@ -78,6 +110,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setRating(review.getRating());
         reviewDto.setBookId(review.getBook().getId());
         reviewDto.setDatetime(review.getDatetime().toString());
+        reviewDto.setApproved(review.getApproved());
         return reviewDto;
     }
 
@@ -89,6 +122,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setRating(review.getRating());
         reviewDto.setShopId(review.getShop().getId());
         reviewDto.setDatetime(review.getDatetime().toString());
+        reviewDto.setApproved(review.getApproved());
         return reviewDto;
     }
 
@@ -101,6 +135,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setRating(reviewDto.getRating());
         review.setBook(bookRepository.getOne(reviewDto.getBookId()));
         review.setDatetime(formatter.parse(reviewDto.getDatetime()));
+        review.setApproved(reviewDto.isApproved());
         return review;
     }
 
@@ -113,6 +148,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setRating(reviewDto.getRating());
         review.setShop(shopRepository.getOne(reviewDto.getShopId()));
         review.setDatetime(formatter.parse(reviewDto.getDatetime()));
+        review.setApproved(reviewDto.isApproved());
         return review;
     }
 }

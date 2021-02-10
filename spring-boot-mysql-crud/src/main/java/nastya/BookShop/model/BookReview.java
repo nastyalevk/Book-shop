@@ -41,4 +41,6 @@ public class BookReview {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    private Boolean approved;
+
 }

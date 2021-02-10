@@ -41,4 +41,6 @@ public class ShopReview {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    private Boolean approved;
+
 }

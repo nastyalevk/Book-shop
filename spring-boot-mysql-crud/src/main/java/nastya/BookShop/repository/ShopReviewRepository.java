@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ShopReviewRepository extends JpaRepository<ShopReview, Integer> {
 
-    List<ShopReview> findAllByShopId(Integer shopId);
+    List<ShopReview> findAllByShopIdAndApproved(Integer shopId, Boolean approved);
+
+    List<ShopReview> findAllByApproved(Boolean approved);
 
 }

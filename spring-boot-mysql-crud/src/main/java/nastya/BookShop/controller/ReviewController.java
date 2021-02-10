@@ -27,14 +27,34 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/shop/{id}")
-    public ResponseEntity<List<ShopReviewDto>> getShopReview(@PathVariable("id") Integer id) {
+    @GetMapping("shop/{id}")
+    public ResponseEntity<List<ShopReviewDto>> getShopReviewClient(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(reviewService.getShopReview(id), HttpStatus.OK);
     }
 
-    @GetMapping("/book/{id}")
-    public ResponseEntity<List<BookReviewDto>> getBookReview(@PathVariable("id") Integer id) {
+    @GetMapping("book/{id}")
+    public ResponseEntity<List<BookReviewDto>> getBookReviewClient(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(reviewService.getBookReview(id), HttpStatus.OK);
+    }
+
+    @GetMapping("approve/shop/")
+    public ResponseEntity<List<ShopReviewDto>> getShopReviewAdmin() {
+        return new ResponseEntity<>(reviewService.getShopReviewAdmin(), HttpStatus.OK);
+    }
+
+    @GetMapping("one/book/{reviewId}")
+    public ResponseEntity<BookReviewDto> getOneBookReview(@PathVariable("reviewId") Integer reviewId) {
+        return new ResponseEntity<>(reviewService.getOneBookReview(reviewId), HttpStatus.OK);
+    }
+
+    @GetMapping("one/shop/{reviewId}")
+    public ResponseEntity<ShopReviewDto> getOneShopReview(@PathVariable("reviewId") Integer reviewId) {
+        return new ResponseEntity<>(reviewService.getOneShopReview(reviewId), HttpStatus.OK);
+    }
+
+    @GetMapping("approve/book/")
+    public ResponseEntity<List<BookReviewDto>> getBookReviewAdmin() {
+        return new ResponseEntity<>(reviewService.getBookReviewAdmin(), HttpStatus.OK);
     }
 
     @PostMapping("book/create")
