@@ -25,11 +25,6 @@ public class UserRolesController {
         this.userRolesService = userRolesService;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<UserRolesDto>> findAll() {
-        return new ResponseEntity<>(userRolesService.findAll(), HttpStatus.OK);
-    }
-
     @PostMapping("/create")
     public ResponseEntity<UserRoles> setRole(@RequestBody UserRolesDto userRolesDto) {
         return new ResponseEntity<>(userRolesService.saveUserRole(userRolesDto), HttpStatus.OK);

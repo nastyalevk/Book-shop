@@ -28,11 +28,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/client/{id}")
-    public ResponseEntity<List<OrderDto>> getOrdersByClient(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderService.findByClientId(id), HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOrder(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(orderService.findById(id), HttpStatus.OK);

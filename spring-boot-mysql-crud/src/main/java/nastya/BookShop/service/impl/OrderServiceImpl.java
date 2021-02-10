@@ -41,11 +41,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findByClientId(Integer id) {
-        return transfer(orderRepository.findAllByUserId(id));
-    }
-
-    @Override
     public PageResponse findByClientUsername(int page, int size, String username) {
         Pageable paging = PageRequest.of(page, size, Sort.by("id").descending());
         Page<Order> orders = orderRepository.findByUserUsername(username, paging);

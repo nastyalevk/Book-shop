@@ -40,16 +40,6 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public List<AssortmentDto> getAssortmentByShop(Integer id) {
-        List<Assortment> assortments = assortmentRepository.findAllByAssortmentIdShopId(id);
-        List<AssortmentDto> assortmentDtos = new ArrayList<>();
-        for (Assortment i : assortments) {
-            assortmentDtos.add(transfer(i));
-        }
-        return assortmentDtos;
-    }
-
-    @Override
     public int getPriceByBookShop(Integer bookId, Integer shopId) {
         AssortmentDto assortmentDto =
                 transfer(assortmentRepository.findByAssortmentIdBookIdAndAssortmentIdShopId(bookId, shopId));

@@ -50,13 +50,17 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) {
+    public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) throws Exception {
         OrderContent orderContent = transfer(orderContentDto);
         Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
                 new AssortmentId(orderContent.getOrderContentId().getBook(),
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
-        assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
-        if(assortment.getQuantity() == 0){
+        if (assortment.getQuantity() - orderContentDto.getQuantity() < 0) {
+            throw new Exception("Not enough items at store");
+        }else{
+            assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
+        }
+        if (assortment.getQuantity() == 0) {
             assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                     AssortmentClassification.waiting.toString(), "assortment"));
         }
@@ -65,14 +69,18 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public OrderContentDto updateOrderContent(OrderContentDto orderContentDto) {
+    public OrderContentDto updateOrderContent(OrderContentDto orderContentDto) throws Exception {
         OrderContent orderContentNew = transfer(orderContentDto);
         OrderContent orderContentOld = orderContentRepository.getByOrderContentId(orderContentNew.getOrderContentId());
         Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
                 new AssortmentId(orderContentNew.getOrderContentId().getBook(),
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
-        assortment.setQuantity(assortment.getQuantity()-orderContentNew.getQuantity()+orderContentOld.getQuantity());
-        if(assortment.getQuantity() == 0){
+        if (assortment.getQuantity() - orderContentNew.getQuantity() + orderContentOld.getQuantity() < 0) {
+            throw new IllegalArgumentException("Not enough items at store");
+        }else {
+            assortment.setQuantity(assortment.getQuantity() - orderContentNew.getQuantity() + orderContentOld.getQuantity());
+        }
+        if (assortment.getQuantity() == 0) {
             assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                     AssortmentClassification.waiting.toString(), "assortment"));
         }
@@ -101,7 +109,7 @@ public class OrderContentServiceImpl implements OrderContentService {
         return orderContentDto;
     }
 
-    private List<OrderContentDto> transfer (List<OrderContent> orderContents){
+    private List<OrderContentDto> transfer(List<OrderContent> orderContents) {
         List<OrderContentDto> orderContentDtos = new ArrayList<>();
         for (OrderContent i : orderContents) {
             orderContentDtos.add(transfer(i));

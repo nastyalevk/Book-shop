@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface AssortmentService {
 
-    List<AssortmentDto> getAssortmentByShop(Integer id);
-
     int getPriceByBookShop(Integer bookId, Integer shopId);
 
     AssortmentDto save(AssortmentDto assortmentDto) throws ParseException;

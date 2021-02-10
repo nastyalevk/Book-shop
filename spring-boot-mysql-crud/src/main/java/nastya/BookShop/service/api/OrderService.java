@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<OrderDto> findByClientId(Integer id);
-
     PageResponse findByClientUsername(int page, int size, String username);
 
     OrderDto findById(Integer id);

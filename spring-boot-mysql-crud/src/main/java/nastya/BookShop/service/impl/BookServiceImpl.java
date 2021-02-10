@@ -53,11 +53,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        bookRepository.deleteById(id);
-    }
-
-    @Override
     public PageResponse getAllBooksPage(String bookName, int page, int size, String[] sort) {
         Pageable pagingSort = PageRequest.of(page, size, Sort.by(sortType(sort)));
         Page<Book> pageBook;
@@ -84,6 +79,11 @@ public class BookServiceImpl implements BookService {
         pageResponse.setTotalElements(assortments.getTotalElements());
         pageResponse.setTotalPages(assortments.getTotalPages());
         return pageResponse;
+    }
+
+    @Override
+    public Boolean isBook(Integer id) {
+        return bookRepository.existsBookById(id);
     }
 
     private List<Sort.Order> sortType(String[] fieldsort) {

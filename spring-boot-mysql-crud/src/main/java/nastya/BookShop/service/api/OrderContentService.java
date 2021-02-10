@@ -11,9 +11,9 @@ public interface OrderContentService {
 
     List<OrderContentDto> getOrderContent(Integer orderId);
 
-    OrderContentDto saveOrderContent(OrderContentDto orderContent);
+    OrderContentDto saveOrderContent(OrderContentDto orderContent) throws Exception;
 
-    OrderContentDto updateOrderContent(OrderContentDto orderContent);
+    OrderContentDto updateOrderContent(OrderContentDto orderContent) throws Exception;
 
     OrderContentDto getOrderContent(Integer orderId, Integer bookId);
 

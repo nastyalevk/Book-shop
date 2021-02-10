@@ -39,21 +39,9 @@ public class BookController {
         return new ResponseEntity<>(bookService.saveBook(bookDto), HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Integer id) {
-        bookService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<BookDto> getBook(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<HttpStatus> updateBook(@RequestBody BookDto bookDto) {
-        bookService.saveBook(bookDto);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/shop/")
@@ -62,5 +50,10 @@ public class BookController {
                                                        @RequestParam() int id) {
         return new ResponseEntity(bookService.getBookByShop(page, size, id), HttpStatus.OK);
 
+    }
+
+    @GetMapping("exist/{id}")
+    public ResponseEntity<Boolean> isBook(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(bookService.isBook(id), HttpStatus.OK);
     }
 }

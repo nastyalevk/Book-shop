@@ -10,10 +10,6 @@ import java.util.List;
 
 public interface AssortmentRepository extends JpaRepository<Assortment, Integer> {
 
-    List<Assortment> findAllByAssortmentIdShopId(Integer id);
-
-    List<Assortment> findAssortmentByAssortmentIdBookId(Integer id);
-
     List<Assortment> findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(Integer id, String classification);
 
     Assortment findByAssortmentIdBookIdAndAssortmentIdShopId(Integer bookId, Integer shopId);

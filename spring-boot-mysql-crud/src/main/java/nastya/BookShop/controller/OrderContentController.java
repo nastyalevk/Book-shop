@@ -42,12 +42,12 @@ public class OrderContentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<OrderContentDto> saveContent(@RequestBody OrderContentDto orderContentDto) {
+    public ResponseEntity<OrderContentDto> saveContent(@RequestBody OrderContentDto orderContentDto) throws Exception {
         return new ResponseEntity<>(orderContentService.saveOrderContent(orderContentDto), HttpStatus.OK);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<OrderContentDto> updateContent(@RequestBody OrderContentDto orderContentDto) {
+    public ResponseEntity<OrderContentDto> updateContent(@RequestBody OrderContentDto orderContentDto) throws Exception {
         return new ResponseEntity<>(orderContentService.updateOrderContent(orderContentDto), HttpStatus.OK);
     }
 

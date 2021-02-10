@@ -13,9 +13,9 @@ public interface BookService {
 
     BookDto saveBook(BookDto book);
 
-    void deleteById(Integer id);
-
     PageResponse getAllBooksPage(String bookName, int page, int size, String[] sort);
 
     PageResponse getBookByShop(int page, int size, Integer shopId);
+
+    Boolean isBook(Integer id);
 }
