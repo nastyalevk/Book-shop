@@ -71,13 +71,22 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public BookReviewDto getOneBookReview(Integer reviewId) {
-        System.out.println("getOneBookReview");
         return transfer(this.bookReviewRepository.getOne(reviewId));
     }
 
     @Override
     public ShopReviewDto getOneShopReview(Integer reviewId) {
         return transfer(this.shopReviewRepository.getOne(reviewId));
+    }
+
+    @Override
+    public void deleteBookReview(BookReviewDto bookReviewDto) throws ParseException {
+        bookReviewRepository.delete(transfer(bookReviewDto));
+    }
+
+    @Override
+    public void deleteShopReview(ShopReviewDto shopReviewDto) throws ParseException {
+        shopReviewRepository.delete(transfer(shopReviewDto));
     }
 
     @Override

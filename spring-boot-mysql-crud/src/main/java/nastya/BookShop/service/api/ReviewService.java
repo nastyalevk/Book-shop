@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface ReviewService {
 
+    void deleteBookReview(BookReviewDto bookReviewDto) throws ParseException;
+
+    void deleteShopReview(ShopReviewDto shopReviewDto) throws ParseException;
+
     List<BookReviewDto> getBookReview(Integer bookId);
 
     List<ShopReviewDto> getShopReview(Integer bookId);

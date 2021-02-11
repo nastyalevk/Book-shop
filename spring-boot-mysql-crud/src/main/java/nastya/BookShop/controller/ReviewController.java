@@ -68,4 +68,18 @@ public class ReviewController {
             throws ParseException {
         return new ResponseEntity<>(reviewService.saveShopReview(ShopReviewDto), HttpStatus.OK);
     }
+
+    @PostMapping("delete/book")
+    public ResponseEntity deleteBookReview(@RequestBody BookReviewDto BookReviewDto)
+            throws ParseException {
+        reviewService.deleteBookReview(BookReviewDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("delete/shop")
+    public ResponseEntity deleteShopReview(@RequestBody ShopReviewDto ShopReviewDto)
+            throws ParseException {
+        reviewService.deleteShopReview(ShopReviewDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
