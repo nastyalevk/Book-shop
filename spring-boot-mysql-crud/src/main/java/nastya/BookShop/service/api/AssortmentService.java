@@ -11,6 +11,8 @@ public interface AssortmentService {
 
     AssortmentDto save(AssortmentDto assortmentDto) throws ParseException;
 
+    AssortmentDto update(AssortmentDto assortmentDto, String username) throws ParseException;
+
     boolean existsByBook(Integer bookId, Integer shopId);
 
     void delete(Integer bookId, Integer shopId) throws ParseException;

@@ -56,7 +56,7 @@ public class OrderContentServiceImpl implements OrderContentService {
                 new AssortmentId(orderContent.getOrderContentId().getBook(),
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
         if (assortment.getQuantity() - orderContentDto.getQuantity() < 0) {
-            throw new Exception("Not enough items at store");
+            throw new IllegalArgumentException("Not enough items at store");
         }else{
             assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
         }

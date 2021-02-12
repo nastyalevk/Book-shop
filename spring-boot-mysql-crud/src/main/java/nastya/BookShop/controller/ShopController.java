@@ -25,9 +25,10 @@ public class ShopController {
         this.shopService = shopService;
     }
 
-    @PostMapping(path = "/create")
-    public ResponseEntity<ShopDto> createShop(@RequestBody ShopDto shopDto) {
-        return new ResponseEntity<>(shopService.saveShop(shopDto), HttpStatus.OK);
+    @PostMapping(path = "/create/{username}")
+    public ResponseEntity<ShopDto> createShop(@RequestBody ShopDto shopDto,
+                                              @PathVariable("username") String username) {
+        return new ResponseEntity<>(shopService.saveShop(shopDto, username), HttpStatus.OK);
     }
 
     @GetMapping("/username/{username}")

@@ -35,7 +35,12 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public ShopDto saveShop(ShopDto shopDto) {
+    public ShopDto saveShop(ShopDto shopDto, String username) {
+        if(shopRepository.existsById(shopDto.getId())){
+            if(!shopRepository.getOne(shopDto.getId()).getUser().getUsername().equals(username)){
+                throw new IllegalArgumentException("You dont have access for this action!");
+            }
+        }
         return transfer(shopRepository.save(transfer((shopDto))));
     }
 

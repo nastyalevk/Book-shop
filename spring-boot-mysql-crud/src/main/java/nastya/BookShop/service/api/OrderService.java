@@ -16,6 +16,6 @@ public interface OrderService {
 
     OrderDto saveOrder(OrderDto order) throws ParseException;
 
-    PageResponse getOrderByShop(int page, int size, int shopId);
+    PageResponse getOrderByShop(int page, int size, int shopId, String useraname);
 
 }

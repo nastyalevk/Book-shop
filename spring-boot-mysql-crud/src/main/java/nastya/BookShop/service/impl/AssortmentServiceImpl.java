@@ -47,6 +47,17 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
+    public AssortmentDto update(AssortmentDto assortmentDto, String username) throws ParseException {
+        Assortment assortment = transfer(assortmentDto);
+        if(assortmentRepository.existsByAssortmentId(assortment.getAssortmentId())){
+            if(!assortment.getAssortmentId().getShop().getUser().getUsername().equals(username)){
+                throw new IllegalArgumentException("You dont have access for this action!");
+            }
+        }
+        return transfer(assortmentRepository.save(transfer(assortmentDto)));
+    }
+
+    @Override
     public AssortmentDto save(AssortmentDto assortmentDto) throws ParseException {
         return transfer(assortmentRepository.save(transfer(assortmentDto)));
     }
@@ -58,7 +69,7 @@ public class AssortmentServiceImpl implements AssortmentService {
     }
 
     @Override
-    public void delete(Integer bookId, Integer shopId) throws ParseException {
+    public void delete(Integer bookId, Integer shopId){
         assortmentRepository.deleteByAssortmentId(new AssortmentId(bookRepository.getOne(bookId),
                 shopRepository.getOne(shopId)));
     }

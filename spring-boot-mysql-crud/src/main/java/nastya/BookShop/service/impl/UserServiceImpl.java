@@ -79,16 +79,16 @@ public class UserServiceImpl implements UserService {
         for (String i : roles) {
             String[] split = i.split("-");
             if ("create".equalsIgnoreCase(split[1])) {
-                userRolesRepository.save(newUserRole(split[1], id));
+                userRolesRepository.save(newUserRole(split[0], id));
             } else if ("delete".equalsIgnoreCase(split[1])) {
-                userRolesRepository.delete(newUserRole(split[1], id));
+                userRolesRepository.delete(newUserRole(split[0], id));
             }
         }
     }
 
     private UserRoles newUserRole(String roleName, Integer id) {
         User user = userRepository.getOne(id);
-        Role role = rolesRepository.findByRoleName(roleName);
+        Role role = rolesRepository.getRoleByRoleName(roleName);
         UserRolesId userRolesId = new UserRolesId();
         userRolesId.setRole(role);
         userRolesId.setUser(user);

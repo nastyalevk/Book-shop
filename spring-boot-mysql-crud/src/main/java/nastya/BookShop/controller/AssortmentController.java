@@ -2,8 +2,6 @@ package nastya.BookShop.controller;
 
 import nastya.BookShop.dto.Assortment.AssortmentDto;
 import nastya.BookShop.service.api.AssortmentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/assortment")
 public class AssortmentController {
-    
+
     private final AssortmentService assortmentService;
 
     @Autowired
@@ -34,31 +32,39 @@ public class AssortmentController {
         return new ResponseEntity<>(assortmentService.getPriceByBookShop(bookId, shopId), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/create")//
-    public ResponseEntity<AssortmentDto> createAssortment(@RequestBody AssortmentDto assortmentDto) 
+    @PostMapping(path = "/create/")
+    public ResponseEntity<AssortmentDto> createAssortment(@RequestBody AssortmentDto assortmentDto)
             throws ParseException {
         return new ResponseEntity<>(assortmentService.save(assortmentDto), HttpStatus.OK);
     }
 
-    @GetMapping("/exists/{bookId}/{shopId}")//
+    @PostMapping(path = "/update/{username}")
+    public ResponseEntity<AssortmentDto> updateAssortment(@RequestBody AssortmentDto assortmentDto,
+                                                          @PathVariable("username") String username)
+            throws ParseException {
+        return new ResponseEntity<>(assortmentService.update(assortmentDto, username), HttpStatus.OK);
+    }
+
+    @GetMapping("/exists/{bookId}/{shopId}")
     public ResponseEntity<Boolean> existsByBook(@PathVariable("bookId") Integer bookId,
                                                 @PathVariable("shopId") Integer shopId) {
         return new ResponseEntity<>(assortmentService.existsByBook(bookId, shopId), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/delete/{bookId}/{shopId}")//
+    @GetMapping(path = "/delete/{bookId}/{shopId}")
     public ResponseEntity deleteAssortment(@PathVariable("bookId") Integer bookId,
                                            @PathVariable("shopId") Integer shopId) throws ParseException {
         assortmentService.delete(bookId, shopId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{bookId}/{shopId}")//
+    @GetMapping("/{bookId}/{shopId}")
     public ResponseEntity<AssortmentDto> getOne(@PathVariable("bookId") Integer bookId,
                                                 @PathVariable("shopId") Integer shopId) {
         return new ResponseEntity<>(assortmentService.getOne(bookId, shopId), HttpStatus.OK);
     }
-    @GetMapping("/{bookId}")//
+
+    @GetMapping("/{bookId}")
     public ResponseEntity<List<AssortmentDto>> getOne(@PathVariable("bookId") Integer bookId) {
         return new ResponseEntity<>(assortmentService.getByBook(bookId), HttpStatus.OK);
     }

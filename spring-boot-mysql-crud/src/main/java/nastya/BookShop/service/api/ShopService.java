@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ShopService {
 
-    ShopDto saveShop(ShopDto shopDto);
+    ShopDto saveShop(ShopDto shopDto, String username);
 
     List<ShopDto> userShops(String username);
 

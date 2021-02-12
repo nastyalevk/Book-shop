@@ -10,6 +10,6 @@ public interface RolesRepository extends JpaRepository<Role, Integer> {
 
     List<Role> findByRoleName(ERole name);
 
-    Role findByRoleName(String roleName);
+    Role getRoleByRoleName(String roleName);
 
 }

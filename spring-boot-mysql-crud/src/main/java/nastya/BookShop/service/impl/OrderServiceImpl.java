@@ -4,12 +4,15 @@ import nastya.BookShop.dto.order.OrderClassification;
 import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.dto.response.PageResponse;
 import nastya.BookShop.model.Order;
+import nastya.BookShop.model.Shop;
 import nastya.BookShop.repository.ClassificationRepository;
 import nastya.BookShop.repository.OrderRepository;
 import nastya.BookShop.repository.ShopRepository;
 import nastya.BookShop.repository.UserRepository;
 import nastya.BookShop.service.api.OrderService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,9 +64,13 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto saveOrder(OrderDto orderDto) throws ParseException {
         return transfer(orderRepository.save(transfer(orderDto)));
     }
-
+    
     @Override
-    public PageResponse getOrderByShop(int page, int size, int shopId) {
+    public PageResponse getOrderByShop(int page, int size, int shopId, String username) {
+        Shop shop = shopRepository.getOne(shopId);
+        if(!shop.getUser().getUsername().equals(username)){
+           throw new IllegalArgumentException("You dont have access for this page!");
+        }
         Pageable paging = PageRequest.of(page, size,
                 Sort.by("id").descending());
         Page<Order> orders = orderRepository.findByShopId(shopId, paging);

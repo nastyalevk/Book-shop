@@ -53,7 +53,8 @@ public class OrderController {
     @GetMapping("/shop/")
     public ResponseEntity<PageResponse> getOrdersByShop(@RequestParam(defaultValue = "0") int page,
                                                         @RequestParam(defaultValue = "9") int size,
-                                                        @RequestParam() int shopId) {
-        return new ResponseEntity<>(orderService.getOrderByShop(page, size, shopId), HttpStatus.OK);
+                                                        @RequestParam() int shopId,
+                                                        @RequestParam(name = "usernameRequested") String useraname) {
+        return new ResponseEntity<>(orderService.getOrderByShop(page, size, shopId, useraname), HttpStatus.OK);
     }
 }
