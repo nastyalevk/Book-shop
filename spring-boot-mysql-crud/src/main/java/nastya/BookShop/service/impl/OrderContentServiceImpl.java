@@ -1,7 +1,9 @@
 package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.Assortment.AssortmentClassification;
+import nastya.BookShop.dto.classification.ClassificationParent;
 import nastya.BookShop.dto.orderContent.OrderContentDto;
+import nastya.BookShop.exception.NotEnoughItemsException;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.AssortmentId;
 import nastya.BookShop.model.OrderContent;
@@ -31,7 +33,8 @@ public class OrderContentServiceImpl implements OrderContentService {
 
     @Autowired
     public OrderContentServiceImpl(OrderContentRepository orderContentRepository, BookRepository bookRepository,
-                                   OrderRepository orderRepository, AssortmentRepository assortmentRepository, ClassificationRepository classificationRepository) {
+                                   OrderRepository orderRepository, AssortmentRepository assortmentRepository,
+                                   ClassificationRepository classificationRepository) {
         this.orderContentRepository = orderContentRepository;
         this.bookRepository = bookRepository;
         this.orderRepository = orderRepository;
@@ -50,39 +53,40 @@ public class OrderContentServiceImpl implements OrderContentService {
     }
 
     @Override
-    public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) throws Exception {
+    public OrderContentDto saveOrderContent(OrderContentDto orderContentDto) {
         OrderContent orderContent = transfer(orderContentDto);
         Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
                 new AssortmentId(orderContent.getOrderContentId().getBook(),
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
         if (assortment.getQuantity() - orderContentDto.getQuantity() < 0) {
-            throw new IllegalArgumentException("Not enough items at store");
-        }else{
+            throw new NotEnoughItemsException("Not enough items at store");
+        } else {
             assortment.setQuantity(assortment.getQuantity() - orderContentDto.getQuantity());
         }
         if (assortment.getQuantity() == 0) {
             assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
-                    AssortmentClassification.waiting.toString(), "assortment"));
+                    AssortmentClassification.WAITING.getName(), ClassificationParent.ASSORTMENT.getName()));
         }
         assortmentRepository.save(assortment);
         return transfer(orderContentRepository.save(orderContent));
     }
 
     @Override
-    public OrderContentDto updateOrderContent(OrderContentDto orderContentDto) throws Exception {
+    public OrderContentDto updateOrderContent(OrderContentDto orderContentDto) {
         OrderContent orderContentNew = transfer(orderContentDto);
         OrderContent orderContentOld = orderContentRepository.getByOrderContentId(orderContentNew.getOrderContentId());
         Assortment assortment = assortmentRepository.getAssortmentByAssortmentId(
                 new AssortmentId(orderContentNew.getOrderContentId().getBook(),
                         orderRepository.getOne(orderContentDto.getOrderId()).getShop()));
         if (assortment.getQuantity() - orderContentNew.getQuantity() + orderContentOld.getQuantity() < 0) {
-            throw new IllegalArgumentException("Not enough items at store");
-        }else {
-            assortment.setQuantity(assortment.getQuantity() - orderContentNew.getQuantity() + orderContentOld.getQuantity());
+            throw new NotEnoughItemsException("Not enough items at store");
+        } else {
+            assortment.setQuantity(assortment.getQuantity() -
+                    orderContentNew.getQuantity() + orderContentOld.getQuantity());
         }
         if (assortment.getQuantity() == 0) {
             assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
-                    AssortmentClassification.waiting.toString(), "assortment"));
+                    AssortmentClassification.WAITING.getName(), ClassificationParent.ASSORTMENT.getName()));
         }
         assortmentRepository.save(assortment);
         return transfer(orderContentRepository.save(orderContentNew));

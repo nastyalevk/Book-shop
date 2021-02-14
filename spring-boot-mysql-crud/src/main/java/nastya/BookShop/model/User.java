@@ -53,6 +53,14 @@ public class User {
     @JsonIgnore
     private Set<Order> order;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Logs> userLog;
+
+    @OneToMany(mappedBy = "admin")
+    @JsonIgnore
+    private Set<Logs> adminLog;
+
     private String username;
     private String email;
     @Column(name = "first_name")

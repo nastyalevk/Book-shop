@@ -13,6 +13,8 @@ public interface UserService {
 
     User saveUser(UserDto user);
 
+    User updateUser(UserDto user);
+
     UserDto findByUsername(String username);
 
     Boolean existsByUsername(String username);

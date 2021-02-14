@@ -23,7 +23,8 @@ public class UserRolesServiceImpl implements UserRolesService {
     private final RolesRepository rolesRepository;
 
     @Autowired
-    public UserRolesServiceImpl(UserRolesRepository userRolesRepository, UserRepository userRepository, RolesRepository rolesRepository) {
+    public UserRolesServiceImpl(UserRolesRepository userRolesRepository, UserRepository userRepository,
+                                RolesRepository rolesRepository) {
         this.userRolesRepository = userRolesRepository;
         this.userRepository = userRepository;
         this.rolesRepository = rolesRepository;

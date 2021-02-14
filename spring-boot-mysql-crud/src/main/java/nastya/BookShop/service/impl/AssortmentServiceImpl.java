@@ -2,7 +2,9 @@ package nastya.BookShop.service.impl;
 
 import nastya.BookShop.dto.Assortment.AssortmentClassification;
 import nastya.BookShop.dto.Assortment.AssortmentDto;
+import nastya.BookShop.dto.classification.ClassificationParent;
 import nastya.BookShop.dto.shop.ShopClassification;
+import nastya.BookShop.exception.NoAccessException;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.AssortmentId;
 import nastya.BookShop.repository.AssortmentRepository;
@@ -51,7 +53,7 @@ public class AssortmentServiceImpl implements AssortmentService {
         Assortment assortment = transfer(assortmentDto);
         if(assortmentRepository.existsByAssortmentId(assortment.getAssortmentId())){
             if(!assortment.getAssortmentId().getShop().getUser().getUsername().equals(username)){
-                throw new IllegalArgumentException("You dont have access for this action!");
+                throw new NoAccessException("You dont have access for this action!");
             }
         }
         return transfer(assortmentRepository.save(transfer(assortmentDto)));
@@ -83,7 +85,7 @@ public class AssortmentServiceImpl implements AssortmentService {
     @Override
     public List<AssortmentDto> getByBook(Integer bookId) {
         return transfer(assortmentRepository.findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(bookId,
-                ShopClassification.open.toString()));
+                ShopClassification.OPEN.toString()));
     }
 
     private AssortmentDto transfer(Assortment assortment) {
@@ -93,7 +95,8 @@ public class AssortmentServiceImpl implements AssortmentService {
         assortmentDto.setQuantity(assortment.getQuantity());
         assortmentDto.setPrice(assortment.getPrice());
         assortmentDto.setCreationDate(assortment.getCreationDate().toString());
-        assortmentDto.setClassification(AssortmentClassification.valueOf(assortment.getClassification().getName()));
+        assortmentDto.setClassification(AssortmentClassification
+                .valueOf(assortment.getClassification().getName().toUpperCase()));
         return assortmentDto;
     }
 
@@ -103,9 +106,10 @@ public class AssortmentServiceImpl implements AssortmentService {
                 shopRepository.getOne(assortmentDto.getShopId())));
         assortment.setQuantity(assortmentDto.getQuantity());
         assortment.setPrice(assortmentDto.getPrice());
-        assortment.setCreationDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(assortmentDto.getCreationDate()));
+        assortment.setCreationDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .parse(assortmentDto.getCreationDate()));
         assortment.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
-                assortmentDto.getClassification().toString(), "assortment"));
+                assortmentDto.getClassification().getName(), ClassificationParent.ASSORTMENT.getName()));
         return assortment;
     }
 

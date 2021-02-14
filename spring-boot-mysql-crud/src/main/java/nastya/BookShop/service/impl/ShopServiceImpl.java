@@ -1,7 +1,9 @@
 package nastya.BookShop.service.impl;
 
+import nastya.BookShop.dto.classification.ClassificationParent;
 import nastya.BookShop.dto.shop.ShopClassification;
 import nastya.BookShop.dto.shop.ShopDto;
+import nastya.BookShop.exception.NoAccessException;
 import nastya.BookShop.model.Assortment;
 import nastya.BookShop.model.Shop;
 import nastya.BookShop.repository.AssortmentRepository;
@@ -38,7 +40,7 @@ public class ShopServiceImpl implements ShopService {
     public ShopDto saveShop(ShopDto shopDto, String username) {
         if(shopRepository.existsById(shopDto.getId())){
             if(!shopRepository.getOne(shopDto.getId()).getUser().getUsername().equals(username)){
-                throw new IllegalArgumentException("You dont have access for this action!");
+                throw new NoAccessException("You dont have access for this action!");
             }
         }
         return transfer(shopRepository.save(transfer((shopDto))));
@@ -53,7 +55,7 @@ public class ShopServiceImpl implements ShopService {
     public List<ShopDto> getShopsByBook(Integer id) {
         List<ShopDto> result = new ArrayList<>();
         List<Assortment> assortments = assortmentRepository.
-                findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(id, ShopClassification.open.toString());
+                findByAssortmentIdBookIdAndAndAssortmentIdShopClassificationName(id, ShopClassification.OPEN.getName());
         for (Assortment i : assortments) {
             result.add(transfer(i.getAssortmentId().getShop()));
         }
@@ -81,7 +83,7 @@ public class ShopServiceImpl implements ShopService {
         shopDto.setCity(shop.getCity());
         shopDto.setAddress(shop.getAddress());
         shopDto.setDescription(shop.getDescription());
-        shopDto.setClassification(ShopClassification.valueOf(shop.getClassification().getName()));
+        shopDto.setClassification(ShopClassification.valueOf(shop.getClassification().getName().toUpperCase()));
         shopDto.setUserId(shop.getUser().getId());
         return shopDto;
     }
@@ -94,8 +96,8 @@ public class ShopServiceImpl implements ShopService {
         shop.setCity(shopDto.getCity());
         shop.setAddress(shopDto.getAddress());
         shop.setDescription(shopDto.getDescription());
-        shop.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(shopDto.getClassification()
-                .toString(), "shop"));
+        shop.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
+                shopDto.getClassification().getName(), ClassificationParent.SHOP.getName()));
         shop.setUser(userRepository.getOne(shopDto.getUserId()));
         return shop;
     }

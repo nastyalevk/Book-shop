@@ -58,6 +58,12 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User updateUser(UserDto userDto) {
+        User user = createUser(userDto);
+        return user;
+    }
+
 
     @Override
     public UserDto findByUsername(String userName) {

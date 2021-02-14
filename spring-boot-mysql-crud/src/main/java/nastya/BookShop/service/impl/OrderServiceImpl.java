@@ -3,6 +3,7 @@ package nastya.BookShop.service.impl;
 import nastya.BookShop.dto.order.OrderClassification;
 import nastya.BookShop.dto.order.OrderDto;
 import nastya.BookShop.dto.response.PageResponse;
+import nastya.BookShop.exception.NoAccessException;
 import nastya.BookShop.model.Order;
 import nastya.BookShop.model.Shop;
 import nastya.BookShop.repository.ClassificationRepository;
@@ -64,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto saveOrder(OrderDto orderDto) throws ParseException {
         return transfer(orderRepository.save(transfer(orderDto)));
     }
-    
+
     @Override
     public PageResponse getOrderByShop(int page, int size, int shopId, String username) {
         Shop shop = shopRepository.getOne(shopId);
         if(!shop.getUser().getUsername().equals(username)){
-           throw new IllegalArgumentException("You dont have access for this page!");
+           throw new NoAccessException("You dont have access for this page!");
         }
         Pageable paging = PageRequest.of(page, size,
                 Sort.by("id").descending());
@@ -107,11 +108,13 @@ public class OrderServiceImpl implements OrderService {
         order.setShop(shopRepository.getShopById(orderDto.getShopId()));
         order.setDeliveryAddress(orderDto.getDeliveryAddress());
         order.setDescription(orderDto.getDescription());
-        order.setOrderSubmitDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(orderDto.getOrderSubmitDate()));
+        order.setOrderSubmitDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .parse(orderDto.getOrderSubmitDate()));
         order.setClassification(classificationRepository.getClassificationByNameAndAndClassificationName(
                 orderDto.getClassification().toString(), "order"));
         order.setCost(orderDto.getCost());
-        order.setOrderCompleteDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(orderDto.getOrderCompleteDate()));
+        order.setOrderCompleteDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .parse(orderDto.getOrderCompleteDate()));
         order.setUser(userRepository.findByUsername(orderDto.getUsername()));
         return order;
     }

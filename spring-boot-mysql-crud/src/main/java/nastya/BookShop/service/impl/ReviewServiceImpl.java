@@ -109,8 +109,6 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDtos;
     }
 
-
-
     private BookReviewDto transfer(BookReview review) {
         BookReviewDto reviewDto = new BookReviewDto();
         reviewDto.setId(review.getId());
