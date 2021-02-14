@@ -13,7 +13,7 @@ public interface UserService {
 
     User saveUser(UserDto user);
 
-    User updateUser(UserDto user);
+    User updateUser(UserDto user, String username);
 
     UserDto findByUsername(String username);
 
@@ -21,6 +21,6 @@ public interface UserService {
 
     Boolean existsByEmail(String email);
 
-    void updateUserRoles(String[] roles, Integer id);
+    void updateUserRoles(String[] roles, Integer id, String adminUsername, String message);
 
 }

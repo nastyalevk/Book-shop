@@ -1,4 +1,4 @@
-package nastya.BookShop.dto.Assortment;
+package nastya.BookShop.dto.assortment;
 
 import lombok.Getter;
 

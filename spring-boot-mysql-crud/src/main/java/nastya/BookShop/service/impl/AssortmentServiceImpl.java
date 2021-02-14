@@ -1,7 +1,7 @@
 package nastya.BookShop.service.impl;
 
-import nastya.BookShop.dto.Assortment.AssortmentClassification;
-import nastya.BookShop.dto.Assortment.AssortmentDto;
+import nastya.BookShop.dto.assortment.AssortmentClassification;
+import nastya.BookShop.dto.assortment.AssortmentDto;
 import nastya.BookShop.dto.classification.ClassificationParent;
 import nastya.BookShop.dto.shop.ShopClassification;
 import nastya.BookShop.exception.NoAccessException;
@@ -16,11 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Transactional

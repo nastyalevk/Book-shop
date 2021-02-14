@@ -23,5 +23,6 @@ public class UserDto {
     private Set<RoleDto> roles;
     private Boolean activated;
     private Boolean isEnabled;
+    private String message;
 
 }

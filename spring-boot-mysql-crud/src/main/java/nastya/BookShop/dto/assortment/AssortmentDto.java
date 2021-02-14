@@ -1,11 +1,9 @@
-package nastya.BookShop.dto.Assortment;
+package nastya.BookShop.dto.assortment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter

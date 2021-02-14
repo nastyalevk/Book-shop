@@ -1,6 +1,6 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.dto.Assortment.AssortmentDto;
+import nastya.BookShop.dto.assortment.AssortmentDto;
 import nastya.BookShop.service.api.AssortmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

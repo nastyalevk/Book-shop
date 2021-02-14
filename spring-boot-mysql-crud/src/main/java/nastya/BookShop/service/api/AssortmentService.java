@@ -1,6 +1,6 @@
 package nastya.BookShop.service.api;
 
-import nastya.BookShop.dto.Assortment.AssortmentDto;
+import nastya.BookShop.dto.assortment.AssortmentDto;
 
 import java.text.ParseException;
 import java.util.List;

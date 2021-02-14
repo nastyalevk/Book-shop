@@ -1,6 +1,6 @@
 package nastya.BookShop.service.impl;
 
-import nastya.BookShop.dto.Assortment.AssortmentClassification;
+import nastya.BookShop.dto.assortment.AssortmentClassification;
 import nastya.BookShop.dto.classification.ClassificationParent;
 import nastya.BookShop.dto.orderContent.OrderContentDto;
 import nastya.BookShop.exception.NotEnoughItemsException;

@@ -37,9 +37,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(path = "/update")
-    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto) {
-        userService.updateUser(userDto);
+    @PostMapping(path = "/update/{username}")
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto,
+                                                 @PathVariable("username") String username) {
+        userService.updateUser(userDto, username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -50,8 +51,10 @@ public class UserController {
 
     @GetMapping("/update-roles/")
     public ResponseEntity<HttpStatus> updateUser(@RequestParam String[] roles,
-                                                 @RequestParam int id) {
-        userService.updateUserRoles(roles, id);
+                                                 @RequestParam int userId,
+                                                 @RequestParam String adminUsername,
+                                                 @RequestParam String message) {
+        userService.updateUserRoles(roles, userId, adminUsername, message);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
