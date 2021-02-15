@@ -2,7 +2,6 @@ package nastya.BookShop.service.api;
 
 import nastya.BookShop.dto.review.BookReviewDto;
 import nastya.BookShop.dto.review.ShopReviewDto;
-import nastya.BookShop.model.ShopReview;
 
 import java.text.ParseException;
 import java.util.List;

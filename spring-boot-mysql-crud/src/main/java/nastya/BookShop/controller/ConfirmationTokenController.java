@@ -1,6 +1,5 @@
 package nastya.BookShop.controller;
 
-import nastya.BookShop.dto.book.BookDto;
 import nastya.BookShop.dto.user.ConfirmationTokenDto;
 import nastya.BookShop.service.api.ConfirmationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
 package nastya.BookShop.service.api;
 
 import nastya.BookShop.dto.orderContent.OrderContentDto;
-import nastya.BookShop.model.OrderContent;
 
 import java.util.List;
 

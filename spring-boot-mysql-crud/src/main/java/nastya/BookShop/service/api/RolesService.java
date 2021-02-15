@@ -4,7 +4,6 @@ import nastya.BookShop.dto.role.RoleDto;
 import nastya.BookShop.model.Role;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RolesService {
 
